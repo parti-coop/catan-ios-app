@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E07E995E6BD7319575982DA /* Pods_catan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C84A87796FB7AC1FFC93CE /* Pods_catan.framework */; };
 		98145B771F42BDD50083349F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98145B761F42BDD50083349F /* AppDelegate.swift */; };
 		98145B791F42BDD50083349F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98145B781F42BDD50083349F /* ViewController.swift */; };
 		98145B7C1F42BDD50083349F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7A1F42BDD50083349F /* Main.storyboard */; };
 		98145B7E1F42BDD50083349F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7D1F42BDD50083349F /* Assets.xcassets */; };
 		98145B811F42BDD50083349F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7F1F42BDD50083349F /* LaunchScreen.storyboard */; };
+		98A5F4F11F42D9B400E6D781 /* Extends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F01F42D9B400E6D781 /* Extends.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,10 @@
 		98145B7D1F42BDD50083349F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98145B801F42BDD50083349F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98145B821F42BDD50083349F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98A5F4F01F42D9B400E6D781 /* Extends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extends.swift; sourceTree = "<group>"; };
+		AE694E3E10ED5854EACD1CCB /* Pods-catan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-catan/Pods-catan.debug.xcconfig"; sourceTree = "<group>"; };
+		D22495B9F4C49C73EEE65CA4 /* Pods-catan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catan.release.xcconfig"; path = "Pods/Target Support Files/Pods-catan/Pods-catan.release.xcconfig"; sourceTree = "<group>"; };
+		F2C84A87796FB7AC1FFC93CE /* Pods_catan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_catan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +35,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E07E995E6BD7319575982DA /* Pods_catan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C0C6717E2B01B092CA7E428 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AE694E3E10ED5854EACD1CCB /* Pods-catan.debug.xcconfig */,
+				D22495B9F4C49C73EEE65CA4 /* Pods-catan.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		5E50A8018DA478E495708BA5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F2C84A87796FB7AC1FFC93CE /* Pods_catan.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		98145B6A1F42BDD50083349F = {
 			isa = PBXGroup;
 			children = (
 				98145B751F42BDD50083349F /* catan */,
 				98145B741F42BDD50083349F /* Products */,
+				0C0C6717E2B01B092CA7E428 /* Pods */,
+				5E50A8018DA478E495708BA5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +80,7 @@
 		98145B751F42BDD50083349F /* catan */ = {
 			isa = PBXGroup;
 			children = (
+				98A5F4EF1F42D98F00E6D781 /* Util */,
 				98145B761F42BDD50083349F /* AppDelegate.swift */,
 				98145B781F42BDD50083349F /* ViewController.swift */,
 				98145B7A1F42BDD50083349F /* Main.storyboard */,
@@ -64,6 +91,14 @@
 			path = catan;
 			sourceTree = "<group>";
 		};
+		98A5F4EF1F42D98F00E6D781 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				98A5F4F01F42D9B400E6D781 /* Extends.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +106,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98145B851F42BDD50083349F /* Build configuration list for PBXNativeTarget "catan" */;
 			buildPhases = (
+				ADF8FC4069F072796191FB19 /* [CP] Check Pods Manifest.lock */,
 				98145B6F1F42BDD50083349F /* Sources */,
 				98145B701F42BDD50083349F /* Frameworks */,
 				98145B711F42BDD50083349F /* Resources */,
+				7A80EBFA0F13D278AA5ACFEE /* [CP] Embed Pods Frameworks */,
+				1A858CD011D9A0AFFCF11DD0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -131,12 +169,61 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1A858CD011D9A0AFFCF11DD0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-catan/Pods-catan-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A80EBFA0F13D278AA5ACFEE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-catan/Pods-catan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ADF8FC4069F072796191FB19 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		98145B6F1F42BDD50083349F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				98145B791F42BDD50083349F /* ViewController.swift in Sources */,
+				98A5F4F11F42D9B400E6D781 /* Extends.swift in Sources */,
 				98145B771F42BDD50083349F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,6 +345,7 @@
 		};
 		98145B861F42BDD50083349F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE694E3E10ED5854EACD1CCB /* Pods-catan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = catan/Info.plist;
@@ -270,6 +358,7 @@
 		};
 		98145B871F42BDD50083349F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D22495B9F4C49C73EEE65CA4 /* Pods-catan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = catan/Info.plist;
@@ -299,6 +388,7 @@
 				98145B871F42BDD50083349F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

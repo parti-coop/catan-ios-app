@@ -7,19 +7,21 @@
 //
 
 import UIKit
+import LBTAComponents
 
 class ViewController: UIViewController {
-
+    let logo: UIImageView = {
+        let logo = UIImageView()
+        logo.image = #imageLiteral(resourceName: "login_logo").withRenderingMode(.alwaysOriginal)
+        return logo
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        view.backgroundColor = UIColor.BRAND_PRIMARY
+        view.addSubview(logo)
+        logo.anchor(view.topAnchor, topConstant: 100)
+        logo.anchorCenterXToSuperview()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 

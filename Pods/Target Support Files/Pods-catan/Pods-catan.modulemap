@@ -1,0 +1,6 @@
+framework module Pods_catan {
+  umbrella header "Pods-catan-umbrella.h"
+
+  export *
+  module * { export * }
+}
