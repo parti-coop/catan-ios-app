@@ -14,6 +14,7 @@
 		98145B7E1F42BDD50083349F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7D1F42BDD50083349F /* Assets.xcassets */; };
 		98145B811F42BDD50083349F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7F1F42BDD50083349F /* LaunchScreen.storyboard */; };
 		98A5F4F11F42D9B400E6D781 /* Extends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F01F42D9B400E6D781 /* Extends.swift */; };
+		98A5F4F31F440A3600E6D781 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F21F440A3600E6D781 /* Style.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,8 @@
 		98145B801F42BDD50083349F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		98145B821F42BDD50083349F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98A5F4F01F42D9B400E6D781 /* Extends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extends.swift; sourceTree = "<group>"; };
+		98A5F4F21F440A3600E6D781 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		98A5F4F41F4439F400E6D781 /* catan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = catan.entitlements; sourceTree = "<group>"; };
 		AE694E3E10ED5854EACD1CCB /* Pods-catan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-catan/Pods-catan.debug.xcconfig"; sourceTree = "<group>"; };
 		D22495B9F4C49C73EEE65CA4 /* Pods-catan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-catan.release.xcconfig"; path = "Pods/Target Support Files/Pods-catan/Pods-catan.release.xcconfig"; sourceTree = "<group>"; };
 		F2C84A87796FB7AC1FFC93CE /* Pods_catan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_catan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +83,7 @@
 		98145B751F42BDD50083349F /* catan */ = {
 			isa = PBXGroup;
 			children = (
+				98A5F4F41F4439F400E6D781 /* catan.entitlements */,
 				98A5F4EF1F42D98F00E6D781 /* Util */,
 				98145B761F42BDD50083349F /* AppDelegate.swift */,
 				98145B781F42BDD50083349F /* ViewController.swift */,
@@ -95,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				98A5F4F01F42D9B400E6D781 /* Extends.swift */,
+				98A5F4F21F440A3600E6D781 /* Style.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -134,7 +139,13 @@
 				TargetAttributes = {
 					98145B721F42BDD50083349F = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = S8RA82BA24;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -225,6 +236,7 @@
 				98145B791F42BDD50083349F /* ViewController.swift in Sources */,
 				98A5F4F11F42D9B400E6D781 /* Extends.swift in Sources */,
 				98145B771F42BDD50083349F /* AppDelegate.swift in Sources */,
+				98A5F4F31F440A3600E6D781 /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +360,8 @@
 			baseConfigurationReference = AE694E3E10ED5854EACD1CCB /* Pods-catan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = catan/catan.entitlements;
+				DEVELOPMENT_TEAM = S8RA82BA24;
 				INFOPLIST_FILE = catan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.parti.catan;
@@ -361,6 +375,8 @@
 			baseConfigurationReference = D22495B9F4C49C73EEE65CA4 /* Pods-catan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = catan/catan.entitlements;
+				DEVELOPMENT_TEAM = S8RA82BA24;
 				INFOPLIST_FILE = catan/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.parti.catan;

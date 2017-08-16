@@ -6,5 +6,8 @@ target 'catan' do
   use_frameworks!
 
   # Pods for catan
-  pod ‘LBTAComponents’, ‘~> 0.1.9’
+  pod 'LBTAComponents', '~> 0.1.9'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
 end
