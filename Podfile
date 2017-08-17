@@ -10,4 +10,13 @@ target 'catan' do
   pod 'FacebookCore'
   pod 'FacebookLogin'
   pod 'FacebookShare'
+  pod 'TRON', '~> 2.0.0'
+  pod 'KeychainAccess'
+  
+  plugin 'cocoapods-keys', {
+      :project => "xyz.parti.catan",
+      :keys => [
+        "serviceClientId",
+        "serviceClientSecret"
+      ]}
 end

@@ -94,14 +94,19 @@ class ViewController: UIViewController {
     
     func handleFacebookSignIn() {
         let loginManager = LoginManager()
+        loginManager.logOut()
         loginManager.logIn([.publicProfile], viewController: self) { (loginResult) in
             switch loginResult {
             case .failed(let error):
                 print(error)
             case .cancelled:
                 print("User cancelled login.")
-            case .success(let grantedPermissions, let declinedPermissions, let accessToken):
-                print("Logged in!")
+            case .success(_, _, let accessToken):
+                Service.sharedInstance.auth(facebookAccessToken: accessToken.authenticationToken, withSuccess: {
+                    print("로그인 성공")
+                }, failure: { (err) in
+                    print("로그인 실패", err)
+                })
             }
         }
     }
