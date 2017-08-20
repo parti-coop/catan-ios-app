@@ -55,7 +55,7 @@ class UserSession {
         if isLogin() {
             UserRequestFactory.fetchMe().resume { (user, error) in
                 if let error = error {
-                    // TODO 로그인한 사용자가 없는지, 네트워크 오류인지 처리 필요
+                    // TODO: 로그인한 사용자가 없는지, 네트워크 오류인지 처리 필요
                     log.debug("User not found: \(error)")
                     //logOut()
                     completion(nil, error)

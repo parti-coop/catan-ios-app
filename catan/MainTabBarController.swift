@@ -17,9 +17,13 @@ class MainTabBarController: UITabBarController {
             return
         }
         
+        //TODO: 로딩화면 보이기
+        
         UserSession.sharedInstance.cacheUser { user, error in
+            // TODO: 로딩화면 닫기
+            
             if let error = error {
-                //TODO 로그인 정보에 해당하는 사용자가 없는 경우 혹은 네트워크 오류
+                //TODO: 로그인 정보에 해당하는 사용자가 없는 경우 혹은 네트워크 오류
                 log.error("다시 로그인해야 합니다. \(error)")
                 self.showLoginView()
             }
@@ -29,6 +33,9 @@ class MainTabBarController: UITabBarController {
     
     fileprivate func showLoginView() {
         DispatchQueue.main.async {
+            if let currentDispatch = OperationQueue.current?.underlyingQueue {
+                print(currentDispatch)
+            }
             let loginController = LoginController()
             let navController = UINavigationController(rootViewController: loginController)
             self.present(navController, animated: true, completion: nil)
@@ -36,7 +43,7 @@ class MainTabBarController: UITabBarController {
     }
     
     func setupViewController() {
-        // TODO LBTA라이브러를 이용하자
+        // TODO: LBTA라이브러를 이용하자
         let layout = UICollectionViewFlowLayout()
         let dashboardController = DashboardController(collectionViewLayout: layout)
         let navController = UINavigationController(rootViewController: dashboardController)

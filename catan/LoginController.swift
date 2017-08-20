@@ -28,7 +28,7 @@ class LoginController: UIViewController {
     }()
     
     func handleShowSignUp() {
-        //TODO 가입하기
+        //TODO: 가입하기
     }
     
     let logo: UIImageView = {
@@ -130,16 +130,16 @@ class LoginController: UIViewController {
         loginManager.logIn([.publicProfile], viewController: self) { (loginResult) in
             switch loginResult {
             case .failed(let error):
-                // TODO 로그인 오류처리
+                // TODO: 로그인 오류처리
                 log.error("로그인 실패 :", error.localizedDescription)
             case .cancelled:
-                // TODO 로그인 취소처리
+                // TODO: 로그인 취소처리
                 log.debug("로그인 취소")
             case .success(_, _, let accessToken):
                 Service.sharedInstance.auth(facebookAccessToken: accessToken.authenticationToken, withSuccess: {
                     self.handleSignIn()
                 }, failure: { (error) in
-                    // TODO 로그인 오류처리
+                    // TODO: 로그인 오류처리
                     log.error("로그인 실패 :", error.localizedDescription)
                 })
             }
@@ -149,7 +149,6 @@ class LoginController: UIViewController {
     fileprivate func handleSignIn() {
         UserSession.sharedInstance.cacheUser { (user, error) in
             if let error = error {
-                // TODO 로그인 오류처리
                 log.error("로그인 실패 :", error.localizedDescription)
                 return
             }
