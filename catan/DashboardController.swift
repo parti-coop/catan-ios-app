@@ -14,7 +14,7 @@ class DashboardController: UICollectionViewController {
         
         collectionView?.backgroundColor = .white
         
-        navigationItem.title = "내 피드 @\(UserSession.sharedInstance.user?.nickname)"
+        navigationItem.title = "내 피드"
         
         setupLogOutButton()
     }
