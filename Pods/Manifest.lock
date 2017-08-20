@@ -6,6 +6,7 @@ PODS:
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
+  - BonMot (4.2)
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
     - FBSDKCoreKit (~> 4.15)
@@ -25,9 +26,11 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.20.2):
     - FBSDKCoreKit
+  - Gloss (1.2.1)
   - KeychainAccess (3.0.1)
   - Keys (1.0.0)
   - LBTAComponents (0.1.9)
+  - SwiftyBeaver (1.1.3)
   - SwiftyJSON (3.1.4)
   - TRON (2.0.1):
     - Alamofire (~> 4.1)
@@ -40,12 +43,15 @@ PODS:
     - TRON/Core
 
 DEPENDENCIES:
+  - BonMot
   - FacebookCore
   - FacebookLogin
   - FacebookShare
+  - Gloss (~> 1.2)
   - KeychainAccess
   - Keys (from `Pods/CocoaPodsKeys`)
   - LBTAComponents (~> 0.1.9)
+  - SwiftyBeaver
   - TRON (~> 2.0.0)
 
 EXTERNAL SOURCES:
@@ -55,18 +61,21 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  BonMot: 9dbd59135974d2fa591a2084b3489bdc0e15e8f8
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
   FacebookShare: 8e9ee8ea06505e6a1d3d719b0cc63e840fb8aaeb
   FBSDKCoreKit: 82eac696eb6157da5f4266c3a241f00e9bd72471
   FBSDKLoginKit: 2211bede07c83391349eacc1fd86cf6d9289ce38
   FBSDKShareKit: ca9b22264ea49a896dafb2467c1a4f72aa41996f
+  Gloss: 9ab33b8ede01e4232571d43a6bf9259b85d1de69
   KeychainAccess: 017ea25e313a49eda10bb19b0bb0760fb1edfe1a
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   LBTAComponents: 9a5d314080d1f80208062ccc81a2d25225c5f572
+  SwiftyBeaver: 949aa1439b8fa3667f68555cfef65de46a70ccde
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TRON: 7b9adeb678fe0e25433d207f6a734aaf145fa9b5
 
-PODFILE CHECKSUM: db227a0b1a8598595df246abac935225bd6fae5e
+PODFILE CHECKSUM: 7275351d8e6696241d02d424388639fa693c2c49
 
 COCOAPODS: 1.3.1

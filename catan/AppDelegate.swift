@@ -8,21 +8,32 @@
 
 import UIKit
 import FacebookCore
+import SwiftyBeaver
+
+let log = SwiftyBeaver.self
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        setupLog()
+
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        window = UIWindow(frame: UIScreen.main.bounds)
+        window = UIWindow()
+        window?.rootViewController = MainTabBarController()
         window?.makeKeyAndVisible()
-        window?.rootViewController = ViewController()
+        
         return true
+    }
+
+    fileprivate func setupLog() {
+        let console = ConsoleDestination()  // log to Xcode Console
+        log.addDestination(console)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -47,12 +58,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        let appId = SDKSettings.appId
-        if url.scheme != nil && url.scheme!.hasPrefix("fb\(appId)") && url.host == "authorize" { // Facebook
-            return SDKApplicationDelegate.shared.application(app, open: url, options: options)
-        }
-        return false
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return SDKApplicationDelegate.shared.application(app, open: url, options: options)
+    }
+    
+    public func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return SDKApplicationDelegate.shared.application(application, open: url)
     }
 }
 

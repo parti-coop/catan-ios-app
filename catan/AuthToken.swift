@@ -14,7 +14,7 @@ struct AuthToken : JSONDecodable {
     static let clientId = CatanKeys().serviceClientId
     static let clientSecret = CatanKeys().serviceClientSecret
     enum grantType {
-        case credentials, assertion
+        case credentials, assertion, refresh_token
     }
     enum provider {
         case facebook

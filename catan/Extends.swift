@@ -10,5 +10,10 @@ import UIKit
 import LBTAComponents
 
 extension UIColor {
-    static let BRAND_PRIMARY = UIColor(r: 150, g: 111, b: 214)
+    static let brand_primary = UIColor(r: 150, g: 111, b: 214)
+    static let app_light_gray = UIColor(r: 210, g: 210, b: 210)
+
+    convenience init(netHex:Int) {
+        self.init(r: CGFloat((netHex >> 16) & 0xff), g: CGFloat((netHex >> 8) & 0xff), b: CGFloat(netHex & 0xff))
+    }
 }
