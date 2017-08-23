@@ -11,40 +11,68 @@ import TRON
 import SwiftyJSON
 import UIKit
 
+protocol DashboardDatasourceDelegate: NSObjectProtocol {
+    func reloadData()
+}
+
 class DashboardDatasource: Datasource {
+    static let POST_SECTION = 0
+    static let BOTTOM_INDICATOR_SECTION = 1
+    
     var posts = [Post]()
     var isFinishedPagination = false
-    weak var controller: DatasourceController?
+    var isLoadingMore = false
+    weak var controller: DashboardDatasourceDelegate?
 
-    init(controller: DatasourceController) {
+    init(controller: DashboardDatasourceDelegate) {
         self.controller = controller
         super.init()
         fetchPosts()
     }
     
     override func cellClasses() -> [DatasourceCell.Type] {
-        return [PostCell.self]
+        return [PostCell.self, IndicatorCell.self]
     }
     
     override func numberOfItems(_ section: Int) -> Int {
-        return posts.count
+        if section == DashboardDatasource.POST_SECTION {
+            return posts.count
+        } else if section == DashboardDatasource.BOTTOM_INDICATOR_SECTION {
+            return isLoadingMore ? 1 : 0
+        }
+        
+        return super.numberOfItems(section)
+    }
+    
+    override func numberOfSections() -> Int {
+        return 2
     }
     
     override func item(_ indexPath: IndexPath) -> Any? {
-        if (posts.count - 1 == indexPath.item) && !isFinishedPagination {
-            fetchPosts()
+        if indexPath.section == DashboardDatasource.POST_SECTION {
+            if (posts.count - 1 == indexPath.item) && !isFinishedPagination {
+                self.isLoadingMore = true
+                self.controller?.reloadData()
+                
+                fetchPosts()
+            }
+            
+            return posts[indexPath.item]
         }
         
-        return posts[indexPath.item]
+        return super.item(indexPath)
     }
     
     fileprivate func fetchPosts() {
         let lastPostId = posts.last?.id
         PostRequestFactory.fetchPageOnDashBoard(lastPostId: lastPostId).resume { (page, error) in
+            self.isLoadingMore = true
+
             if let error = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
                 log.error("게시글 로딩 실패 : \(error.localizedDescription)")
                 self.isFinishedPagination = true
+                self.controller?.reloadData()
                 return
             }
             
@@ -52,9 +80,7 @@ class DashboardDatasource: Datasource {
             self.posts += page.items
             self.isFinishedPagination = !page.hasMoreItem
             
-            self.controller?.collectionView?.reloadData()
+            self.controller?.reloadData()
         }
     }
-    
-    // 게시글 가져오기 - 끝
 }

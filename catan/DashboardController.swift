@@ -9,7 +9,7 @@
 import UIKit
 import LBTAComponents
 
-class DashboardController: DatasourceController {
+class DashboardController: DatasourceController, DashboardDatasourceDelegate {
     //TODO: errorMessageLabel
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -23,7 +23,6 @@ class DashboardController: DatasourceController {
         
         navigationItem.title = "내 피드"
         setupLogOutButton()
-        
         self.datasource = DashboardDatasource(controller: self)
     }
     
@@ -32,7 +31,17 @@ class DashboardController: DatasourceController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 100)
+        if indexPath.section == DashboardDatasource.POST_SECTION {
+            return CGSize(width: view.frame.width, height: 100)
+        } else if indexPath.section == DashboardDatasource.BOTTOM_INDICATOR_SECTION {
+            return CGSize(width: view.frame.width, height: 50)
+        }
+        
+        return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
+    }
+    
+    func reloadData() {
+        self.collectionView?.reloadData()
     }
     
     // 로그아웃 - 시작
