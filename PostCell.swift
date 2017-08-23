@@ -11,8 +11,8 @@ import LBTAComponents
 class PostCell: DatasourceCell {
     override var datasourceItem: Any? {
         didSet {
-            guard let post = datasourceItem as? String else { return }
-            titleLabel.text = post
+            guard let post = datasourceItem as? Post else { return }
+            titleLabel.text = post.parsedBody
         }
     }
     

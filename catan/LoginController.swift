@@ -149,7 +149,8 @@ class LoginController: UIViewController {
     fileprivate func handleSignIn() {
         UserSession.sharedInstance.cacheUser { (user, error) in
             if let error = error {
-                log.error("로그인 실패 :", error.localizedDescription)
+                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
+                log.error("로그인 실패 : \(error.localizedDescription)")
                 return
             }
                         

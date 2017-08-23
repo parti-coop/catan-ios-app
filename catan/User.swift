@@ -6,12 +6,10 @@
 //  Copyright © 2017년 Parti. All rights reserved.
 //
 
-import Foundation
 import TRON
 import SwiftyJSON
 
 struct User : JSONDecodable {
-    /// Creates model object from SwiftyJSON.JSON struct.
     init(json: JSON) throws {
         id = json["id"].intValue
         email = json["email"].stringValue

@@ -8,10 +8,18 @@
 
 import LBTAComponents
 import TRON
+import SwiftyJSON
+import UIKit
 
 class DashboardDatasource: Datasource {
-    override init() {
+    var posts = [Post]()
+    var isFinishedPagination = false
+    weak var controller: DatasourceController?
+
+    init(controller: DatasourceController) {
+        self.controller = controller
         super.init()
+        fetchPosts()
     }
     
     override func cellClasses() -> [DatasourceCell.Type] {
@@ -19,10 +27,34 @@ class DashboardDatasource: Datasource {
     }
     
     override func numberOfItems(_ section: Int) -> Int {
-        return 5
+        return posts.count
     }
     
     override func item(_ indexPath: IndexPath) -> Any? {
-        return "Post"
+        if (posts.count - 1 == indexPath.item) && !isFinishedPagination {
+            fetchPosts()
+        }
+        
+        return posts[indexPath.item]
     }
+    
+    fileprivate func fetchPosts() {
+        let lastPostId = posts.last?.id
+        PostRequestFactory.fetchPageOnDashBoard(lastPostId: lastPostId).resume { (page, error) in
+            if let error = error {
+                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
+                log.error("게시글 로딩 실패 : \(error.localizedDescription)")
+                self.isFinishedPagination = true
+                return
+            }
+            
+            guard let page = page else { return }
+            self.posts += page.items
+            self.isFinishedPagination = !page.hasMoreItem
+            
+            self.controller?.collectionView?.reloadData()
+        }
+    }
+    
+    // 게시글 가져오기 - 끝
 }

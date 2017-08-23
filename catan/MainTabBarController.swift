@@ -12,12 +12,13 @@ class MainTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //TODO: 로딩화면 보이기
+        view.backgroundColor = .white
+
         if !UserSession.sharedInstance.isLogin() {
             showLoginView()
             return
         }
-        
-        //TODO: 로딩화면 보이기
         
         UserSession.sharedInstance.cacheUser { user, error in
             // TODO: 로딩화면 닫기

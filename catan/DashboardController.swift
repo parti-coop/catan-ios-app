@@ -24,7 +24,7 @@ class DashboardController: DatasourceController {
         navigationItem.title = "내 피드"
         setupLogOutButton()
         
-        fetchPosts()
+        self.datasource = DashboardDatasource(controller: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -35,15 +35,6 @@ class DashboardController: DatasourceController {
         return CGSize(width: view.frame.width, height: 100)
     }
     
-    // 게시글 가져오기 - 시작
-    
-    fileprivate func fetchPosts() {
-        let postDataSource = DashboardDatasource()
-        self.datasource = postDataSource
-    }
-    
-    // 게시글 가져오기 - 끝
-
     // 로그아웃 - 시작
     
     fileprivate func setupLogOutButton() {

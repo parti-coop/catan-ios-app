@@ -134,3 +134,11 @@ struct UserRequestFactory {
     }
 }
 
+struct PostRequestFactory {
+    static func fetchPageOnDashBoard(lastPostId: Int? = nil) -> APIRequest<Page<Post>, Service.JSONError> {
+        let request: APIRequest<Page<Post>, Service.JSONError> = Service.sharedInstance.requestAuthenticated("/api/v1/posts/dashboard")
+        request.parameters["last_id"] = lastPostId
+        return request
+    }
+}
+
