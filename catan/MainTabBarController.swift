@@ -43,9 +43,7 @@ class MainTabBarController: UITabBarController {
     }
     
     func setupViewController() {
-        // TODO: LBTA라이브러를 이용하자
-        let layout = UICollectionViewFlowLayout()
-        let dashboardController = DashboardController(collectionViewLayout: layout)
+        let dashboardController = DashboardController()
         let dashboardNavController = templateNavController(rootViewController: dashboardController, unselectedImage: #imageLiteral(resourceName: "dashboard_menu"), selectedImage: #imageLiteral(resourceName: "dashboard_menu_filled"))
         
         let searchNavController = templateNavController(unselectedImage: #imageLiteral(resourceName: "search_menu"), selectedImage: #imageLiteral(resourceName: "search_menu_filled"))
