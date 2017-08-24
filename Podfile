@@ -15,6 +15,8 @@ target 'catan' do
   pod 'BonMot'
   pod 'SwiftyBeaver'
   pod 'Gloss', '~> 1.2'
+  pod 'Kingfisher', '~> 3.0'
+  pod 'DateToolsSwift'
 
   plugin 'cocoapods-keys', {
       :project => "xyz.parti.catan"

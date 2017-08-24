@@ -16,8 +16,10 @@ struct Post: JSONDecodable {
         parsedBody = json["parsed_body"].stringValue
         truncatedParsedBody = json["truncated_parsed_body"].stringValue
         specificDescStripedTags = json["specific_desc_striped_tags"].stringValue
-        createdAt = json["created_at"].date
-        lastStrokedAt = json["last_stroked_at"].date
+        parti = try Parti(json: json["parti"])
+        user = try User(json: json["user"])
+        createdAt = json["created_at"].dateTime
+        lastStrokedAt = json["last_stroked_at"].dateTime
         isUpVotedByMe = json["is_upvoted_by_me"].boolValue
         upvotesCount = json["upvotes_count"].intValue
         commentsCount = json["comments_count"].intValue
@@ -32,8 +34,8 @@ struct Post: JSONDecodable {
     let parsedBody: String
     let truncatedParsedBody: String
     let specificDescStripedTags: String
-    //Parti parti;
-    //User user;
+    let parti: Parti
+    let user: User;
     let createdAt: Date?
     let lastStrokedAt: Date?
     let isUpVotedByMe: Bool

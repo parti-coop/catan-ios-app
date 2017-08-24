@@ -32,12 +32,24 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate {
 
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == DashboardDatasource.POST_SECTION {
-            return CGSize(width: view.frame.width, height: 100)
+            guard let post = self.datasource?.item(indexPath) as? Post else { return .zero }
+            return CGSize(width: view.frame.width, height: PostCell.height(post, frame: view.frame))
         } else if indexPath.section == DashboardDatasource.BOTTOM_INDICATOR_SECTION {
             return CGSize(width: view.frame.width, height: 50)
         }
         
         return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        
+        if offsetY > contentHeight - scrollView.frame.size.height {
+            guard let datasource = datasource as? DashboardDatasource else { return }
+            datasource.fetchPosts()
+            collectionView?.reloadData()
+        }
     }
     
     func reloadData() {

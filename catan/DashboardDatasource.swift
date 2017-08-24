@@ -50,24 +50,20 @@ class DashboardDatasource: Datasource {
     
     override func item(_ indexPath: IndexPath) -> Any? {
         if indexPath.section == DashboardDatasource.POST_SECTION {
-            if (posts.count - 1 == indexPath.item) && !isFinishedPagination {
-                self.isLoadingMore = true
-                self.controller?.reloadData()
-                
-                fetchPosts()
-            }
-            
             return posts[indexPath.item]
         }
         
         return super.item(indexPath)
     }
     
-    fileprivate func fetchPosts() {
+    func fetchPosts() {
+        if self.isLoadingMore {
+            return
+        }
+        self.isLoadingMore = true
+       
         let lastPostId = posts.last?.id
         PostRequestFactory.fetchPageOnDashBoard(lastPostId: lastPostId).resume { (page, error) in
-            self.isLoadingMore = true
-
             if let error = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
                 log.error("게시글 로딩 실패 : \(error.localizedDescription)")
@@ -79,7 +75,7 @@ class DashboardDatasource: Datasource {
             guard let page = page else { return }
             self.posts += page.items
             self.isFinishedPagination = !page.hasMoreItem
-            
+            self.isLoadingMore = false
             self.controller?.reloadData()
         }
     }

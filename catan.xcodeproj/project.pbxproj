@@ -17,6 +17,9 @@
 		985100E11F4D1CBC009BE875 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100E01F4D1CBC009BE875 /* Page.swift */; };
 		985100E51F4D27FC009BE875 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100E41F4D27FC009BE875 /* Collection+Extension.swift */; };
 		985100E71F4D6C1E009BE875 /* IndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100E61F4D6C1E009BE875 /* IndicatorCell.swift */; };
+		985100E91F4D82BC009BE875 /* Parti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100E81F4D82BC009BE875 /* Parti.swift */; };
+		985100EB1F4D84F1009BE875 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100EA1F4D84F1009BE875 /* Group.swift */; };
+		985100F01F4E9F71009BE875 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 985100F21F4E9F71009BE875 /* Localizable.strings */; };
 		98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */; };
 		98A5F4F31F440A3600E6D781 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F21F440A3600E6D781 /* Style.swift */; };
 		98A5F4F71F449AD600E6D781 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F61F449AD600E6D781 /* Service.swift */; };
@@ -41,6 +44,10 @@
 		985100E01F4D1CBC009BE875 /* Page.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		985100E41F4D27FC009BE875 /* Collection+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		985100E61F4D6C1E009BE875 /* IndicatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndicatorCell.swift; sourceTree = "<group>"; };
+		985100E81F4D82BC009BE875 /* Parti.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parti.swift; sourceTree = "<group>"; };
+		985100EA1F4D84F1009BE875 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		985100F41F4E9F95009BE875 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		985100F51F4E9FC9009BE875 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		98A5F4F21F440A3600E6D781 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		98A5F4F41F4439F400E6D781 /* catan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = catan.entitlements; sourceTree = "<group>"; };
@@ -89,6 +96,7 @@
 		98145B6A1F42BDD50083349F = {
 			isa = PBXGroup;
 			children = (
+				985100F21F4E9F71009BE875 /* Localizable.strings */,
 				98145B751F42BDD50083349F /* catan */,
 				98145B741F42BDD50083349F /* Products */,
 				0C0C6717E2B01B092CA7E428 /* Pods */,
@@ -107,13 +115,12 @@
 		98145B751F42BDD50083349F /* catan */ = {
 			isa = PBXGroup;
 			children = (
+				98A5F4EF1F42D98F00E6D781 /* Util */,
 				98A5F4F81F45107700E6D781 /* Model */,
 				985100DA1F4CFA0C009BE875 /* View */,
 				985100DB1F4CFA19009BE875 /* Controller */,
-				98E663551F49229B00455CEB /* Login */,
 				98A5F4F51F449AB000E6D781 /* Service */,
 				98A5F4F41F4439F400E6D781 /* catan.entitlements */,
-				98A5F4EF1F42D98F00E6D781 /* Util */,
 				98145B761F42BDD50083349F /* AppDelegate.swift */,
 				98145B7D1F42BDD50083349F /* Assets.xcassets */,
 				98145B821F42BDD50083349F /* Info.plist */,
@@ -169,15 +176,10 @@
 				98E663531F491AB700455CEB /* User.swift */,
 				985100DC1F4D0022009BE875 /* Post.swift */,
 				985100E01F4D1CBC009BE875 /* Page.swift */,
+				985100E81F4D82BC009BE875 /* Parti.swift */,
+				985100EA1F4D84F1009BE875 /* Group.swift */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		98E663551F49229B00455CEB /* Login */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,6 +234,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 98145B6A1F42BDD50083349F;
 			productRefGroup = 98145B741F42BDD50083349F /* Products */;
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98145B7E1F42BDD50083349F /* Assets.xcassets in Resources */,
+				985100F01F4E9F71009BE875 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +284,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/BonMot/BonMot.framework",
+				"${BUILT_PRODUCTS_DIR}/DateToolsSwift/DateToolsSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -289,6 +294,7 @@
 				"${BUILT_PRODUCTS_DIR}/Gloss/Gloss.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LBTAComponents/LBTAComponents.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -299,6 +305,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BonMot.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DateToolsSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -308,6 +315,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Gloss.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LBTAComponents.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
@@ -346,6 +354,8 @@
 				985100D71F4CF109009BE875 /* DashboardDatasource.swift in Sources */,
 				985100E51F4D27FC009BE875 /* Collection+Extension.swift in Sources */,
 				985100DF1F4D19DC009BE875 /* JSON+extension.swift in Sources */,
+				985100EB1F4D84F1009BE875 /* Group.swift in Sources */,
+				985100E91F4D82BC009BE875 /* Parti.swift in Sources */,
 				985100E11F4D1CBC009BE875 /* Page.swift in Sources */,
 				98E663521F490CE400455CEB /* DashboardController.swift in Sources */,
 				985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */,
@@ -366,11 +376,24 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		985100F21F4E9F71009BE875 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				985100F41F4E9F95009BE875 /* en */,
+				985100F51F4E9FC9009BE875 /* ko */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		98145B831F42BDD50083349F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -421,6 +444,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

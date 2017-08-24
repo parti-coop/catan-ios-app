@@ -12,7 +12,7 @@ import SwiftyJSON
 struct Page<T: JSONDecodable>: JSONDecodable {
     init(json: JSON) throws {
         hasMoreItem = json["has_more_item"].boolValue
-        lastStrokedAt = json["last_stroked_at"].date
+        lastStrokedAt = json["last_stroked_at"].dateTime
         
         guard let itemsJSON = json["items"].array else {
             throw NSError(domain: "xyz.parti", code: 1, userInfo: [NSLocalizedDescriptionKey: "서버 응답에 오류가 있습니다"])
