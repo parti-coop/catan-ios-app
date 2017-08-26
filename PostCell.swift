@@ -139,7 +139,6 @@ class PostCell: DatasourceCell {
     
     static func height(_ post: Post, frame: CGRect) -> CGFloat {
         if let cached = heightCache.object(forKey: NSNumber(value: post.id)) {
-            print("Cached Height : \(post.id)")
             return CGFloat(cached)
         }
         
@@ -177,6 +176,7 @@ class PostCell: DatasourceCell {
         
         let result = partiViewHeight + userViewHeight + postBasicViewsHeight
         heightCache.setObject(NSNumber(value: Float(result)), forKey: NSNumber(value: post.id))
+        
         return result
     }
     

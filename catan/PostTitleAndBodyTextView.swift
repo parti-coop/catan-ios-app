@@ -21,7 +21,7 @@ class PostTitleAndBodyTextView: UITextView {
             if let cached = PostTitleAndBodyTextView.textsCache.object(forKey: NSNumber(value: post.id)) {
                 attributedText = cached
             } else {
-                attributedText = PostTitleAndBodyTextView.makeText(post)
+                attributedText = PostTitleAndBodyTextView.buildText(post)
                 trimText()
             
                 if let attributedText = attributedText {
@@ -36,13 +36,13 @@ class PostTitleAndBodyTextView: UITextView {
         let allRange = layoutManager.glyphRange(for: textContainer)
         
         var ranges = [NSRange]()
-        print(layoutManager.enumerateLineFragments(forGlyphRange: allRange, using: { (lineRect, usedRect, textContainer, lineRange, stop) in
+        layoutManager.enumerateLineFragments(forGlyphRange: allRange, using: { (lineRect, usedRect, textContainer, lineRange, stop) in
             ranges.append(lineRange)
-        }))
+        })
 
         // TODO: 버그가 있는지 체크 필요
         for range in ranges.reversed() {
-            if textStorage.attributedSubstring(from: range).string.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if textStorage.attributedSubstring(from: range).string.isBlank() {
                 textStorage.deleteCharacters(in: range)
             } else {
                 return
@@ -50,15 +50,14 @@ class PostTitleAndBodyTextView: UITextView {
         }
     }
     
-    static fileprivate func makeText(_ post: Post) -> NSAttributedString? {
-        if post.parsedTitle.isEmpty && post.truncatedParsedBody.isEmpty {
+    static fileprivate func buildText(_ post: Post) -> NSAttributedString? {
+        if post.hasNoTitleAndBody() {
             return nil
         }
         
         let postTitleHtml = buildSmartHtmlString(post.parsedTitle, fontSize: titleFontPointSize) ?? ""
-        let postBodyHtml = buildSmartHtmlString(post.truncatedParsedBody, fontSize: bodyFontPointSize) ?? ""
-        
-        print("\(postTitleHtml)\(postBodyHtml)")
+        let postBodyHtmlSource = ( post.truncatedParsedBody.isBlank() ? post.parsedBody : post.truncatedParsedBody )
+        let postBodyHtml = buildSmartHtmlString(postBodyHtmlSource, fontSize: bodyFontPointSize) ?? ""
         if let postTitleAndBodyData = "\(postTitleHtml)\(postBodyHtml)".data(using: String.Encoding.unicode, allowLossyConversion: true) {
             if let result = try? NSMutableAttributedString(data: postTitleAndBodyData,
                 options: [
@@ -134,6 +133,7 @@ class PostTitleAndBodyTextView: UITextView {
             return CGFloat(cached)
         }
         
+        let dummyTextStorage = NSTextStorage(attributedString: attributedText)
         let dummyTextContainer: NSTextContainer = {
             let size = CGSize(width: width, height: .greatestFiniteMagnitude)
             let container = NSTextContainer(size: size)
@@ -141,17 +141,19 @@ class PostTitleAndBodyTextView: UITextView {
             return container
         }()
         let dummyLayoutManager: NSLayoutManager = {
-            let textStorage = NSTextStorage(attributedString: attributedText)
             let layoutManager = NSLayoutManager()
             layoutManager.addTextContainer(dummyTextContainer)
-            textStorage.addLayoutManager(layoutManager)
+            dummyTextStorage.addLayoutManager(layoutManager)
             return layoutManager
         }()
         
+        dummyLayoutManager.glyphRange(for: dummyTextContainer)
         let rect = dummyLayoutManager.usedRect(for: dummyTextContainer)
         var height = rect.size.height
         if height >= 0 {
             height -= redundantBottomPaddingHeight()
+        } else {
+            height = 0
         }
         
         PostTitleAndBodyTextView.heightCache.setObject(NSNumber(value: Float(height)), forKey: NSNumber(value: post.id))
@@ -159,7 +161,11 @@ class PostTitleAndBodyTextView: UITextView {
     }
     
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
-        guard let post = post, !(post.parsedTitle.isEmpty && post.truncatedParsedBody.isEmpty) else {
+        guard let post = post else {
+            return 0
+        }
+        
+        if post.hasNoTitleAndBody() {
             return 0
         }
         
@@ -171,6 +177,6 @@ class PostTitleAndBodyTextView: UITextView {
     
     fileprivate func redundantBottomPaddingHeight() -> CGFloat {
         guard let post = post else { return 0 }
-        return (post.truncatedParsedBody.isEmpty ? (PostTitleAndBodyTextView.titleFontPointSize) : (PostTitleAndBodyTextView.bodyFontPointSize))
+        return (post.parsedBody.isBlank() ? (PostTitleAndBodyTextView.titleFontPointSize) : (PostTitleAndBodyTextView.bodyFontPointSize))
     }
 }

@@ -51,4 +51,8 @@ struct Post: JSONDecodable {
     //FileSource[] file_sources;
     let latestStrokedActivity: String
     let expiredAfter: Int
+    
+    func hasNoTitleAndBody() -> Bool {
+        return parsedTitle.isBlank() && parsedBody.isBlank()
+    }
 }
