@@ -14,6 +14,8 @@ extension UIColor {
     static let app_gray = UIColor.gray
     static let app_light_gray = UIColor(r: 210, g: 210, b: 210)
     static let app_lighter_gray = UIColor(r: 232, g: 236, b: 241)
+    
+    static let app_link = UIColor(r: 6, g: 69, b: 174)
 
     convenience init(netHex:Int) {
         self.init(r: CGFloat((netHex >> 16) & 0xff), g: CGFloat((netHex >> 8) & 0xff), b: CGFloat(netHex & 0xff))

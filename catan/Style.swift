@@ -16,19 +16,24 @@ struct Style {
     }
     
     struct font {
-        static let defaultBold = UIFont.boldSystemFont(ofSize: 14)
-        static let defaultNormal = UIFont.systemFont(ofSize: 14)
-        static let smallNormal = UIFont.systemFont(ofSize: 12)
+        static let defaultBold = UIFont.boldSystemFont(ofSize: 18)
+        static let defaultNormal = UIFont.systemFont(ofSize: 18)
+        static let smallNormal = UIFont.systemFont(ofSize: 16)
     }
     
     struct dimension {
-        static let defaultSpace: CGFloat = 6
-        static let smallSpace: CGFloat = 3
+        static let defaultSpace: CGFloat = 8
+        static let largeSpace: CGFloat = 12
+        static let smallSpace: CGFloat = 4
         static let defaultRadius: CGFloat = 4
-        static let defautLineHeight: CGFloat = 24
-        static let largeLineHeight: CGFloat = 36
-        static let defaultRadious: CGFloat = 5
+        static let defautLineHeight: CGFloat = 36
+        static let largeLineHeight: CGFloat = 50
         static let defaultDividerHeight: CGFloat = 1
+        
+        struct postCell {
+            static let paddingLeft: CGFloat = 16
+            static let paddingRight: CGFloat = 16
+        }
     }
     
     static func image(asLogo imageView: UIImageView) {

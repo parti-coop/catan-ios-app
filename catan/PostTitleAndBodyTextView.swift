@@ -9,7 +9,7 @@
 import UIKit
 
 class PostTitleAndBodyTextView: UITextView {
-    static let heightCache = NSCache<NSNumber, NSNumber>()
+    static let heightCache = HeightCache<NSNumber>()
     static let textsCache = NSCache<NSNumber, NSAttributedString>()
 
     static let titleFontPointSize = CGFloat(18)
@@ -72,7 +72,7 @@ class PostTitleAndBodyTextView: UITextView {
                 paragraphStyle.paragraphSpacing = 0
                 paragraphStyle.paragraphSpacingBefore = 14
                 result.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: textRange)
-                
+             
                 return result
             }
         }
@@ -102,6 +102,7 @@ class PostTitleAndBodyTextView: UITextView {
         isScrollEnabled = false
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
+        linkTextAttributes = [ NSForegroundColorAttributeName: UIColor.app_link, NSUnderlineColorAttributeName: UIColor.clear ]
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -129,8 +130,8 @@ class PostTitleAndBodyTextView: UITextView {
             return 0
         }
         
-        if let cached = PostTitleAndBodyTextView.heightCache.object(forKey: NSNumber(value: post.id)) {
-            return CGFloat(cached)
+        if let cached = PostTitleAndBodyTextView.heightCache.height(forKey: NSNumber(value: post.id), onWidth: width) {
+            return cached
         }
         
         let dummyTextStorage = NSTextStorage(attributedString: attributedText)
@@ -156,7 +157,7 @@ class PostTitleAndBodyTextView: UITextView {
             height = 0
         }
         
-        PostTitleAndBodyTextView.heightCache.setObject(NSNumber(value: Float(height)), forKey: NSNumber(value: post.id))
+        PostTitleAndBodyTextView.heightCache.setHeight(height, forKey: NSNumber(value: post.id), onWidth: width)
         return height
     }
     

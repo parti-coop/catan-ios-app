@@ -40,7 +40,7 @@ class LoginController: UIViewController {
     let facebookSignInButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("페이스북으로 로그인", for: .normal)
-        button.layer.cornerRadius = Style.dimension.defaultRadious
+        button.layer.cornerRadius = Style.dimension.defaultRadius
         button.titleLabel?.font = Style.font.defaultBold
         button.setTitleColor(.white, for: .normal)
         
@@ -55,7 +55,7 @@ class LoginController: UIViewController {
     let twitterSignInButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("트위터로 로그인", for: .normal)
-        button.layer.cornerRadius = Style.dimension.defaultRadious
+        button.layer.cornerRadius = Style.dimension.defaultRadius
         button.titleLabel?.font = Style.font.defaultBold
         button.setTitleColor(.white, for: .normal)
         
@@ -68,7 +68,7 @@ class LoginController: UIViewController {
     let googleSignInButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("구글로 로그인", for: .normal)
-        button.layer.cornerRadius = Style.dimension.defaultRadious
+        button.layer.cornerRadius = Style.dimension.defaultRadius
         button.titleLabel?.font = Style.font.defaultBold
         button.setTitleColor(.white, for: .normal)
         
@@ -81,7 +81,7 @@ class LoginController: UIViewController {
     let emailSignInButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("이메일로 로그인", for: .normal)
-        button.layer.cornerRadius = Style.dimension.defaultRadious
+        button.layer.cornerRadius = Style.dimension.defaultRadius
         button.titleLabel?.font = Style.font.defaultBold
         button.setTitleColor(.white, for: .normal)
         
