@@ -28,6 +28,7 @@ struct Style {
         static let defautLineHeight: CGFloat = 24
         static let largeLineHeight: CGFloat = 36
         static let defaultRadious: CGFloat = 5
+        static let defaultDividerHeight: CGFloat = 1
     }
     
     static func image(asLogo imageView: UIImageView) {

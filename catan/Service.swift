@@ -26,6 +26,7 @@ struct Service {
     
     class JSONError: JSONDecodable {
         required init(json: JSON) throws {
+            //TODO: 오류처리
             print("오류가 발생했습니다")
         }
     }

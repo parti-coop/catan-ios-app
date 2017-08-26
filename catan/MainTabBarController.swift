@@ -34,6 +34,7 @@ class MainTabBarController: UITabBarController {
     
     fileprivate func showLoginView() {
         DispatchQueue.main.async {
+            //TODO: 삭제필요
             if let currentDispatch = OperationQueue.current?.underlyingQueue {
                 print(currentDispatch)
             }
