@@ -16,18 +16,20 @@ struct Style {
     }
     
     struct font {
-        static let defaultBold = UIFont.boldSystemFont(ofSize: 18)
-        static let defaultNormal = UIFont.systemFont(ofSize: 18)
-        static let smallNormal = UIFont.systemFont(ofSize: 16)
+        static let defaultBold = UIFont.boldSystemFont(ofSize: 17)
+        static let defaultNormal = UIFont.systemFont(ofSize: 17)
+        static let smallNormal = UIFont.systemFont(ofSize: 15)
     }
     
     struct dimension {
         static let defaultSpace: CGFloat = 8
         static let largeSpace: CGFloat = 12
         static let smallSpace: CGFloat = 4
+        static let xsmallSpace: CGFloat = 2
         static let defaultRadius: CGFloat = 4
-        static let defautLineHeight: CGFloat = 36
-        static let largeLineHeight: CGFloat = 50
+        static let defautLineHeight: CGFloat = font.defaultNormal.pointSize + dimension.smallSpace
+        static let largeLineHeight: CGFloat = 42
+        static let smallLineHeight: CGFloat = font.smallNormal.pointSize + dimension.smallSpace
         static let defaultDividerHeight: CGFloat = 1
         
         struct postCell {

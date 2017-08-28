@@ -8,23 +8,23 @@
 
 import UIKit
 
-class HeightCache<KeyType : AnyObject> {
-    var caches = [CGFloat : NSCache<KeyType, NSNumber>]()
+class HeightCache {
+    var caches = [CGFloat : NSCache<NSString, NSNumber>]()
     
-    func height(forKey: KeyType, onWidth width: CGFloat) -> CGFloat? {
-        guard let cache = caches[width], let number = cache.object(forKey: forKey) else { return nil }
+    func height(forKey key: Int, onWidth width: CGFloat) -> CGFloat? {
+        guard let cache = caches[width], let number = cache.object(forKey: NSString(string: "\(key)")) else { return nil }
         return CGFloat(number)
     }
     
-    func setHeight(_ height: CGFloat, forKey key: KeyType, onWidth width: CGFloat) {
+    func setHeight(_ height: CGFloat, forKey key: Int, onWidth width: CGFloat) {
         if caches[width] == nil {
-            caches[width] = NSCache<KeyType, NSNumber>()
+            caches[width] = NSCache<NSString, NSNumber>()
         }
-        caches[height]?.setObject(NSNumber(value: Float(height)), forKey: key)
+        caches[width]?.setObject(NSNumber(value: Float(height)), forKey: NSString(string: "\(key)"))
     }
     
-    func purgeHeight(forKey key: KeyType, onWidth width: CGFloat) {
+    func purgeHeight(forKey key: Int, onWidth width: CGFloat) {
         guard let cache = caches[width] else { return }
-        cache.removeObject(forKey: key)
+        cache.removeObject(forKey: NSString(string: "\(key)"))
     }
 }

@@ -55,4 +55,8 @@ struct Post: JSONDecodable {
     func hasNoTitleAndBody() -> Bool {
         return parsedTitle.isBlank() && parsedBody.isBlank()
     }
+    
+    func hasNoComments() -> Bool {
+        return commentsCount <= 0
+    }
 }

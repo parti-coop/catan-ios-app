@@ -11,7 +11,7 @@ import Kingfisher
 import DateToolsSwift
 
 class PostCell: DatasourceCell {
-    static let heightCache = HeightCache<NSNumber>()
+    static let heightCache = HeightCache()
     
     static let postTitleTextViewFontPointSize = CGFloat(18)
     static let postBodyTextViewFontPointSize = Style.font.defaultNormal.pointSize
@@ -30,6 +30,7 @@ class PostCell: DatasourceCell {
             createdAtLabel.text = PostCell.buildCreatedAtText(post)
             
             postTitleAndBodyTextView.post = post
+            latestCommentsView.post = post
         }
     }
     
@@ -57,6 +58,7 @@ class PostCell: DatasourceCell {
         label.font = Style.font.defaultNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        label.backgroundColor = .blue
         return label
     }()
     
@@ -80,14 +82,19 @@ class PostCell: DatasourceCell {
         let label = CatanLabel()
         label.font = Style.font.smallNormal
         label.textColor = UIColor.app_gray
-//        label.backgroundColor = .yellow
         return label
     }()
     
     let postTitleAndBodyTextView: PostTitleAndBodyTextView = {
         let textView = PostTitleAndBodyTextView()
-//        textView.backgroundColor = .green
+        textView.backgroundColor = .red
         return textView
+    }()
+
+    let latestCommentsView: LatestCommentsView = {
+        let cView = LatestCommentsView()
+        cView.backgroundColor = .red
+        return cView
     }()
     
     override func setupViews() {
@@ -98,6 +105,7 @@ class PostCell: DatasourceCell {
         setupPartiViews()
         setupUserViews()
         setupPostBasicViews()
+        setupLatestCommentsViews()
     }
     
     fileprivate func setupPartiViews() {
@@ -109,8 +117,7 @@ class PostCell: DatasourceCell {
         partiLogoImageView.anchor(baseTopAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: Style.dimension.defaultSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.defautLineHeight, heightConstant: Style.dimension.defautLineHeight)
         
         partiTitleLabel.anchor(baseTopAnchor, left: partiLogoImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.defaultSpace, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingLeft)
-        
-        partiTitleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: Style.dimension.defautLineHeight).isActive = true
+        partiTitleLabel.greaterThanOrEqualToHeight(Style.dimension.defautLineHeight)
         
         partiTitleDividerView.backgroundColor = UIColor.app_light_gray
         addSubview(partiTitleDividerView)
@@ -127,18 +134,28 @@ class PostCell: DatasourceCell {
         userImageView.anchor(baseTopAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: Style.dimension.defaultSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.largeLineHeight, heightConstant: Style.dimension.largeLineHeight)
         
         userNicknameLabel.anchor(baseTopAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.defaultSpace, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingRight, widthConstant: 0)
+        userNicknameLabel.greaterThanOrEqualToHeight(Style.dimension.defautLineHeight)
         
-        createdAtLabel.anchor(userNicknameLabel.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.smallSpace, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingLeft, widthConstant: 0)
+        createdAtLabel.anchor(userNicknameLabel.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.xsmallSpace, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingLeft, widthConstant: 0)
+        createdAtLabel.greaterThanOrEqualToHeight(Style.dimension.smallLineHeight)
     }
     
     fileprivate func setupPostBasicViews() {
         addSubview(postTitleAndBodyTextView)
         
-        postTitleAndBodyTextView.anchor(createdAtLabel.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.largeSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingRight)
+        postTitleAndBodyTextView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.largeSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingRight)
+        postTitleAndBodyTextView.collapsable(createdAtLabel.bottomAnchor, topConstant: Style.dimension.defaultSpace)
+    }
+    
+    fileprivate func setupLatestCommentsViews() {
+        addSubview(latestCommentsView)
+        
+        latestCommentsView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
+        latestCommentsView.collapsable(postTitleAndBodyTextView.bottomAnchor, topConstant: Style.dimension.defaultSpace)
     }
     
     static func height(_ post: Post, frame: CGRect) -> CGFloat {
-        if let cached = heightCache.height(forKey: NSNumber(value: post.id), onWidth: frame.width) {
+        if let cached = heightCache.height(forKey: post.id, onWidth: frame.width) {
             return cached
         }
         
@@ -149,7 +166,7 @@ class PostCell: DatasourceCell {
             - partiLogoImageViewWidth
             - Style.dimension.defaultSpace
             - Style.dimension.postCell.paddingRight
-        let partiTitleLabelHeight = CatanLabel.estimateHeight(text: PostCell.buildPartiTitleText(post), width: partiTitleLabelWidth, of: PostCell.prototype.partiTitleLabel)
+        let partiTitleLabelHeight = CatanLabel.estimateHeight(text: PostCell.buildPartiTitleText(post), width: partiTitleLabelWidth, of: PostCell.prototype.partiTitleLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
         let partiViewHeight = Style.dimension.defaultSpace
             + max(partiTitleLabelHeight, Style.dimension.defautLineHeight)
             + Style.dimension.defaultSpace
@@ -163,19 +180,23 @@ class PostCell: DatasourceCell {
             - userImageViewWidth
             - Style.dimension.defaultSpace
             - Style.dimension.postCell.paddingRight
-        let userNickNameLabelHeight = CatanLabel.estimateHeight(text: post.user.nickname, width: userNickNameLabelWidth, of: PostCell.prototype.userNicknameLabel)
-        let createdAtLabelHeight = CatanLabel.estimateHeight(text: PostCell.buildCreatedAtText(post), width: userNickNameLabelWidth, of: PostCell.prototype.createdAtLabel)
+        let userNickNameLabelHeight = CatanLabel.estimateHeight(text: post.user.nickname, width: userNickNameLabelWidth, of: PostCell.prototype.userNicknameLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
+        let createdAtLabelHeight = CatanLabel.estimateHeight(text: PostCell.buildCreatedAtText(post), width: userNickNameLabelWidth, of: PostCell.prototype.createdAtLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
         let userViewHeight = Style.dimension.defaultSpace
             + max(userImageViewHeight,
                 userNickNameLabelHeight
-                + Style.dimension.smallSpace
+                + Style.dimension.xsmallSpace
                 + createdAtLabelHeight)
         
         // postBasicViews Height
         let postBasicViewsHeight = heightPostTitleAndBodyViews(post, frame: frame)
         
-        let result = partiViewHeight + userViewHeight + postBasicViewsHeight
-        heightCache.setHeight(result, forKey: NSNumber(value: post.id), onWidth: frame.width)
+        // latestCommentsViewsHeight Height
+        let latestCommentsViewsHeight = heightLatestCommentsViews(post, frame: frame)
+        
+        let result = partiViewHeight + userViewHeight + postBasicViewsHeight - 3
+        + latestCommentsViewsHeight
+        heightCache.setHeight(result, forKey: post.id, onWidth: frame.width)
         
         return result
     }
@@ -190,5 +211,10 @@ class PostCell: DatasourceCell {
         return frame.width
             - Style.dimension.postCell.paddingLeft
             - Style.dimension.postCell.paddingRight
+    }
+    
+    static fileprivate func heightLatestCommentsViews(_ post: Post, frame: CGRect) -> CGFloat {
+        let latestCommentsViewHeight = LatestCommentsView.estimateHeight(post: post, width: frame.width)
+        return (latestCommentsViewHeight == 0 ? 0 : Style.dimension.defaultSpace + latestCommentsViewHeight)
     }
 }

@@ -9,10 +9,10 @@
 import UIKit
 
 class PostTitleAndBodyTextView: UITextView {
-    static let heightCache = HeightCache<NSNumber>()
+    static let heightCache = HeightCache()
     static let textsCache = NSCache<NSNumber, NSAttributedString>()
 
-    static let titleFontPointSize = CGFloat(18)
+    static let titleFontPointSize = CGFloat(26)
     static let bodyFontPointSize = Style.font.defaultNormal.pointSize
     
     var post: Post? {
@@ -45,7 +45,7 @@ class PostTitleAndBodyTextView: UITextView {
             if textStorage.attributedSubstring(from: range).string.isBlank() {
                 textStorage.deleteCharacters(in: range)
             } else {
-                return
+                break
             }
         }
     }
@@ -95,6 +95,7 @@ class PostTitleAndBodyTextView: UITextView {
         return "<div style=\"font-size: \(fontSize)px;\">\(parsedText)</div>"
     }
     
+    
     public init() {
         super.init(frame: .zero, textContainer: nil)
         backgroundColor = .clear
@@ -122,58 +123,34 @@ class PostTitleAndBodyTextView: UITextView {
         var intrinsicContentSize = layoutManager.boundingRect(forGlyphRange: layoutManager.glyphRange(for: textContainer), in: textContainer).size
         intrinsicContentSize.width = UIViewNoIntrinsicMetric
         intrinsicContentSize.height = estimateHeight(width: frame.width)
+        
+        collapse(out: intrinsicContentSize.height)
         return intrinsicContentSize
     }
 
-    fileprivate func estimateHeight(width: CGFloat) -> CGFloat {
-        guard let attributedText = attributedText, let post = post else {
-            return 0
-        }
+    func estimateHeight(width: CGFloat) -> CGFloat {
+        guard let attributedText = attributedText, let post = post else { return 0 }
+        if post.hasNoTitleAndBody() { return 0 }
         
-        if let cached = PostTitleAndBodyTextView.heightCache.height(forKey: NSNumber(value: post.id), onWidth: width) {
+        if let cached = PostTitleAndBodyTextView.heightCache.height(forKey: post.id, onWidth: width) {
             return cached
         }
         
-        let dummyTextStorage = NSTextStorage(attributedString: attributedText)
-        let dummyTextContainer: NSTextContainer = {
-            let size = CGSize(width: width, height: .greatestFiniteMagnitude)
-            let container = NSTextContainer(size: size)
-            container.lineFragmentPadding = 0
-            return container
-        }()
-        let dummyLayoutManager: NSLayoutManager = {
-            let layoutManager = NSLayoutManager()
-            layoutManager.addTextContainer(dummyTextContainer)
-            dummyTextStorage.addLayoutManager(layoutManager)
-            return layoutManager
-        }()
-        
-        dummyLayoutManager.glyphRange(for: dummyTextContainer)
-        let rect = dummyLayoutManager.usedRect(for: dummyTextContainer)
-        var height = rect.size.height
+        var height = attributedText.heightWithConstrainedWidth(width: width)
         if height >= 0 {
             height -= redundantBottomPaddingHeight()
         } else {
             height = 0
         }
         
-        PostTitleAndBodyTextView.heightCache.setHeight(height, forKey: NSNumber(value: post.id), onWidth: width)
+        PostTitleAndBodyTextView.heightCache.setHeight(height, forKey: post.id, onWidth: width)
         return height
     }
     
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
-        guard let post = post else {
-            return 0
-        }
-        
-        if post.hasNoTitleAndBody() {
-            return 0
-        }
-        
-        let dummayTextView = PostTitleAndBodyTextView()
-        dummayTextView.post = post
-        
-        return dummayTextView.estimateHeight(width: width)
+        let dummyTextView = PostTitleAndBodyTextView()
+        dummyTextView.post = post
+        return dummyTextView.estimateHeight(width: width)
     }
     
     fileprivate func redundantBottomPaddingHeight() -> CGFloat {
