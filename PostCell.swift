@@ -150,8 +150,7 @@ class PostCell: DatasourceCell {
     fileprivate func setupLatestCommentsViews() {
         addSubview(latestCommentsView)
         
-        latestCommentsView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
-        latestCommentsView.collapsable(postTitleAndBodyTextView.bottomAnchor, topConstant: Style.dimension.defaultSpace)
+        latestCommentsView.anchor(postTitleAndBodyTextView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
     }
     
     static func height(_ post: Post, frame: CGRect) -> CGFloat {

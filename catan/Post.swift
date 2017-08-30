@@ -25,6 +25,12 @@ struct Post: JSONDecodable {
         commentsCount = json["comments_count"].intValue
         latestStrokedActivity = json["latest_stroked_activity"].stringValue
         expiredAfter = json["expired_after"].intValue
+        
+        if let commentsJSON = json["latest_comments"].array {
+            latestComments = try commentsJSON.decode()
+        } else {
+            latestComments = [Comment]()
+        }
     }
 
     
@@ -41,7 +47,7 @@ struct Post: JSONDecodable {
     let isUpVotedByMe: Bool
     let upvotesCount: Int
     let commentsCount: Int
-    //Comment[] latest_comments;
+    let latestComments: [Comment]
     //Comment sticky_comment;
     //LinkSource link_source;
     //Poll poll;

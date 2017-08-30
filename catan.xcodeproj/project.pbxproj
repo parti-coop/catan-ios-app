@@ -28,6 +28,7 @@
 		985101051F52581C009BE875 /* CollapsibleConstrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101041F52581C009BE875 /* CollapsibleConstrain.swift */; };
 		985101071F52FFF2009BE875 /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101061F52FFF2009BE875 /* NSAttributedString+Extension.swift */; };
 		985101091F539364009BE875 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101081F539364009BE875 /* UIView+Extension.swift */; };
+		9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989798591F54D8BE00A5F67B /* Comment.swift */; };
 		98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */; };
 		98A5F4F31F440A3600E6D781 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F21F440A3600E6D781 /* Style.swift */; };
 		98A5F4F71F449AD600E6D781 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F61F449AD600E6D781 /* Service.swift */; };
@@ -64,6 +65,7 @@
 		985101041F52581C009BE875 /* CollapsibleConstrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleConstrain.swift; sourceTree = "<group>"; };
 		985101061F52FFF2009BE875 /* NSAttributedString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extension.swift"; sourceTree = "<group>"; };
 		985101081F539364009BE875 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		989798591F54D8BE00A5F67B /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		98A5F4F21F440A3600E6D781 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		98A5F4F41F4439F400E6D781 /* catan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = catan.entitlements; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				985100E01F4D1CBC009BE875 /* Page.swift */,
 				985100E81F4D82BC009BE875 /* Parti.swift */,
 				985100EA1F4D84F1009BE875 /* Group.swift */,
+				989798591F54D8BE00A5F67B /* Comment.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				98E663521F490CE400455CEB /* DashboardController.swift in Sources */,
 				985101091F539364009BE875 /* UIView+Extension.swift in Sources */,
 				985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */,
+				9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */,
 				985100FB1F4FCF8C009BE875 /* CatanLabel.swift in Sources */,
 				98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */,
 				98A5F4F71F449AD600E6D781 /* Service.swift in Sources */,

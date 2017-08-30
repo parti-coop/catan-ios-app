@@ -10,17 +10,47 @@ import UIKit
 
 class LatestCommentsView: UIView {
     static let heightCache = HeightCache()
+    var commentViews = [UIView]()
   
     var post: Post? {
         didSet {
-            //guard let post = post else { return }
-        
-            collapse(out: estimateHeight(width: frame.width))
+            for commentView in commentViews {
+                commentView.removeFromSuperview()
+            }
+            commentViews.removeAll()
+            
+            if let post = post {
+                setupCommentViews(post: post)
+            }
+            invalidateIntrinsicContentSize()
         }
+    }
+    
+    private func setupCommentViews(post: Post) {
+        var currentTopAnchor = topAnchor
+        for comment in post.latestComments {
+            let commentView = UIView()
+            commentView.backgroundColor = [ UIColor.red, UIColor.yellow, UIColor.blue, UIColor.green ][comment.id % 4]
+            addSubview(commentView)
+            
+            commentView.anchor(currentTopAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, heightConstant: 100)
+            
+            currentTopAnchor = commentView.bottomAnchor
+            commentViews.append(commentView)
+        }
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        guard let post = post, !post.hasNoComments() else { return CGSize.zero }
+        return CGSize(width: frame.width, height: CGFloat(100 * post.latestComments.count))
     }
     
     public init() {
         super.init(frame: .zero)
+    }
+    
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -31,13 +61,12 @@ class LatestCommentsView: UIView {
         guard let post = post else { return 0 }
         if post.hasNoComments() { return 0 }
         
-        return 200
+        return intrinsicContentSize.height
     }
     
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
-        let dummyView = LatestCommentsView()
+        let dummyView = LatestCommentsView(frame: CGRect(x: 0, y: 0, width: width, height: .greatestFiniteMagnitude))
         dummyView.post = post
-        
-        return dummyView.estimateHeight(width: width)
+        return dummyView.intrinsicContentSize.height
     }
 }
