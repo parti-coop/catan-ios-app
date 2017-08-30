@@ -29,7 +29,7 @@ class PostCell: DatasourceCell {
             userNicknameLabel.text = post.user.nickname
             createdAtLabel.text = PostCell.buildCreatedAtText(post)
             
-            postTitleAndBodyTextView.post = post
+            postTitleAndBodyView.post = post
             latestCommentsView.post = post
         }
     }
@@ -85,8 +85,8 @@ class PostCell: DatasourceCell {
         return label
     }()
     
-    let postTitleAndBodyTextView: PostTitleAndBodyTextView = {
-        let textView = PostTitleAndBodyTextView()
+    let postTitleAndBodyView: PostTitleAndBodyView = {
+        let textView = PostTitleAndBodyView()
         textView.backgroundColor = .red
         return textView
     }()
@@ -141,16 +141,16 @@ class PostCell: DatasourceCell {
     }
     
     fileprivate func setupPostBasicViews() {
-        addSubview(postTitleAndBodyTextView)
+        addSubview(postTitleAndBodyView)
         
-        postTitleAndBodyTextView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.largeSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingRight)
-        postTitleAndBodyTextView.collapsable(createdAtLabel.bottomAnchor, topConstant: Style.dimension.defaultSpace)
+        postTitleAndBodyView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.largeSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingRight)
+        postTitleAndBodyView.collapsable(createdAtLabel.bottomAnchor, topConstant: Style.dimension.defaultSpace)
     }
     
     fileprivate func setupLatestCommentsViews() {
         addSubview(latestCommentsView)
         
-        latestCommentsView.anchor(postTitleAndBodyTextView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
+        latestCommentsView.anchor(postTitleAndBodyView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
     }
     
     static func height(_ post: Post, frame: CGRect) -> CGFloat {
@@ -201,9 +201,9 @@ class PostCell: DatasourceCell {
     }
     
     static fileprivate func heightPostTitleAndBodyViews(_ post: Post, frame: CGRect) -> CGFloat {
-        let postTitleAndBodyTextViewWidth = widthPostTitleAndBodyViews(frame: frame)
-        let postTitleAndBodyTextViewHeight = PostTitleAndBodyTextView.estimateHeight(post: post, width: postTitleAndBodyTextViewWidth)
-        return (postTitleAndBodyTextViewHeight == 0 ? 0 : Style.dimension.defaultSpace + postTitleAndBodyTextViewHeight)
+        let postTitleAndBodyViewWidth = widthPostTitleAndBodyViews(frame: frame)
+        let postTitleAndBodyViewHeight = PostTitleAndBodyView.estimateHeight(post: post, width: postTitleAndBodyViewWidth)
+        return (postTitleAndBodyViewHeight == 0 ? 0 : Style.dimension.defaultSpace + postTitleAndBodyViewHeight)
     }
     
     static fileprivate func widthPostTitleAndBodyViews(frame: CGRect) -> CGFloat {

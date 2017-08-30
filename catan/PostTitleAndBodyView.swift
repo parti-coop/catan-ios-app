@@ -1,5 +1,5 @@
 //
-//  PostTitleAndBodyTextView.swift
+//  PostTitleAndBodyView.swift
 //  catan
 //
 //  Created by Youngmin Kim on 2017. 8. 25..
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostTitleAndBodyTextView: UITextView {
+class PostTitleAndBodyView: UITextView {
     static let heightCache = HeightCache()
     static let textsCache = NSCache<NSNumber, NSAttributedString>()
 
@@ -18,14 +18,14 @@ class PostTitleAndBodyTextView: UITextView {
     var post: Post? {
         didSet {
             guard let post = post else { return }
-            if let cached = PostTitleAndBodyTextView.textsCache.object(forKey: NSNumber(value: post.id)) {
+            if let cached = PostTitleAndBodyView.textsCache.object(forKey: NSNumber(value: post.id)) {
                 attributedText = cached
             } else {
-                attributedText = PostTitleAndBodyTextView.buildText(post)
+                attributedText = PostTitleAndBodyView.buildText(post)
                 trimText()
             
                 if let attributedText = attributedText {
-                    PostTitleAndBodyTextView.textsCache.setObject(attributedText, forKey: NSNumber(value: post.id))
+                    PostTitleAndBodyView.textsCache.setObject(attributedText, forKey: NSNumber(value: post.id))
                 }
             }
             setNeedsLayout()
@@ -132,7 +132,7 @@ class PostTitleAndBodyTextView: UITextView {
         guard let attributedText = attributedText, let post = post else { return 0 }
         if post.hasNoTitleAndBody() { return 0 }
         
-        if let cached = PostTitleAndBodyTextView.heightCache.height(forKey: post.id, onWidth: width) {
+        if let cached = PostTitleAndBodyView.heightCache.height(forKey: post.id, onWidth: width) {
             return cached
         }
         
@@ -143,18 +143,18 @@ class PostTitleAndBodyTextView: UITextView {
             height = 0
         }
         
-        PostTitleAndBodyTextView.heightCache.setHeight(height, forKey: post.id, onWidth: width)
+        PostTitleAndBodyView.heightCache.setHeight(height, forKey: post.id, onWidth: width)
         return height
     }
     
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
-        let dummyTextView = PostTitleAndBodyTextView()
+        let dummyTextView = PostTitleAndBodyView()
         dummyTextView.post = post
         return dummyTextView.estimateHeight(width: width)
     }
     
     fileprivate func redundantBottomPaddingHeight() -> CGFloat {
         guard let post = post else { return 0 }
-        return (post.parsedBody.isBlank() ? (PostTitleAndBodyTextView.titleFontPointSize) : (PostTitleAndBodyTextView.bodyFontPointSize))
+        return (post.parsedBody.isBlank() ? (PostTitleAndBodyView.titleFontPointSize) : (PostTitleAndBodyView.bodyFontPointSize))
     }
 }

@@ -21,7 +21,7 @@
 		985100EB1F4D84F1009BE875 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100EA1F4D84F1009BE875 /* Group.swift */; };
 		985100F01F4E9F71009BE875 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 985100F21F4E9F71009BE875 /* Localizable.strings */; };
 		985100FB1F4FCF8C009BE875 /* CatanLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100FA1F4FCF8C009BE875 /* CatanLabel.swift */; };
-		985100FD1F501B2F009BE875 /* PostTitleAndBodyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100FC1F501B2F009BE875 /* PostTitleAndBodyTextView.swift */; };
+		985100FD1F501B2F009BE875 /* PostTitleAndBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */; };
 		985100FF1F515CBA009BE875 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100FE1F515CBA009BE875 /* String.swift */; };
 		985101011F517A6C009BE875 /* HeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101001F517A6C009BE875 /* HeightCache.swift */; };
 		985101031F5183B7009BE875 /* LatestCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101021F5183B7009BE875 /* LatestCommentsView.swift */; };
@@ -58,7 +58,7 @@
 		985100F41F4E9F95009BE875 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		985100F51F4E9FC9009BE875 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		985100FA1F4FCF8C009BE875 /* CatanLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatanLabel.swift; sourceTree = "<group>"; };
-		985100FC1F501B2F009BE875 /* PostTitleAndBodyTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTitleAndBodyTextView.swift; sourceTree = "<group>"; };
+		985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTitleAndBodyView.swift; sourceTree = "<group>"; };
 		985100FE1F515CBA009BE875 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		985101001F517A6C009BE875 /* HeightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightCache.swift; sourceTree = "<group>"; };
 		985101021F5183B7009BE875 /* LatestCommentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestCommentsView.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 				985100D81F4CF3A2009BE875 /* PostCell.swift */,
 				985100E61F4D6C1E009BE875 /* IndicatorCell.swift */,
 				985100FA1F4FCF8C009BE875 /* CatanLabel.swift */,
-				985100FC1F501B2F009BE875 /* PostTitleAndBodyTextView.swift */,
+				985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */,
 				985101021F5183B7009BE875 /* LatestCommentsView.swift */,
 			);
 			name = View;
@@ -395,7 +395,7 @@
 				98A5F4F71F449AD600E6D781 /* Service.swift in Sources */,
 				985100DD1F4D0022009BE875 /* Post.swift in Sources */,
 				985101051F52581C009BE875 /* CollapsibleConstrain.swift in Sources */,
-				985100FD1F501B2F009BE875 /* PostTitleAndBodyTextView.swift in Sources */,
+				985100FD1F501B2F009BE875 /* PostTitleAndBodyView.swift in Sources */,
 				98A5F4FC1F46642000E6D781 /* MainTabBarController.swift in Sources */,
 				98E663541F491AB700455CEB /* User.swift in Sources */,
 				985101071F52FFF2009BE875 /* NSAttributedString+Extension.swift in Sources */,
