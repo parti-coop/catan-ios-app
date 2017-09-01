@@ -36,6 +36,11 @@ struct Style {
             static let paddingLeft: CGFloat = 16
             static let paddingRight: CGFloat = 16
         }
+        struct commentView {
+            static let paddingLeft: CGFloat = 16
+            static let paddingRight: CGFloat = 16
+            static let userImage: CGFloat = 28
+        }
     }
     
     static func image(asLogo imageView: UIImageView) {

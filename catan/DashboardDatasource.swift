@@ -18,7 +18,7 @@ protocol DashboardDatasourceDelegate: NSObjectProtocol {
 class DashboardDatasource: Datasource {
     static let POST_SECTION = 0
     static let BOTTOM_INDICATOR_SECTION = 1
-    
+
     var posts = [Post]()
     var isFinishedPagination = false
     var isLoadingMore = false
@@ -72,11 +72,24 @@ class DashboardDatasource: Datasource {
                 return
             }
             
-            guard let page = page else { return }
-            self.posts += page.items
-            self.isFinishedPagination = !page.hasMoreItem
-            self.isLoadingMore = false
-            self.controller?.reloadData()
+            guard var page = page else { return }
+            
+            DispatchQueue.main.async() {
+                for (index, _) in page.items.enumerated() {
+                    var post = page.items[index]
+                    post.titleAndBodyAttributedText = PostTitleAndBodyView.buildText(post)
+                    for (commentIndex, _) in page.items[index].latestComments.enumerated() {
+                        var comment = post.latestComments[commentIndex]
+                        comment.bodyAttributedText = CommentBodyView.buildBodyText(comment)
+                        post.latestComments[commentIndex] = comment
+                    }
+                    page.items[index] = post
+                }
+                self.posts += page.items
+                self.isFinishedPagination = !page.hasMoreItem
+                self.isLoadingMore = false
+                self.controller?.reloadData()
+            }
         }
     }
 }

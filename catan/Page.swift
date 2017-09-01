@@ -23,5 +23,5 @@ struct Page<T: JSONDecodable>: JSONDecodable {
     
     let hasMoreItem: Bool
     let lastStrokedAt: Date?
-    let items: [T]
+    var items: [T]
 }

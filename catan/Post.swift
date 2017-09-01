@@ -32,7 +32,6 @@ struct Post: JSONDecodable {
             latestComments = [Comment]()
         }
     }
-
     
     // TODO: 연결된 모델을 만듭니다
     let id: Int
@@ -47,7 +46,7 @@ struct Post: JSONDecodable {
     let isUpVotedByMe: Bool
     let upvotesCount: Int
     let commentsCount: Int
-    let latestComments: [Comment]
+    var latestComments: [Comment]
     //Comment sticky_comment;
     //LinkSource link_source;
     //Poll poll;
@@ -57,6 +56,8 @@ struct Post: JSONDecodable {
     //FileSource[] file_sources;
     let latestStrokedActivity: String
     let expiredAfter: Int
+    
+    var titleAndBodyAttributedText: NSAttributedString?
     
     func hasNoTitleAndBody() -> Bool {
         return parsedTitle.isBlank() && parsedBody.isBlank()

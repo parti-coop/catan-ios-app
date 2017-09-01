@@ -31,6 +31,8 @@ class PostCell: DatasourceCell {
             
             postTitleAndBodyView.post = post
             latestCommentsView.post = post
+            
+            setNeedsLayout()
         }
     }
     
@@ -39,12 +41,11 @@ class PostCell: DatasourceCell {
         if !post.parti.group.isIndie() {
             partiTitle += " < \(post.parti.group.title)"
         }
-        
         return partiTitle
     }
     
     static fileprivate func buildCreatedAtText(_ post: Post) -> String {
-        return post.createdAt?.timeAgoSinceNow ?? ""
+        return post.createdAt?.timeAgoSinceNowApproximately ?? ""
     }
     
     let partiLogoImageView: UIImageView = {
@@ -58,7 +59,7 @@ class PostCell: DatasourceCell {
         label.font = Style.font.defaultNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.backgroundColor = .blue
+        label.textColor = .brand_primary
         return label
     }()
     
@@ -87,14 +88,13 @@ class PostCell: DatasourceCell {
     
     let postTitleAndBodyView: PostTitleAndBodyView = {
         let textView = PostTitleAndBodyView()
-        textView.backgroundColor = .red
         return textView
     }()
 
     let latestCommentsView: LatestCommentsView = {
-        let cView = LatestCommentsView()
-        cView.backgroundColor = .red
-        return cView
+        let view = LatestCommentsView()
+        view.backgroundColor = UIColor.app_lighter_gray
+        return view
     }()
     
     override func setupViews() {
@@ -143,14 +143,17 @@ class PostCell: DatasourceCell {
     fileprivate func setupPostBasicViews() {
         addSubview(postTitleAndBodyView)
         
-        postTitleAndBodyView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.largeSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingRight)
-        postTitleAndBodyView.collapsable(createdAtLabel.bottomAnchor, topConstant: Style.dimension.defaultSpace)
+        postTitleAndBodyView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingRight)
+        postTitleAndBodyView.forceWidth = PostCell.widthPostTitleAndBodyViews(frame: frame)
+        postTitleAndBodyView.anchorCollapsibleTop(createdAtLabel.bottomAnchor, topConstant: Style.dimension.defaultSpace)
     }
     
     fileprivate func setupLatestCommentsViews() {
         addSubview(latestCommentsView)
         
-        latestCommentsView.anchor(postTitleAndBodyView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
+        latestCommentsView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
+        latestCommentsView.forceWidth = frame.width
+        latestCommentsView.anchorCollapsibleTop(postTitleAndBodyView.bottomAnchor, topConstant: Style.dimension.defaultSpace)
     }
     
     static func height(_ post: Post, frame: CGRect) -> CGFloat {
@@ -192,7 +195,6 @@ class PostCell: DatasourceCell {
         
         // latestCommentsViewsHeight Height
         let latestCommentsViewsHeight = heightLatestCommentsViews(post, frame: frame)
-        
         let result = partiViewHeight + userViewHeight + postBasicViewsHeight - 3
         + latestCommentsViewsHeight
         heightCache.setHeight(result, forKey: post.id, onWidth: frame.width)

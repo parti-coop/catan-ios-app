@@ -35,4 +35,6 @@ struct Comment: JSONDecodable {
     let isBlinded: Bool
     let choice: String
     let isDestroyable: Bool
+    
+    var bodyAttributedText: NSAttributedString?
 }

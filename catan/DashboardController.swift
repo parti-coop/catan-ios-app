@@ -19,7 +19,7 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.backgroundColor = UIColor.app_lighter_gray
+        collectionView?.backgroundColor = UIColor.white
         
         navigationItem.title = "내 피드"
         setupLogOutButton()
@@ -54,6 +54,7 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate {
     
     func reloadData() {
         self.collectionView?.reloadData()
+        collectionView?.backgroundColor = UIColor.app_light_gray
     }
     
     // 로그아웃 - 시작

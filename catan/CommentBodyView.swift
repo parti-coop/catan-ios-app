@@ -7,62 +7,58 @@
 //
 
 import UIKit
+import BonMot
 
-class PostTitleAndBodyView: UITextView {
+class CommentBodyView: UITextView {
     static let heightCache = HeightCache()
     var forceWidth = CGFloat(0) {
         didSet {
-            if post != nil {
+            if comment != nil {
                 fatalError("데이터가 지정되기 전에 폭을 설정해야 합니다")
             }
         }
     }
-    var collapsibleTopConstraint: CollapsibleTopConstraint?
     
-    static let titleFontPointSize = CGFloat(26)
     static let bodyFontPointSize = Style.font.defaultNormal.pointSize
     
-    var post: Post? {
+    var comment: Comment? {
         didSet {
-            if let post = post, let attributedText = post.titleAndBodyAttributedText {
+            if let comment = comment, let attributedText = comment.bodyAttributedText {
                 self.attributedText = attributedText
             } else{
                 self.attributedText = nil
             }
-            let height = PostTitleAndBodyView.estimateHeight(post: post, width: forceWidth)
-            collapsibleTopConstraint?.adjustConstant(height: height)
             setNeedsLayout()
         }
     }
-
-    static func buildText(_ post: Post) -> NSAttributedString? {
-        if post.hasNoTitleAndBody() {
-            return nil
-        }
-        
-        let postTitleHtml = buildSmartHtmlString(post.parsedTitle, fontSize: titleFontPointSize) ?? ""
-        let postBodyHtmlSource = ( post.truncatedParsedBody.isBlank() ? post.parsedBody : post.truncatedParsedBody )
-        let postBodyHtml = buildSmartHtmlString(postBodyHtmlSource, fontSize: bodyFontPointSize) ?? ""
-        if let postTitleAndBodyData = "\(postTitleHtml)\(postBodyHtml)".data(using: String.Encoding.unicode, allowLossyConversion: true) {
-            if let result = try? NSMutableAttributedString(data: postTitleAndBodyData,
-                options: [
-                    NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                    "NSOriginalFont": Style.font.defaultNormal,
-                    NSFontAttributeName: Style.font.defaultNormal
-                ],
-                documentAttributes: nil) {
+    
+    static func buildBodyText(_ comment: Comment) -> NSAttributedString? {
+        let commentBodyHtml = buildSmartHtmlString(comment.body, fontSize: CommentView.bodyFontPointSize) ?? ""
+        if let commentBodyData = commentBodyHtml.data(using: String.Encoding.unicode, allowLossyConversion: true) {
+            if var commentBodyText = try? NSMutableAttributedString(data: commentBodyData,
+                                                           options: [
+                                                            NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                            "NSOriginalFont": Style.font.defaultNormal,
+                                                            NSFontAttributeName: Style.font.defaultNormal ],
+                                                           documentAttributes: nil) {
+                
+                let result = buildUserNicknameText(comment) + commentBodyText
                 let textRange = NSMakeRange(0, result.length)
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.lineSpacing = 2
                 paragraphStyle.paragraphSpacing = 0
                 paragraphStyle.paragraphSpacingBefore = 14
                 result.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: textRange)
-             
                 return result.trimText()
             }
         }
         
         return nil
+    }
+    
+    static fileprivate func buildUserNicknameText(_ comment: Comment) -> NSAttributedString {
+        return (comment.user.nickname + "  ").styled(
+            with: Style.string.defaultBold, .color(.brand_primary))
     }
     
     static fileprivate func buildSmartHtmlString(_ text: String, fontSize: CGFloat) -> String? {
@@ -98,34 +94,38 @@ class PostTitleAndBodyView: UITextView {
         super.layoutSubviews()
         invalidateIntrinsicContentSize()
     }
-
+    
     override var intrinsicContentSize: CGSize {
-        if post == nil || forceWidth <= 0 {
+        if comment == nil || forceWidth <= 0 {
             return super.intrinsicContentSize
         }
 
         let height = estimateIntrinsicContentHeight()
         return CGSize(width: forceWidth, height: height)
     }
-
+    
     fileprivate func estimateIntrinsicContentHeight() -> CGFloat {
-        let height = PostTitleAndBodyView.estimateHeight(post: self.post, width: forceWidth)
+        let height = CommentBodyView.estimateHeight(comment: self.comment, width: forceWidth)
         return height > 0 ? height + 1: CGFloat(0)
     }
     
-    static fileprivate func redundantBottomPaddingHeight(post: Post?) -> CGFloat {
-        guard let post = post else { return 0 }
-        return (post.parsedBody.isBlank() ? (PostTitleAndBodyView.titleFontPointSize) : (PostTitleAndBodyView.bodyFontPointSize))
+    static fileprivate func redundantBottomPaddingHeight(comment: Comment?) -> CGFloat {
+        guard let comment = comment, !comment.body.isBlank() else { return 0 }
+        return CommentBodyView.bodyFontPointSize
     }
     
-    static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
-        guard let titleAndBodyAttributedText = post?.titleAndBodyAttributedText else { return CGFloat(0) }
-        let textHeight = titleAndBodyAttributedText.heightWithConstrainedWidth(width: width)
-        let height = textHeight - redundantBottomPaddingHeight(post: post) - 2
-        return textHeight > 0 ? height : CGFloat(0)
-    }
-    
-    func anchorCollapsibleTop(_ topAnchor: NSLayoutYAxisAnchor, topConstant: CGFloat) {
-        collapsibleTopConstraint = CollapsibleTopConstraint(self, top: topAnchor, topConstant: topConstant)
+    static func estimateHeight(comment: Comment?, width: CGFloat) -> CGFloat {
+        guard let comment = comment else { return CGFloat(0) }
+        
+        if let cached = heightCache.height(forKey: comment.id, onWidth: width) {
+            return cached
+        }
+        
+        guard let bodyAttributedText = comment.bodyAttributedText else { return CGFloat(0) }
+        let textHeight = bodyAttributedText.heightWithConstrainedWidth(width: width)
+        let height = max(textHeight - redundantBottomPaddingHeight(comment: comment) + 1, CGFloat(0))
+        
+        heightCache.setHeight(height, forKey: comment.id, onWidth: width)
+        return height
     }
 }

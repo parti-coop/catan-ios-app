@@ -93,8 +93,8 @@ struct Service {
 
 extension APIRequest where Model : Any {
     func resume(_ completion: @escaping (Model?, Error?) -> ()) {
-        perform(withSuccess: { (authToken) in
-            completion(authToken, nil)
+        perform(withSuccess: { (model) in
+            completion(model, nil)
         }) { (err) in
             log.error(err)
             completion(nil, err)
