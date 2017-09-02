@@ -40,7 +40,7 @@ class PostTitleAndBodyView: UITextView {
             return nil
         }
         
-        let postTitleHtml = buildSmartHtmlString(post.parsedTitle, fontSize: titleFontPointSize) ?? ""
+        let postTitleHtml = buildSmartHtmlString(post.parsedTitle, fontSize: titleFontPointSize, fontWeight: 200) ?? ""
         let postBodyHtmlSource = ( post.truncatedParsedBody.isBlank() ? post.parsedBody : post.truncatedParsedBody )
         let postBodyHtml = buildSmartHtmlString(postBodyHtmlSource, fontSize: bodyFontPointSize) ?? ""
         if let postTitleAndBodyData = "\(postTitleHtml)\(postBodyHtml)".data(using: String.Encoding.unicode, allowLossyConversion: true) {
@@ -65,7 +65,7 @@ class PostTitleAndBodyView: UITextView {
         return nil
     }
     
-    static fileprivate func buildSmartHtmlString(_ text: String, fontSize: CGFloat) -> String? {
+    static fileprivate func buildSmartHtmlString(_ text: String, fontSize: CGFloat, fontWeight: Int = 400) -> String? {
         var parsedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
         if parsedText.isEmpty { return nil }
         
@@ -77,7 +77,7 @@ class PostTitleAndBodyView: UITextView {
             let end = parsedText.endIndex
             parsedText.replaceSubrange(start..<end, with: "<br></p>")
         }
-        return "<div style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(fontSize)px;\">\(parsedText)</div>"
+        return "<div style=\"font-family: '-apple-system', 'HelveticaNeue'; font-size: \(fontSize)px; font-weight: \(fontWeight);\">\(parsedText)</div>"
     }
     
     public init() {

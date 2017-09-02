@@ -13,7 +13,7 @@ extension UIColor {
     static let brand_primary = UIColor(r: 150, g: 111, b: 214)
     static let app_gray = UIColor.gray
     static let app_light_gray = UIColor(r: 210, g: 210, b: 210)
-    static let app_lighter_gray = UIColor(r: 232, g: 236, b: 241)
+    static let app_lighter_gray = UIColor(r: 245, g: 245, b: 245)
     static let app_blue = UIColor(r: 6, g: 69, b: 174)
     
     static let app_link = brand_primary
