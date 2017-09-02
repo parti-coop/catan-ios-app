@@ -56,7 +56,7 @@ class PostCell: DatasourceCell {
     
     let partiTitleLabel: CatanLabel = {
         let label = CatanLabel()
-        label.font = Style.font.defaultNormal
+        label.font = Style.font.smallNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textColor = .brand_primary
@@ -90,7 +90,29 @@ class PostCell: DatasourceCell {
         let textView = PostTitleAndBodyView()
         return textView
     }()
-
+    
+    let actionDividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .app_light_gray
+        return view
+    }()
+    
+    let upvoteButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("공감해요", for: .normal)
+        button.setTitleColor(.gray, for: .normal)
+        return button
+    }()
+    
+    let commentingButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("댓글달기", for: .normal)
+        button.setTitleColor(.gray, for: .normal)
+        return button
+    }()
+    
+    let actionButtonsBottomView = UIView()
+    
     let latestCommentsView: LatestCommentsView = {
         let view = LatestCommentsView()
         view.backgroundColor = UIColor.app_lighter_gray
@@ -105,6 +127,7 @@ class PostCell: DatasourceCell {
         setupPartiViews()
         setupUserViews()
         setupPostBasicViews()
+        setupActionButtons()
         setupLatestCommentsViews()
     }
     
@@ -148,12 +171,30 @@ class PostCell: DatasourceCell {
         postTitleAndBodyView.anchorCollapsibleTop(createdAtLabel.bottomAnchor, topConstant: Style.dimension.defaultSpace)
     }
     
+    fileprivate func setupActionButtons() {
+        addSubview(actionDividerView)
+        addSubview(upvoteButton)
+        addSubview(commentingButton)
+        
+        actionDividerView.anchor(postTitleAndBodyView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
+                                 topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: Style.dimension.defaultDividerHeight)
+        
+        let margin = Style.dimension.defaultSpace
+        
+        upvoteButton.anchor(actionDividerView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil,
+                            topConstant: margin, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: 0,
+                            heightConstant: Style.dimension.defautLineHeight)
+        commentingButton.anchor(actionDividerView.bottomAnchor, left: upvoteButton.rightAnchor, bottom: nil, right: nil,
+                                topConstant: margin, leftConstant: Style.dimension.largeSpace, bottomConstant: 0, rightConstant: 0,
+                                heightConstant: Style.dimension.defautLineHeight)
+    }
+    
     fileprivate func setupLatestCommentsViews() {
         addSubview(latestCommentsView)
         
-        latestCommentsView.anchor(left: leftAnchor, bottom: nil, right: rightAnchor, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
+        latestCommentsView.anchor(commentingButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
+                                  topConstant: Style.dimension.defaultSpace, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
         latestCommentsView.forceWidth = frame.width
-        latestCommentsView.anchorCollapsibleTop(postTitleAndBodyView.bottomAnchor, topConstant: Style.dimension.defaultSpace)
     }
     
     static func height(_ post: Post, frame: CGRect) -> CGFloat {
@@ -195,8 +236,10 @@ class PostCell: DatasourceCell {
         
         // latestCommentsViewsHeight Height
         let latestCommentsViewsHeight = heightLatestCommentsViews(post, frame: frame)
-        let result = partiViewHeight + userViewHeight + postBasicViewsHeight - 3
-        + latestCommentsViewsHeight
+        let result = partiViewHeight + userViewHeight
+            + postBasicViewsHeight - 3
+            + heightActionButtons()
+            + latestCommentsViewsHeight
         heightCache.setHeight(result, forKey: post.id, onWidth: frame.width)
         
         return result
@@ -214,8 +257,15 @@ class PostCell: DatasourceCell {
             - Style.dimension.postCell.paddingRight
     }
     
+    static fileprivate func heightActionButtons() -> CGFloat {
+        return Style.dimension.defaultDividerHeight
+            + Style.dimension.defaultSpace
+            + Style.dimension.defautLineHeight
+            + Style.dimension.defaultSpace
+    }
+    
     static fileprivate func heightLatestCommentsViews(_ post: Post, frame: CGRect) -> CGFloat {
         let latestCommentsViewHeight = LatestCommentsView.estimateHeight(post: post, width: frame.width)
-        return (latestCommentsViewHeight == 0 ? 0 : Style.dimension.defaultSpace + latestCommentsViewHeight)
+        return (latestCommentsViewHeight == 0 ? 0 : latestCommentsViewHeight)
     }
 }

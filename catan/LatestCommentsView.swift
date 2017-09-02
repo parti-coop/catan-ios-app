@@ -18,13 +18,11 @@ class LatestCommentsView: UIView {
             }
         }
     }
-    var collapsibleTopConstraint: CollapsibleTopConstraint?
 
     var post: Post? {
         didSet {
             setupCommentViews(post: post)
             let height = estimateIntrinsicContentHeight(width: forceWidth)
-            collapsibleTopConstraint?.adjustConstant(height: height)
             setNeedsLayout()
         }
     }
@@ -92,9 +90,5 @@ class LatestCommentsView: UIView {
         
         heightCache.setHeight(height, forKey: post.id, onWidth: width)
         return height
-    }
-    
-    func anchorCollapsibleTop(_ topAnchor: NSLayoutYAxisAnchor, topConstant: CGFloat) {
-        collapsibleTopConstraint = CollapsibleTopConstraint(self, top: topAnchor, topConstant: topConstant)
     }
 }
