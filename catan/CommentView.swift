@@ -7,10 +7,40 @@
 //
 
 import UIKit
+import BonMot
 
 class CommentView: UIView {
     static let bodyFontPointSize = Style.font.defaultNormal.pointSize
     let forceWidth: CGFloat
+
+    var comment: Comment? {
+        didSet {
+            guard let comment = comment else { return }
+            
+            bodyTextView.comment = comment
+            userImageView.kf.setImage(with: URL(string: comment.user.imageUrl))
+            createdAtLabel.text = buildCreatedAtText(comment)
+            upvoteLabel.attributedText = buildUpvoteLabelText(comment)
+            setNeedsLayout()
+        }
+    }
+    
+    fileprivate func buildCreatedAtText(_ comment: Comment) -> String {
+        return comment.createdAt?.timeAgoSinceNowApproximately ?? ""
+    }
+    
+    fileprivate func buildUpvoteLabelText(_ comment: Comment) -> NSAttributedString? {
+        if comment.upvotesCount <= 0 { return nil }
+        
+        let color = (comment.isUpvotedByMe ? UIColor.brand_primary : UIColor.gray)
+        let heartImage = #imageLiteral(resourceName: "hearts_filled").withRenderingMode(.alwaysTemplate).tintedImage(color: color)
+        
+        return NSAttributedString.composed(of: [
+            heartImage.styled(with: .baselineOffset(-2)),
+            Special.noBreakSpace,
+            String(comment.upvotesCount).styled(with: Style.string.defaultSmall, .color(color))
+            ])
+    }
     
     let dividerView: UIView = {
         let view = UIView()
@@ -50,20 +80,10 @@ class CommentView: UIView {
         return label
     }()
     
-    var comment: Comment? {
-        didSet {
-            guard let comment = comment else { return }
-            
-            bodyTextView.comment = comment
-            userImageView.kf.setImage(with: URL(string: comment.user.imageUrl))
-            createdAtLabel.text = buildCreatedAtText(comment)
-            setNeedsLayout()
-        }
-    }
-    
-    fileprivate func buildCreatedAtText(_ comment: Comment) -> String {
-        return comment.createdAt?.timeAgoSinceNowApproximately ?? ""
-    }
+    let upvoteLabel: UILabel = {
+        let label = UILabel()
+        return label
+    }()
     
     init(forceWidth: CGFloat) {
         self.forceWidth = forceWidth
@@ -87,6 +107,7 @@ class CommentView: UIView {
         addSubview(upvoteButton)
         addSubview(commentingButton)
         addSubview(createdAtLabel)
+        addSubview(upvoteLabel)
 
         dividerView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: Style.dimension.defaultSpace, rightConstant: 0, heightConstant: Style.dimension.defaultDividerHeight)
         
@@ -96,9 +117,18 @@ class CommentView: UIView {
         bodyTextView.forceWidth = CommentView.widthCommentBodyViews(width: forceWidth)
         
         let actionButtonsMargin = CGFloat(0)
-        upvoteButton.anchor(bodyTextView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: nil, topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0, heightConstant: Style.dimension.defautLineHeight)
-        commentingButton.anchor(bodyTextView.bottomAnchor, left: upvoteButton.rightAnchor, bottom: nil, right: nil, topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0, heightConstant: Style.dimension.defautLineHeight)
-        createdAtLabel.anchor(bodyTextView.bottomAnchor, left: commentingButton.rightAnchor, bottom: nil, right: nil, topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0, heightConstant: Style.dimension.defautLineHeight)
+        upvoteButton.anchor(bodyTextView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: nil,
+                            topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                            heightConstant: Style.dimension.defautLineHeight)
+        commentingButton.anchor(bodyTextView.bottomAnchor, left: upvoteButton.rightAnchor, bottom: nil, right: nil,
+                                topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                                heightConstant: Style.dimension.defautLineHeight)
+        createdAtLabel.anchor(bodyTextView.bottomAnchor, left: commentingButton.rightAnchor, bottom: nil, right: nil,
+                              topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                              heightConstant: Style.dimension.defautLineHeight)
+        upvoteLabel.anchor(bodyTextView.bottomAnchor, left: createdAtLabel.rightAnchor, bottom: nil, right: nil,
+                           topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                           widthConstant: 0, heightConstant: 0)
         
         layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: Style.dimension.defaultSpace, right: 0)
     }

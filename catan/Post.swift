@@ -20,7 +20,7 @@ struct Post: JSONDecodable {
         user = try User(json: json["user"])
         createdAt = json["created_at"].dateTime
         lastStrokedAt = json["last_stroked_at"].dateTime
-        isUpVotedByMe = json["is_upvoted_by_me"].boolValue
+        isUpvotedByMe = json["is_upvoted_by_me"].boolValue
         upvotesCount = json["upvotes_count"].intValue
         commentsCount = json["comments_count"].intValue
         latestStrokedActivity = json["latest_stroked_activity"].stringValue
@@ -43,7 +43,7 @@ struct Post: JSONDecodable {
     let user: User;
     let createdAt: Date?
     let lastStrokedAt: Date?
-    let isUpVotedByMe: Bool
+    let isUpvotedByMe: Bool
     let upvotesCount: Int
     let commentsCount: Int
     var latestComments: [Comment]

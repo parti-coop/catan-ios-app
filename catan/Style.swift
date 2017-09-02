@@ -13,6 +13,7 @@ struct Style {
     struct string {
         static let defaultNormal = StringStyle.Part.font(font.defaultNormal)
         static let defaultBold = StringStyle.Part.font(font.defaultBold)
+        static let defaultSmall = StringStyle.Part.font(font.smallNormal)
     }
     
     struct font {

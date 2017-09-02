@@ -9,6 +9,7 @@
 import LBTAComponents
 import Kingfisher
 import DateToolsSwift
+import BonMot
 
 class PostCell: DatasourceCell {
     static let heightCache = HeightCache()
@@ -31,7 +32,8 @@ class PostCell: DatasourceCell {
             
             postTitleAndBodyView.post = post
             latestCommentsView.post = post
-            
+            upvoteLabel.attributedText = buildUpvoteLabelText(post)
+
             setNeedsLayout()
         }
     }
@@ -46,6 +48,19 @@ class PostCell: DatasourceCell {
     
     static fileprivate func buildCreatedAtText(_ post: Post) -> String {
         return post.createdAt?.timeAgoSinceNowApproximately ?? ""
+    }
+    
+    fileprivate func buildUpvoteLabelText(_ post: Post) -> NSAttributedString? {
+        if post.upvotesCount <= 0 { return nil }
+        
+        let color = (post.isUpvotedByMe ? UIColor.brand_primary : UIColor.gray)
+        let heartImage = #imageLiteral(resourceName: "hearts_filled").withRenderingMode(.alwaysTemplate).tintedImage(color: color)
+        
+        return NSAttributedString.composed(of: [
+            heartImage.styled(with: .baselineOffset(-2)),
+            Special.noBreakSpace,
+            String(post.upvotesCount).styled(with: Style.string.defaultSmall, .color(color))
+            ])
     }
     
     let partiLogoImageView: UIImageView = {
@@ -109,6 +124,11 @@ class PostCell: DatasourceCell {
         button.setTitle("댓글달기", for: .normal)
         button.setTitleColor(.gray, for: .normal)
         return button
+    }()
+    
+    let upvoteLabel: UILabel = {
+        let label = UILabel()
+        return label
     }()
     
     let actionButtonsBottomView = UIView()
@@ -175,6 +195,7 @@ class PostCell: DatasourceCell {
         addSubview(actionDividerView)
         addSubview(upvoteButton)
         addSubview(commentingButton)
+        addSubview(upvoteLabel)
         
         actionDividerView.anchor(postTitleAndBodyView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
                                  topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: Style.dimension.defaultDividerHeight)
@@ -187,6 +208,9 @@ class PostCell: DatasourceCell {
         commentingButton.anchor(actionDividerView.bottomAnchor, left: upvoteButton.rightAnchor, bottom: nil, right: nil,
                                 topConstant: margin, leftConstant: Style.dimension.largeSpace, bottomConstant: 0, rightConstant: 0,
                                 heightConstant: Style.dimension.defautLineHeight)
+        upvoteLabel.anchor(actionDividerView.bottomAnchor, left: commentingButton.rightAnchor, bottom: nil, right: nil,
+                           topConstant: margin, leftConstant: Style.dimension.largeSpace, bottomConstant: 0, rightConstant: 0,
+                           widthConstant: 0, heightConstant: Style.dimension.defautLineHeight)
     }
     
     fileprivate func setupLatestCommentsViews() {
