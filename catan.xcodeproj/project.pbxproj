@@ -12,6 +12,9 @@
 		98145B7E1F42BDD50083349F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7D1F42BDD50083349F /* Assets.xcassets */; };
 		983A11631F590D5E000D7D7F /* CommentBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983A11621F590D5E000D7D7F /* CommentBodyView.swift */; };
 		983A11651F59B9AF000D7D7F /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983A11641F59B9AF000D7D7F /* Date+Extension.swift */; };
+		983A11671F5A81FF000D7D7F /* FileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983A11661F5A81FF000D7D7F /* FileSource.swift */; };
+		983A11691F5A8E37000D7D7F /* PostAdditionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983A11681F5A8E37000D7D7F /* PostAdditionalView.swift */; };
+		983A116B1F5A97E2000D7D7F /* CollapsibleBottomMargin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983A116A1F5A97E2000D7D7F /* CollapsibleBottomMargin.swift */; };
 		98467F1B1F56A7B3008EEB3D /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98467F1A1F56A7B3008EEB3D /* CommentView.swift */; };
 		985100D71F4CF109009BE875 /* DashboardDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100D61F4CF109009BE875 /* DashboardDatasource.swift */; };
 		985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100D81F4CF3A2009BE875 /* PostCell.swift */; };
@@ -50,6 +53,9 @@
 		98145B821F42BDD50083349F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		983A11621F590D5E000D7D7F /* CommentBodyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentBodyView.swift; sourceTree = "<group>"; };
 		983A11641F59B9AF000D7D7F /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		983A11661F5A81FF000D7D7F /* FileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSource.swift; sourceTree = "<group>"; };
+		983A11681F5A8E37000D7D7F /* PostAdditionalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostAdditionalView.swift; sourceTree = "<group>"; };
+		983A116A1F5A97E2000D7D7F /* CollapsibleBottomMargin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleBottomMargin.swift; sourceTree = "<group>"; };
 		98467F1A1F56A7B3008EEB3D /* CommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		985100D61F4CF109009BE875 /* DashboardDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDatasource.swift; sourceTree = "<group>"; };
 		985100D81F4CF3A2009BE875 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCell.swift; path = ../PostCell.swift; sourceTree = "<group>"; };
@@ -161,6 +167,8 @@
 				985101021F5183B7009BE875 /* LatestCommentsView.swift */,
 				98467F1A1F56A7B3008EEB3D /* CommentView.swift */,
 				983A11621F590D5E000D7D7F /* CommentBodyView.swift */,
+				983A11681F5A8E37000D7D7F /* PostAdditionalView.swift */,
+				983A116A1F5A97E2000D7D7F /* CollapsibleBottomMargin.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -211,6 +219,7 @@
 				985100E81F4D82BC009BE875 /* Parti.swift */,
 				985100EA1F4D84F1009BE875 /* Group.swift */,
 				989798591F54D8BE00A5F67B /* Comment.swift */,
+				983A11661F5A81FF000D7D7F /* FileSource.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -395,6 +404,7 @@
 				98E663521F490CE400455CEB /* DashboardController.swift in Sources */,
 				985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */,
 				983A11631F590D5E000D7D7F /* CommentBodyView.swift in Sources */,
+				983A116B1F5A97E2000D7D7F /* CollapsibleBottomMargin.swift in Sources */,
 				9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */,
 				985100FB1F4FCF8C009BE875 /* CatanLabel.swift in Sources */,
 				983A11651F59B9AF000D7D7F /* Date+Extension.swift in Sources */,
@@ -412,8 +422,10 @@
 				98A5F4F31F440A3600E6D781 /* Style.swift in Sources */,
 				985101031F5183B7009BE875 /* LatestCommentsView.swift in Sources */,
 				98E663591F49602200455CEB /* ServiceHandler.swift in Sources */,
+				983A11671F5A81FF000D7D7F /* FileSource.swift in Sources */,
 				98A5F4FA1F4510A100E6D781 /* AuthToken.swift in Sources */,
 				985100E71F4D6C1E009BE875 /* IndicatorCell.swift in Sources */,
+				983A11691F5A8E37000D7D7F /* PostAdditionalView.swift in Sources */,
 				98E663571F4922AA00455CEB /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -35,7 +35,7 @@ class CommentBodyView: UITextView {
     static func buildBodyText(_ comment: Comment) -> NSAttributedString? {
         let commentBodyHtml = buildSmartHtmlString(comment.body, fontSize: CommentView.bodyFontPointSize) ?? ""
         if let commentBodyData = commentBodyHtml.data(using: String.Encoding.unicode, allowLossyConversion: true) {
-            if var commentBodyText = try? NSMutableAttributedString(data: commentBodyData,
+            if let commentBodyText = try? NSMutableAttributedString(data: commentBodyData,
                                                            options: [
                                                             NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
                                                             "NSOriginalFont": Style.font.defaultNormal,

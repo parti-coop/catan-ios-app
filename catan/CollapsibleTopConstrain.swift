@@ -10,10 +10,11 @@ import UIKit
 
 class CollapsibleTopConstraint {
     fileprivate let view: UIView
+    
     fileprivate var topConstraint: NSLayoutConstraint
     fileprivate var topConstant: CGFloat
    
-    public init(_ view: UIView, top: NSLayoutYAxisAnchor, topConstant: CGFloat) {
+    public init(_ view: UIView, top: NSLayoutYAxisAnchor, topConstant: CGFloat = 0) {
         self.view = view
         view.translatesAutoresizingMaskIntoConstraints = false
         

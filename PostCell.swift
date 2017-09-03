@@ -31,6 +31,7 @@ class PostCell: DatasourceCell {
             createdAtLabel.text = PostCell.buildCreatedAtText(post)
             
             postTitleAndBodyView.post = post
+            postAdditionalView.post = post
             latestCommentsView.post = post
             upvoteLabel.attributedText = buildUpvoteLabelText(post)
 
@@ -106,6 +107,11 @@ class PostCell: DatasourceCell {
         return textView
     }()
     
+    let postAdditionalView: PostAdditionalView = {
+        let view = PostAdditionalView()
+        return view
+    }()
+    
     let actionDividerView: UIView = {
         let view = UIView()
         view.backgroundColor = .app_light_gray
@@ -147,6 +153,7 @@ class PostCell: DatasourceCell {
         setupPartiViews()
         setupUserViews()
         setupPostBasicViews()
+        setupPostAdditionalViews()
         setupActionButtons()
         setupLatestCommentsViews()
     }
@@ -191,13 +198,21 @@ class PostCell: DatasourceCell {
         postTitleAndBodyView.anchorCollapsibleTop(createdAtLabel.bottomAnchor, topConstant: Style.dimension.defaultSpace)
     }
     
+    fileprivate func setupPostAdditionalViews() {
+        addSubview(postAdditionalView)
+        
+        postAdditionalView.anchor(postTitleAndBodyView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
+                                  topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
+        postAdditionalView.forceWidth = frame.width
+    }
+    
     fileprivate func setupActionButtons() {
         addSubview(actionDividerView)
         addSubview(upvoteButton)
         addSubview(commentingButton)
         addSubview(upvoteLabel)
         
-        actionDividerView.anchor(postTitleAndBodyView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
+        actionDividerView.anchor(postAdditionalView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
                                  topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: Style.dimension.defaultDividerHeight)
         
         let margin = Style.dimension.defaultSpace
@@ -255,15 +270,11 @@ class PostCell: DatasourceCell {
                 + Style.dimension.xsmallSpace
                 + createdAtLabelHeight)
         
-        // postBasicViews Height
-        let postBasicViewsHeight = heightPostTitleAndBodyViews(post, frame: frame)
-        
-        // latestCommentsViewsHeight Height
-        let latestCommentsViewsHeight = heightLatestCommentsViews(post, frame: frame)
         let result = partiViewHeight + userViewHeight
-            + postBasicViewsHeight - 3
+            + heightPostTitleAndBodyViews(post, frame: frame) - 3
+            + heightPostAdditionalViews(post, frame: frame)
             + heightActionButtons()
-            + latestCommentsViewsHeight
+            + heightLatestCommentsViews(post, frame: frame)
         heightCache.setHeight(result, forKey: post.id, onWidth: frame.width)
         
         return result
@@ -281,6 +292,10 @@ class PostCell: DatasourceCell {
             - Style.dimension.postCell.paddingRight
     }
     
+    static fileprivate func heightPostAdditionalViews(_ post: Post, frame: CGRect) -> CGFloat {
+        return PostAdditionalView.estimateHeight(post: post, width: frame.width)
+    }
+    
     static fileprivate func heightActionButtons() -> CGFloat {
         return Style.dimension.defaultDividerHeight
             + Style.dimension.defaultSpace
@@ -289,7 +304,6 @@ class PostCell: DatasourceCell {
     }
     
     static fileprivate func heightLatestCommentsViews(_ post: Post, frame: CGRect) -> CGFloat {
-        let latestCommentsViewHeight = LatestCommentsView.estimateHeight(post: post, width: frame.width)
-        return (latestCommentsViewHeight == 0 ? 0 : latestCommentsViewHeight)
+        return LatestCommentsView.estimateHeight(post: post, width: frame.width)
     }
 }

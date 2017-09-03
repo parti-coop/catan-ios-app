@@ -31,6 +31,11 @@ struct Post: JSONDecodable {
         } else {
             latestComments = [Comment]()
         }
+        if let fileSourcesJSON = json["file_sources"].array {
+            fileSources = try fileSourcesJSON.decode()
+        } else {
+            fileSources = [FileSource]()
+        }
     }
     
     // TODO: 연결된 모델을 만듭니다
@@ -53,7 +58,7 @@ struct Post: JSONDecodable {
     //Survey survey;
     //Wiki wiki;
     //Share share;
-    //FileSource[] file_sources;
+    let fileSources: [FileSource];
     let latestStrokedActivity: String
     let expiredAfter: Int
     
@@ -65,5 +70,11 @@ struct Post: JSONDecodable {
     
     func hasNoComments() -> Bool {
         return commentsCount <= 0
+    }
+    
+    func fileSourcesOnlyImage() -> [FileSource] {
+        return fileSources.filter { (fileSource) -> Bool in
+            return fileSource.isImage()
+        }
     }
 }

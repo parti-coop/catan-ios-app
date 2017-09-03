@@ -22,7 +22,6 @@ class LatestCommentsView: UIView {
     var post: Post? {
         didSet {
             setupCommentViews(post: post)
-            let height = estimateIntrinsicContentHeight(width: forceWidth)
             setNeedsLayout()
         }
     }
