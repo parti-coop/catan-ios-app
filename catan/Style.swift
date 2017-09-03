@@ -36,6 +36,7 @@ struct Style {
         struct postCell {
             static let paddingLeft: CGFloat = 16
             static let paddingRight: CGFloat = 16
+            static let imageFileSourceSpace: CGFloat = dimension.smallSpace
         }
         struct commentView {
             static let paddingLeft: CGFloat = 16

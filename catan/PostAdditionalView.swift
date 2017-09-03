@@ -22,11 +22,6 @@ class PostAdditionalView: UIStackView {
         }
     }
     
-    let firstImageView: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
-    
     let imageFileSourcesView: PostImageFileSourcesView = {
         let view = PostImageFileSourcesView()
         return view
@@ -34,7 +29,6 @@ class PostAdditionalView: UIStackView {
     
     var post: Post? {
         didSet {
-            firstImageView.image = nil
             imageFileSourcesView.post = post
             setNeedsLayout()
         }
