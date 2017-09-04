@@ -11,7 +11,6 @@ import Kingfisher
 
 class PostImageFileSourcesView: UIStackView {
     static let heightCache = HeightCache()
-    static let firstImageMaxHeight = CGFloat(1000)
     
     var forceWidth = CGFloat(0) {
         didSet {
@@ -28,11 +27,15 @@ class PostImageFileSourcesView: UIStackView {
             if let post = post {
                 let fileSourcesOnlyImage = post.fileSourcesOnlyImage()
                 if !fileSourcesOnlyImage.isEmpty {
-                    for fileSources in chunk(fileSourcesOnlyImage: fileSourcesOnlyImage) {
+                    let chunck = PostImageFileSourcesView.chunk(fileSourcesOnlyImage: fileSourcesOnlyImage)
+                    for fileSources in chunck {
                         guard let subview = buildImagesRow(fileSources: fileSources) else { continue }
                         addArrangedSubview(subview)
                     }
+                    toggleBottomMargin(fileSources: fileSourcesOnlyImage)
                 }
+            } else {
+                toggleBottomMargin()
             }
             setNeedsLayout()
         }
@@ -44,7 +47,7 @@ class PostImageFileSourcesView: UIStackView {
         }
     }
     
-    fileprivate func chunk(fileSourcesOnlyImage fileSources: [FileSource]) -> [[FileSource]] {
+    fileprivate static func chunk(fileSourcesOnlyImage fileSources: [FileSource]) -> [[FileSource]] {
         var result = [[FileSource]]()
         if fileSources.isEmpty {
             return result
@@ -54,7 +57,7 @@ class PostImageFileSourcesView: UIStackView {
             result.append(fileSources)
             return result
         }
-        
+                
         let chunkSize = 3
         result += stride(from: 1, to: fileSources.count, by: chunkSize).map {
             Array(fileSources[$0..<min($0 + chunkSize, fileSources.count)])
@@ -72,19 +75,51 @@ class PostImageFileSourcesView: UIStackView {
         switch fileSources.count {
         case 1:
             let imageView = UIImageView()
-            let targetSize = CGSize(width: forceWidth, height: PostImageFileSourcesView.firstImageMaxHeight)
+            let targetSize = CGSize(width: forceWidth, height: Style.dimension.postCell.firstImageFileSourceMaxHeight)
             imageView.kf.setImage(
                 with: URL(string: fileSources[0].attachmentMdUrl),
                 options: [.processor(ResizingImageProcessor(targetSize: targetSize, contentMode: .aspectFit))])
             imageView.clipsToBounds = true
             return imageView
-        case 2:
-            return UIView()
-        case 3:
-            return UIView()
         default:
-            return nil
+            let rowStackView = buildMultiImagesRowStackView(columnCount: fileSources.count)
+            for (index, subview) in rowStackView.subviews.enumerated() {
+                loadImage(of: fileSources[index], to: subview)
+            }
+            rowStackView.anchor(heightConstant: Style.dimension.postCell.remainImageFileSourceHeight)
+            return rowStackView
         }
+    }
+    
+    fileprivate func buildMultiImagesRowStackView(columnCount: Int) -> UIStackView {
+        let rowStackView = UIStackView()
+        rowStackView.axis = .horizontal
+        rowStackView.distribution = .fillEqually
+        rowStackView.spacing = Style.dimension.postCell.imageFileSourceSpace
+        
+        for _ in 1...columnCount {
+            rowStackView.addArrangedSubview(UIView())
+        }
+        
+        return rowStackView
+    }
+    
+    fileprivate func loadImage(of filesource: FileSource, to view: UIView) {
+        let imageView = UIImageView()
+        imageView.kf.setImage(with: URL(string: filesource.attachmentMdUrl))
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+
+        view.addSubview(imageView)
+        imageView.fillSuperview()
+    }
+    
+    fileprivate func toggleBottomMargin(fileSources: [FileSource] = [FileSource]()) {
+        layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: PostImageFileSourcesView.estimateBottomMargin(fileSources: fileSources), right: 0)
+    }
+    
+    fileprivate static func estimateBottomMargin(fileSources: [FileSource] = [FileSource]()) -> CGFloat {
+        return fileSources.count > 1 ? Style.dimension.postCell.imageFileSourceSpace: 0
     }
     
     init() {
@@ -92,6 +127,8 @@ class PostImageFileSourcesView: UIStackView {
         axis = .vertical
         distribution = .equalSpacing
         spacing = Style.dimension.postCell.imageFileSourceSpace
+        isLayoutMarginsRelativeArrangement = true
+        layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
     required init(coder: NSCoder) {
@@ -121,9 +158,25 @@ class PostImageFileSourcesView: UIStackView {
 
         let fileSourcesOnlyImage = post.fileSourcesOnlyImage()
         if !fileSourcesOnlyImage.isEmpty {
-            let imagesHeight = fileSourcesOnlyImage[0].estimateHeight(width: width, maxHeight: PostAdditionalView.firstImageMaxHeight)
-            return imagesHeight
+            let chunk = PostImageFileSourcesView.chunk(fileSourcesOnlyImage: fileSourcesOnlyImage)
+            guard let firstRow = chunk.first else { return CGFloat(0) }
+            
+            var result = CGFloat(0)
+            if firstRow.count <= 1 {
+                let firstImagesHeight = fileSourcesOnlyImage[0].estimateHeight(width: width, maxHeight: PostAdditionalView.firstImageMaxHeight)
+                result += firstImagesHeight
+            } else {
+                result += Style.dimension.postCell.remainImageFileSourceHeight
+            }
+            
+            let rowCount = chunk.count
+            let rowSpaceCount = rowCount - 1
+            result += CGFloat(rowCount - 1) * Style.dimension.postCell.remainImageFileSourceHeight
+            result += CGFloat(rowSpaceCount) * Style.dimension.postCell.imageFileSourceSpace
+            result += PostImageFileSourcesView.estimateBottomMargin(fileSources: fileSourcesOnlyImage)
+            return result
         }
+
         
         return CGFloat(0)
     }
