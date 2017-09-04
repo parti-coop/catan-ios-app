@@ -74,13 +74,20 @@ class PostImageFileSourcesView: UIStackView {
     fileprivate func buildImagesRow(fileSources: [FileSource]) -> UIView? {
         switch fileSources.count {
         case 1:
+            let fileSource = fileSources[0]
+            let height = fileSource.estimateHeight(width: forceWidth, maxHeight: Style.dimension.postCell.firstImageFileSourceMaxHeight)
+
+            let imageContainer = UIView()
+            imageContainer.anchor(heightConstant: height)
+            
             let imageView = UIImageView()
-            let targetSize = CGSize(width: forceWidth, height: Style.dimension.postCell.firstImageFileSourceMaxHeight)
-            imageView.kf.setImage(
-                with: URL(string: fileSources[0].attachmentMdUrl),
-                options: [.processor(ResizingImageProcessor(targetSize: targetSize, contentMode: .aspectFit))])
+            imageView.kf.setImage(with: URL(string: fileSource.attachmentMdUrl))
             imageView.clipsToBounds = true
-            return imageView
+            
+            imageContainer.addSubview(imageView)
+            imageView.fillSuperview()
+            
+            return imageContainer
         default:
             let rowStackView = buildMultiImagesRowStackView(columnCount: fileSources.count)
             for (index, subview) in rowStackView.subviews.enumerated() {
