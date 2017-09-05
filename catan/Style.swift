@@ -37,8 +37,10 @@ struct Style {
             static let paddingLeft: CGFloat = 16
             static let paddingRight: CGFloat = 16
             static let imageFileSourceSpace: CGFloat = dimension.smallSpace
+            static let documentFileSourceSpace: CGFloat = dimension.smallSpace
             static let firstImageFileSourceMaxHeight = CGFloat(1000)
             static let remainImageFileSourceHeight = CGFloat(150)
+            static let postAdditionalViewSpace = dimension.defaultSpace
         }
         struct commentView {
             static let paddingLeft: CGFloat = 16

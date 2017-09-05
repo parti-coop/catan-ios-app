@@ -275,6 +275,7 @@ class PostCell: DatasourceCell {
             + heightPostAdditionalViews(post, frame: frame)
             + heightActionButtons()
             + heightLatestCommentsViews(post, frame: frame)
+        
         heightCache.setHeight(result, forKey: post.id, onWidth: frame.width)
         
         return result

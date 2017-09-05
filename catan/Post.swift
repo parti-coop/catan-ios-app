@@ -77,4 +77,10 @@ struct Post: JSONDecodable {
             return fileSource.isImage()
         }
     }
+    
+    func fileSourcesOnlyDocument() -> [FileSource] {
+        return fileSources.filter { (fileSource) -> Bool in
+            return !fileSource.isImage()
+        }
+    }
 }

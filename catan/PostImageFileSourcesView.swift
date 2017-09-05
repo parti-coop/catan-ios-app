@@ -10,6 +10,7 @@ import UIKit
 import Kingfisher
 
 class PostImageFileSourcesView: UIStackView {
+    // TODO: 높이를 캐시합니다.
     static let heightCache = HeightCache()
     
     var forceWidth = CGFloat(0) {
@@ -32,10 +33,7 @@ class PostImageFileSourcesView: UIStackView {
                         guard let subview = buildImagesRow(fileSources: fileSources) else { continue }
                         addArrangedSubview(subview)
                     }
-                    toggleBottomMargin(fileSources: fileSourcesOnlyImage)
                 }
-            } else {
-                toggleBottomMargin()
             }
             setNeedsLayout()
         }
@@ -90,7 +88,7 @@ class PostImageFileSourcesView: UIStackView {
             return imageContainer
         default:
             let rowStackView = buildMultiImagesRowStackView(columnCount: fileSources.count)
-            for (index, subview) in rowStackView.subviews.enumerated() {
+            for (index, subview) in rowStackView.arrangedSubviews.enumerated() {
                 loadImage(of: fileSources[index], to: subview)
             }
             rowStackView.anchor(heightConstant: Style.dimension.postCell.remainImageFileSourceHeight)
@@ -121,14 +119,6 @@ class PostImageFileSourcesView: UIStackView {
         imageView.fillSuperview()
     }
     
-    fileprivate func toggleBottomMargin(fileSources: [FileSource] = [FileSource]()) {
-        layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: PostImageFileSourcesView.estimateBottomMargin(fileSources: fileSources), right: 0)
-    }
-    
-    fileprivate static func estimateBottomMargin(fileSources: [FileSource] = [FileSource]()) -> CGFloat {
-        return fileSources.count > 1 ? Style.dimension.postCell.imageFileSourceSpace: 0
-    }
-    
     init() {
         super.init(frame: .zero)
         axis = .vertical
@@ -146,19 +136,21 @@ class PostImageFileSourcesView: UIStackView {
         super.layoutSubviews()
         invalidateIntrinsicContentSize()
     }
-//
-//    override var intrinsicContentSize: CGSize {
-//        if post == nil || forceWidth <= 0 {
-//            return super.intrinsicContentSize
-//        }
-//
-//        let height = estimateIntrinsicContentHeight()
-//        return CGSize(width: forceWidth, height: height)
-//    }
     
-//    fileprivate func estimateIntrinsicContentHeight() -> CGFloat {
-//        return PostAdditionalView.estimateHeight(post: self.post, width: forceWidth)
-//    }
+    func visible() -> Bool {
+        return !subviews.isEmpty
+    }
+    
+    static func estimateBottomMarginIfLastAdditionalView(post: Post?, defaultMargin: CGFloat) -> CGFloat {
+        guard let post = post else { return CGFloat(0) }
+        if post.fileSourcesOnlyImage().count == 1 {
+            return CGFloat(0)
+        } else if post.fileSourcesOnlyImage().count > 1 {
+            return Style.dimension.postCell.remainImageFileSourceHeight
+        } else {
+            return defaultMargin
+        }
+    }
     
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
         guard let post = post else { return CGFloat(0) }
@@ -170,7 +162,7 @@ class PostImageFileSourcesView: UIStackView {
             
             var result = CGFloat(0)
             if firstRow.count <= 1 {
-                let firstImagesHeight = fileSourcesOnlyImage[0].estimateHeight(width: width, maxHeight: PostAdditionalView.firstImageMaxHeight)
+                let firstImagesHeight = fileSourcesOnlyImage[0].estimateHeight(width: width, maxHeight: Style.dimension.postCell.firstImageFileSourceMaxHeight)
                 result += firstImagesHeight
             } else {
                 result += Style.dimension.postCell.remainImageFileSourceHeight
@@ -180,10 +172,8 @@ class PostImageFileSourcesView: UIStackView {
             let rowSpaceCount = rowCount - 1
             result += CGFloat(rowCount - 1) * Style.dimension.postCell.remainImageFileSourceHeight
             result += CGFloat(rowSpaceCount) * Style.dimension.postCell.imageFileSourceSpace
-            result += PostImageFileSourcesView.estimateBottomMargin(fileSources: fileSourcesOnlyImage)
             return result
         }
-
         
         return CGFloat(0)
     }

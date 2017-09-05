@@ -33,6 +33,7 @@
 		985101031F5183B7009BE875 /* LatestCommentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101021F5183B7009BE875 /* LatestCommentsView.swift */; };
 		985101051F52581C009BE875 /* CollapsibleTopConstrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101041F52581C009BE875 /* CollapsibleTopConstrain.swift */; };
 		985101071F52FFF2009BE875 /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101061F52FFF2009BE875 /* NSAttributedString+Extension.swift */; };
+		985BED801F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985BED7F1F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift */; };
 		9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989798591F54D8BE00A5F67B /* Comment.swift */; };
 		98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */; };
 		98A5F4F31F440A3600E6D781 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F21F440A3600E6D781 /* Style.swift */; };
@@ -75,6 +76,7 @@
 		985101021F5183B7009BE875 /* LatestCommentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatestCommentsView.swift; sourceTree = "<group>"; };
 		985101041F52581C009BE875 /* CollapsibleTopConstrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTopConstrain.swift; sourceTree = "<group>"; };
 		985101061F52FFF2009BE875 /* NSAttributedString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extension.swift"; sourceTree = "<group>"; };
+		985BED7F1F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDocumentFileSourcesView.swift; sourceTree = "<group>"; };
 		989798591F54D8BE00A5F67B /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		98A5F4F21F440A3600E6D781 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				983A11621F590D5E000D7D7F /* CommentBodyView.swift */,
 				983A11681F5A8E37000D7D7F /* PostAdditionalView.swift */,
 				983A116C1F5BEF2B000D7D7F /* PostImageFileSourcesView.swift */,
+				985BED7F1F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				98A5F4FC1F46642000E6D781 /* MainTabBarController.swift in Sources */,
 				98E663541F491AB700455CEB /* User.swift in Sources */,
 				985101071F52FFF2009BE875 /* NSAttributedString+Extension.swift in Sources */,
+				985BED801F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift in Sources */,
 				98145B771F42BDD50083349F /* AppDelegate.swift in Sources */,
 				98E6635B1F4962D500455CEB /* UserSession.swift in Sources */,
 				98A5F4F31F440A3600E6D781 /* Style.swift in Sources */,

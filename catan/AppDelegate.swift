@@ -9,6 +9,7 @@
 import UIKit
 import FacebookCore
 import SwiftyBeaver
+import Kingfisher
 
 let log = SwiftyBeaver.self
 
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         setupLog()
+        setupKingfisher()
 
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
@@ -30,10 +32,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-
+    
     fileprivate func setupLog() {
         let console = ConsoleDestination()  // log to Xcode Console
         log.addDestination(console)
+    }
+    
+    fileprivate func setupKingfisher() {
+        let imgManager = ImageDownloader.default
+        imgManager.trustedHosts = Set(["dev.parti.xyz", "parti.dev"])
+        KingfisherManager.shared.downloader = imgManager
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
