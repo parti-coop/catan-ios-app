@@ -1,12 +1,12 @@
 PODS:
-  - Alamofire (4.4.0)
+  - Alamofire (4.5.0)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - BonMot (4.2)
+  - BonMot (4.3.1)
   - DateToolsSwift (2.0.3)
   - FacebookCore (0.2.0):
     - Bolts (~> 1.8)
@@ -21,28 +21,29 @@ PODS:
     - FacebookCore (~> 0.2)
     - FBSDKCoreKit (~> 4.15)
     - FBSDKShareKit (~> 4.15)
-  - FBSDKCoreKit (4.20.2):
+  - FBSDKCoreKit (4.22.1):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.20.2):
+  - FBSDKLoginKit (4.22.1):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.20.2):
+  - FBSDKShareKit (4.22.1):
     - FBSDKCoreKit
-  - Gloss (1.2.1)
-  - KeychainAccess (3.0.1)
+  - Gloss (1.2.4)
+  - KeychainAccess (3.0.2)
   - Keys (1.0.0)
-  - Kingfisher (3.5.2)
+  - Kingfisher (3.12.2)
   - LBTAComponents (0.1.9)
-  - SwiftyBeaver (1.1.3)
+  - SwiftyBeaver (1.4.0)
   - SwiftyJSON (3.1.4)
-  - TRON (2.0.1):
+  - TRON (3.0.3):
     - Alamofire (~> 4.1)
-    - TRON/SwiftyJSON (= 2.0.1)
-  - TRON/Core (2.0.1):
+    - TRON/SwiftyJSON (= 3.0.3)
+  - TRON/Core (3.0.3):
     - Alamofire (~> 4.1)
-  - TRON/SwiftyJSON (2.0.1):
+  - TRON/SwiftyJSON (3.0.3):
     - Alamofire (~> 4.1)
     - SwiftyJSON (~> 3.1)
     - TRON/Core
+  - UICircularProgressRing (1.7.1)
 
 DEPENDENCIES:
   - BonMot
@@ -50,38 +51,43 @@ DEPENDENCIES:
   - FacebookCore
   - FacebookLogin
   - FacebookShare
+  - FBSDKCoreKit (~> 4.22.1)
+  - FBSDKLoginKit (~> 4.22.1)
+  - FBSDKShareKit (~> 4.22.1)
   - Gloss (~> 1.2)
   - KeychainAccess
   - Keys (from `Pods/CocoaPodsKeys`)
   - Kingfisher (~> 3.0)
   - LBTAComponents (~> 0.1.9)
   - SwiftyBeaver
-  - TRON (~> 2.0.0)
+  - TRON (~> 3.0.0)
+  - UICircularProgressRing
 
 EXTERNAL SOURCES:
   Keys:
     :path: Pods/CocoaPodsKeys
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  BonMot: 9dbd59135974d2fa591a2084b3489bdc0e15e8f8
+  BonMot: 043bb5a8834cc6d74e9d624742272b92385e0a27
   DateToolsSwift: bf69bf9056d9e53c5c03f06e51f219b9b8b02f9e
   FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
   FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
   FacebookShare: 8e9ee8ea06505e6a1d3d719b0cc63e840fb8aaeb
-  FBSDKCoreKit: 82eac696eb6157da5f4266c3a241f00e9bd72471
-  FBSDKLoginKit: 2211bede07c83391349eacc1fd86cf6d9289ce38
-  FBSDKShareKit: ca9b22264ea49a896dafb2467c1a4f72aa41996f
-  Gloss: 9ab33b8ede01e4232571d43a6bf9259b85d1de69
-  KeychainAccess: 017ea25e313a49eda10bb19b0bb0760fb1edfe1a
+  FBSDKCoreKit: 9c2daf0162214d6d2e21cf8208a9c6c2a2e42b9c
+  FBSDKLoginKit: 00cf28916b9f0169763a3d61985d745b579fe304
+  FBSDKShareKit: 1cbd0fdc2bb3277dd3522512855dcf1f4088f734
+  Gloss: 4e036074610fdb993abcb958ebcd7332588e2333
+  KeychainAccess: a986406022dfc7c634c691ad3bec670cc6a32002
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
-  Kingfisher: 9950e382c500b6834ce004c7c4131c444e90c3a1
+  Kingfisher: 320626678acadfcf47008b3c6841cd882050737b
   LBTAComponents: 9a5d314080d1f80208062ccc81a2d25225c5f572
-  SwiftyBeaver: 949aa1439b8fa3667f68555cfef65de46a70ccde
+  SwiftyBeaver: 78d9186ce7595b4400ce01e5fd750d263e72dd7b
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  TRON: 7b9adeb678fe0e25433d207f6a734aaf145fa9b5
+  TRON: dd43f2d37b70ae245e5fef4a52f1ab8a5eaac3a5
+  UICircularProgressRing: 8d7904a0eda5a7c821b5852b36c37683867149a8
 
-PODFILE CHECKSUM: b4b3597db85d437934ec360f293f21702c70f8cb
+PODFILE CHECKSUM: 33b1e074f7a4ef252c070c6d03b705eaccfd6456
 
 COCOAPODS: 1.3.1

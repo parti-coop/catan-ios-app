@@ -146,7 +146,7 @@ class PostImageFileSourcesView: UIStackView {
         if post.fileSourcesOnlyImage().count == 1 {
             return CGFloat(0)
         } else if post.fileSourcesOnlyImage().count > 1 {
-            return Style.dimension.postCell.remainImageFileSourceHeight
+            return Style.dimension.postCell.imageFileSourceSpace
         } else {
             return defaultMargin
         }

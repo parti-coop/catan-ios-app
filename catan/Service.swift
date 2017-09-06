@@ -31,6 +31,13 @@ struct Service {
         }
     }
     
+    class DownloadError: JSONDecodable {
+        required init(json: JSON) throws {
+            //TODO: 오류처리
+            print("다운로드가 취소됩니다")
+        }
+    }
+    
     static func defaultManager() -> SessionManager {
         return buildManager()
 
@@ -70,6 +77,19 @@ struct Service {
     
     func requestAuthenticated<T : JSONDecodable>(_ path: String, method: Alamofire.HTTPMethod = .get, parameters: [String: Any] = [:]) -> APIRequest<T, JSONError> {
         return request(path, tron: tronAuthenticated, method: method, parameters: parameters)
+    }
+    
+    func downloadAuthenticated(_ path: String, parameters: [String: Any] = [:], resumingFrom: Data? = nil, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<EmptyResponse, DownloadError> {
+        let request: DownloadAPIRequest<EmptyResponse, DownloadError> = {
+            if let resumingFrom = resumingFrom {
+                return tronAuthenticated.download(path, to: destination, resumingFrom: resumingFrom)
+            } else {
+                return tronAuthenticated.download(path, to: destination)
+            }
+        }()
+        request.parameters = parameters
+        request.validationClosure = { $0.validate(statusCode: (200..<300)) }
+        return request
     }
     
     func auth(facebookAccessToken: String, withSuccess successBlock: (() -> Void)?, failure failureBlock: ((Error) -> Void)?) {
@@ -139,6 +159,11 @@ struct PostRequestFactory {
     static func fetchPageOnDashBoard(lastPostId: Int? = nil) -> APIRequest<Page<Post>, Service.JSONError> {
         let request: APIRequest<Page<Post>, Service.JSONError> = Service.sharedInstance.requestAuthenticated("/api/v1/posts/dashboard")
         request.parameters["last_id"] = lastPostId
+        return request
+    }
+    
+    static func download(postId: Int, fileSourceId: Int, resumingFrom: Data? = nil, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<EmptyResponse, Service.DownloadError> {
+        let request: DownloadAPIRequest<EmptyResponse, Service.DownloadError> = Service.sharedInstance.downloadAuthenticated("/api/v1/posts/\(postId)/download_file/\(fileSourceId)", resumingFrom: resumingFrom, to: destination)
         return request
     }
 }

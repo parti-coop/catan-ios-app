@@ -24,6 +24,8 @@
 // THE SOFTWARE.
 
 import Foundation
+
+#if os(iOS)
 import UIKit
 import Alamofire
 
@@ -56,3 +58,5 @@ open class NetworkActivityPlugin : Plugin {
         networkActivityCount -= 1
     }
 }
+
+#endif

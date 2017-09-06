@@ -23,6 +23,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import Foundation
 import Alamofire
 
 public enum DownloadRequestType {
@@ -53,6 +54,9 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
     
     /// Serializes received error into APIError<ErrorModel>
     open var errorParser : DownloadErrorParser
+    
+    /// Closure that is applied to request before it is sent.
+    open var validationClosure: (DownloadRequest) -> DownloadRequest = { $0.validate() }
     
     // Creates `DownloadAPIRequest` with specified `type`, `path` and configures it with to be used with `tron`.
     public init<Serializer : ErrorHandlingDownloadResponseSerializerProtocol>(type: DownloadRequestType, path: String, tron: TRON, responseSerializer: Serializer)
@@ -110,7 +114,7 @@ open class DownloadAPIRequest<Model, ErrorModel>: BaseRequest<Model,ErrorModel> 
             request.resume()
         }
         didSendAlamofireRequest(request)
-        return request.validate().response(queue: resultDeliveryQueue, responseSerializer: downloadResponseSerializer(with: request), completionHandler: { downloadResponse in
+        return validationClosure(request).response(queue: resultDeliveryQueue, responseSerializer: downloadResponseSerializer(with: request), completionHandler: { downloadResponse in
             self.didReceiveDownloadResponse(downloadResponse, forRequest: request)
             completion(downloadResponse)
         })

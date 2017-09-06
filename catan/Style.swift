@@ -17,6 +17,7 @@ struct Style {
     }
     
     struct font {
+        static let defaultThin = UIFont.systemFont(ofSize: 17, weight: UIFontWeightThin)
         static let defaultBold = UIFont.boldSystemFont(ofSize: 17)
         static let defaultNormal = UIFont.systemFont(ofSize: 17)
         static let smallNormal = UIFont.systemFont(ofSize: 15)
@@ -41,6 +42,8 @@ struct Style {
             static let firstImageFileSourceMaxHeight = CGFloat(1000)
             static let remainImageFileSourceHeight = CGFloat(150)
             static let postAdditionalViewSpace = dimension.defaultSpace
+            static let downloadButtonSize = CGFloat(50)
+            static let downloadProgressRingSize = CGFloat(22)
         }
         struct commentView {
             static let paddingLeft: CGFloat = 16
