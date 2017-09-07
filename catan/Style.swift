@@ -11,13 +11,16 @@ import BonMot
 
 struct Style {
     struct string {
+        static let largeThin = StringStyle.Part.font(font.largeThin)
         static let defaultNormal = StringStyle.Part.font(font.defaultNormal)
         static let defaultBold = StringStyle.Part.font(font.defaultBold)
         static let defaultSmall = StringStyle.Part.font(font.smallNormal)
     }
     
     struct font {
+        static let largeThin = UIFont.systemFont(ofSize: 20, weight: UIFontWeightThin)
         static let defaultThin = UIFont.systemFont(ofSize: 17, weight: UIFontWeightThin)
+        static let smallThin = UIFont.systemFont(ofSize: 15, weight: UIFontWeightThin)
         static let defaultBold = UIFont.boldSystemFont(ofSize: 17)
         static let defaultNormal = UIFont.systemFont(ofSize: 17)
         static let smallNormal = UIFont.systemFont(ofSize: 15)
@@ -39,11 +42,13 @@ struct Style {
             static let paddingRight: CGFloat = 16
             static let imageFileSourceSpace: CGFloat = dimension.smallSpace
             static let documentFileSourceSpace: CGFloat = dimension.smallSpace
-            static let firstImageFileSourceMaxHeight = CGFloat(1000)
-            static let remainImageFileSourceHeight = CGFloat(150)
+            static let firstImageFileSourceMaxHeight: CGFloat = 1000
+            static let remainImageFileSourceHeight: CGFloat = 150
             static let postAdditionalViewSpace = dimension.defaultSpace
-            static let downloadButtonSize = CGFloat(50)
-            static let downloadProgressRingSize = CGFloat(22)
+            static let downloadButtonSize: CGFloat = 50
+            static let downloadProgressRingSize: CGFloat = 22
+            static let linkSourceImageSize: CGFloat = 150
+            static let linkSourceDesciptionPadding: CGFloat = 16
         }
         struct commentView {
             static let paddingLeft: CGFloat = 16

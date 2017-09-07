@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import TRON
 
 class Formatter {
     
@@ -32,7 +33,6 @@ class Formatter {
 }
 
 extension JSON {
-    
     public var date: Date? {
         get {
             switch self.type {
@@ -55,4 +55,8 @@ extension JSON {
         }
     }
     
+    func decode<T: JSONDecodable>() throws -> T? {
+        if self.isEmpty { return nil }
+        return try T(json: self)
+    }
 }

@@ -14,4 +14,8 @@ extension String {
     func isBlank() -> Bool {
         return strip().isEmpty
     }
+    
+    func isPresent() -> Bool {
+        return !isBlank()
+    }
 }

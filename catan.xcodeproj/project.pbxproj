@@ -10,6 +10,8 @@
 		7E07E995E6BD7319575982DA /* Pods_catan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C84A87796FB7AC1FFC93CE /* Pods_catan.framework */; };
 		98145B771F42BDD50083349F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98145B761F42BDD50083349F /* AppDelegate.swift */; };
 		98145B7E1F42BDD50083349F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7D1F42BDD50083349F /* Assets.xcassets */; };
+		98392D6F1F6094A80027C966 /* LinkSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98392D6E1F6094A80027C966 /* LinkSourceView.swift */; };
+		98392D711F6095B80027C966 /* LinkSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98392D701F6095B80027C966 /* LinkSource.swift */; };
 		983A11631F590D5E000D7D7F /* CommentBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983A11621F590D5E000D7D7F /* CommentBodyView.swift */; };
 		983A11651F59B9AF000D7D7F /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983A11641F59B9AF000D7D7F /* Date+Extension.swift */; };
 		983A11671F5A81FF000D7D7F /* FileSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983A11661F5A81FF000D7D7F /* FileSource.swift */; };
@@ -52,6 +54,8 @@
 		98145B761F42BDD50083349F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98145B7D1F42BDD50083349F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98145B821F42BDD50083349F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		98392D6E1F6094A80027C966 /* LinkSourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkSourceView.swift; sourceTree = "<group>"; };
+		98392D701F6095B80027C966 /* LinkSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkSource.swift; sourceTree = "<group>"; };
 		983A11621F590D5E000D7D7F /* CommentBodyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentBodyView.swift; sourceTree = "<group>"; };
 		983A11641F59B9AF000D7D7F /* Date+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		983A11661F5A81FF000D7D7F /* FileSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSource.swift; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 				983A11681F5A8E37000D7D7F /* PostAdditionalView.swift */,
 				983A116C1F5BEF2B000D7D7F /* PostImageFileSourcesView.swift */,
 				985BED7F1F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift */,
+				98392D6E1F6094A80027C966 /* LinkSourceView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -223,6 +228,7 @@
 				985100EA1F4D84F1009BE875 /* Group.swift */,
 				989798591F54D8BE00A5F67B /* Comment.swift */,
 				983A11661F5A81FF000D7D7F /* FileSource.swift */,
+				98392D701F6095B80027C966 /* LinkSource.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -409,12 +415,14 @@
 				98E663521F490CE400455CEB /* DashboardController.swift in Sources */,
 				985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */,
 				983A11631F590D5E000D7D7F /* CommentBodyView.swift in Sources */,
+				98392D711F6095B80027C966 /* LinkSource.swift in Sources */,
 				9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */,
 				985100FB1F4FCF8C009BE875 /* CatanLabel.swift in Sources */,
 				983A11651F59B9AF000D7D7F /* Date+Extension.swift in Sources */,
 				98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */,
 				98A5F4F71F449AD600E6D781 /* Service.swift in Sources */,
 				983A116D1F5BEF2B000D7D7F /* PostImageFileSourcesView.swift in Sources */,
+				98392D6F1F6094A80027C966 /* LinkSourceView.swift in Sources */,
 				985100DD1F4D0022009BE875 /* Post.swift in Sources */,
 				985101051F52581C009BE875 /* CollapsibleTopConstrain.swift in Sources */,
 				985100FD1F501B2F009BE875 /* PostTitleAndBodyView.swift in Sources */,

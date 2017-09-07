@@ -18,10 +18,16 @@ class PostAdditionalView: UIStackView {
             if post != nil {
                 fatalError("데이터가 지정되기 전에 폭을 설정해야 합니다")
             }
+            linkSourceView.forceWidth = forceWidth
             documentFileSourcesView.forceWidth = forceWidth
             imageFileSourcesView.forceWidth = forceWidth
         }
     }
+    
+    let linkSourceView: LinkSourceView = {
+        let view = LinkSourceView()
+        return view
+    }()
     
     let documentFileSourcesView: PostDocumentFileSourcesView = {
         let view = PostDocumentFileSourcesView()
@@ -37,6 +43,7 @@ class PostAdditionalView: UIStackView {
         didSet {
             removeAllArrangedSubview()
 
+            linkSourceView.post = post
             imageFileSourcesView.post = post
             documentFileSourcesView.post = post
             
@@ -46,6 +53,12 @@ class PostAdditionalView: UIStackView {
     }
     
     fileprivate func setupViews() {
+        if(linkSourceView.visible()) {
+            addArrangedSubview(linkSourceView)
+            linkSourceView.anchor(left: leftAnchor, right: rightAnchor,
+                                  leftConstant: Style.dimension.postCell.paddingLeft, rightConstant: Style.dimension.postCell.paddingRight)
+        }
+        
         if(imageFileSourcesView.visible()) {
             addArrangedSubview(imageFileSourcesView)
         }
@@ -95,6 +108,11 @@ class PostAdditionalView: UIStackView {
         var isPostImageFileSourcesViewLastAdditionalView = false
         var rowCount = 0
         
+        let linkSourceHeight = LinkSourceView.estimateHeight(post: post, width: width)
+        if linkSourceHeight > 0 {
+            rowCount += 1
+        }
+
         let imageFileSourcesHeight = PostImageFileSourcesView.estimateHeight(post: post, width: width)
         if imageFileSourcesHeight > 0 {
             rowCount += 1
@@ -115,6 +133,6 @@ class PostAdditionalView: UIStackView {
         }
         let rowsSpace = CGFloat(max(0, rowCount - 1)) * Style.dimension.postCell.postAdditionalViewSpace
         
-        return imageFileSourcesHeight + documentFileSourcesHeight + bottomMargin + rowsSpace
+        return linkSourceHeight + imageFileSourcesHeight + documentFileSourcesHeight + bottomMargin + rowsSpace
     }
 }

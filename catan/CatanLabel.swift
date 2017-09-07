@@ -21,12 +21,19 @@ class CatanLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    static func estimateHeight(text: String, width: CGFloat, of prototype: CatanLabel, greaterThanOrEqualToHeight: CGFloat) -> CGFloat {
+    static func estimateHeight(text: String, width: CGFloat, of prototype: CatanLabel, greaterThanOrEqualToHeight: CGFloat = 0) -> CGFloat {
         let dummyView = CatanLabel()
         dummyView.text = text
         dummyView.font = prototype.font
         dummyView.numberOfLines = prototype.numberOfLines
         return max(dummyView.estimateContentHeight(width: width), greaterThanOrEqualToHeight)
+    }
+    
+    static func estimateHeight(attributedText: NSAttributedString, of prototype: CatanLabel, width: CGFloat) -> CGFloat {
+        let dummyView = CatanLabel()
+        dummyView.attributedText = attributedText
+        dummyView.numberOfLines = prototype.numberOfLines
+        return dummyView.estimateContentHeight(width: width)
     }
 
     fileprivate func estimateContentHeight(width: CGFloat) -> CGFloat {

@@ -31,6 +31,7 @@ struct Post: JSONDecodable {
         } else {
             latestComments = [Comment]()
         }
+        linkSource = try json["link_source"].decode()
         if let fileSourcesJSON = json["file_sources"].array {
             fileSources = try fileSourcesJSON.decode()
         } else {
@@ -53,7 +54,7 @@ struct Post: JSONDecodable {
     let commentsCount: Int
     var latestComments: [Comment]
     //Comment sticky_comment;
-    //LinkSource link_source;
+    let linkSource: LinkSource?
     //Poll poll;
     //Survey survey;
     //Wiki wiki;

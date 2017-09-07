@@ -62,7 +62,6 @@ class PostDocumentFileSourceView: UIView, FileSourceDownloadDelegate {
     
     let downloadControlContainer: UIView = {
         let view = UIView()
-        view.backgroundColor = .green
         return view
     }()
     
