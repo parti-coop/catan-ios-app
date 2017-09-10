@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import KRWordWrapLabel
 
-class CatanLabel: UILabel {
+class CatanLabel: KRWordWrapLabel {
     var greaterThanOrEqualToHeight: CGFloat?
     
     public init(text: String? = nil, font: UIFont? = nil) {
@@ -26,6 +27,7 @@ class CatanLabel: UILabel {
         dummyView.text = text
         dummyView.font = prototype.font
         dummyView.numberOfLines = prototype.numberOfLines
+        dummyView.lineBreakMode = prototype.lineBreakMode
         return max(dummyView.estimateContentHeight(width: width), greaterThanOrEqualToHeight)
     }
     
@@ -33,6 +35,7 @@ class CatanLabel: UILabel {
         let dummyView = CatanLabel()
         dummyView.attributedText = attributedText
         dummyView.numberOfLines = prototype.numberOfLines
+        dummyView.lineBreakMode = prototype.lineBreakMode
         return dummyView.estimateContentHeight(width: width)
     }
 

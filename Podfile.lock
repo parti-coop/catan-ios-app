@@ -31,6 +31,7 @@ PODS:
   - KeychainAccess (3.0.2)
   - Keys (1.0.0)
   - Kingfisher (3.12.2)
+  - KRWordWrapLabel (2.0.1)
   - LBTAComponents (0.1.9)
   - SwiftyBeaver (1.4.0)
   - SwiftyJSON (3.1.4)
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - KeychainAccess
   - Keys (from `Pods/CocoaPodsKeys`)
   - Kingfisher (~> 3.0)
+  - KRWordWrapLabel
   - LBTAComponents (~> 0.1.9)
   - SwiftyBeaver
   - TRON (~> 3.0.0)
@@ -82,12 +84,13 @@ SPEC CHECKSUMS:
   KeychainAccess: a986406022dfc7c634c691ad3bec670cc6a32002
   Keys: 9c35bf00f612ee1d48556f4a4b9b4551e224e90f
   Kingfisher: 320626678acadfcf47008b3c6841cd882050737b
+  KRWordWrapLabel: a70d0e2c2baaab6e39bda828b9e83d47dab853e1
   LBTAComponents: 9a5d314080d1f80208062ccc81a2d25225c5f572
   SwiftyBeaver: 78d9186ce7595b4400ce01e5fd750d263e72dd7b
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   TRON: dd43f2d37b70ae245e5fef4a52f1ab8a5eaac3a5
   UICircularProgressRing: 8d7904a0eda5a7c821b5852b36c37683867149a8
 
-PODFILE CHECKSUM: 33b1e074f7a4ef252c070c6d03b705eaccfd6456
+PODFILE CHECKSUM: a55ebc167e68bcb9a7ce6d49c5d6785835ef33b6
 
 COCOAPODS: 1.3.1

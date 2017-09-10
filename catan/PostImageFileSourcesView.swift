@@ -23,7 +23,7 @@ class PostImageFileSourcesView: UIStackView {
     
     var post: Post? {
         didSet {
-            removeAllArrangedSubview()
+            removeAllArrangedSubviews()
             
             if let post = post {
                 let fileSourcesOnlyImage = post.fileSourcesOnlyImage()
@@ -36,12 +36,6 @@ class PostImageFileSourcesView: UIStackView {
                 }
             }
             setNeedsLayout()
-        }
-    }
-    
-    fileprivate func removeAllArrangedSubview() {
-        for view in arrangedSubviews {
-            view.removeFromSuperview()
         }
     }
     

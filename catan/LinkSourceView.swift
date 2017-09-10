@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BonMot
 
 class LinkSourceView: UIStackView {
     // TODO: 높이를 캐시합니다.
@@ -72,21 +73,16 @@ class LinkSourceView: UIStackView {
         }
     }
     
-    fileprivate func removeAllArrangedSubviews() {
-        for view in arrangedSubviews {
-            view.removeFromSuperview()
-        }
-    }
-    
     static fileprivate func buildSiteNameText(linkSource: LinkSource) -> NSAttributedString {
         return NSAttributedString.composed(of: [
-            #imageLiteral(resourceName: "external_link").withRenderingMode(.alwaysOriginal).tintedImage(color: .app_gray).styled(with: .baselineOffset(-2)), " ",
+            #imageLiteral(resourceName: "external_link").withRenderingMode(.alwaysOriginal).tintedImage(color: .app_gray).styled(with: .baselineOffset(-2)),
+            Special.noBreakSpace,
             linkSource.siteName])
     }
     
     let borderView: UIView = {
         let view = UIView()
-        view.layer.borderWidth = 1;
+        view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.app_light_gray.cgColor
         view.layer.cornerRadius = Style.dimension.defaultRadius
         view.layer.masksToBounds = true
@@ -122,6 +118,8 @@ class LinkSourceView: UIStackView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.app_light_gray.cgColor
         
         return imageView
     }()

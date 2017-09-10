@@ -49,6 +49,10 @@ struct Style {
             static let downloadProgressRingSize: CGFloat = 22
             static let linkSourceImageSize: CGFloat = 150
             static let linkSourceDesciptionPadding: CGFloat = 16
+            static let pollPadding: CGFloat = 16
+            static let pollVoteButtonWidth: CGFloat = 100
+            static let pollVoteButtonHeight: CGFloat = 60
+            static let postVoteUserImageSize: CGFloat = 14
         }
         struct commentView {
             static let paddingLeft: CGFloat = 16

@@ -201,7 +201,7 @@ class PostDocumentFileSourcesView: UIStackView {
     
     var post: Post? {
         didSet {
-            removeAllArrangedSubview()
+            removeAllArrangedSubviews()
             
             if let post = post {
                 let fileSourcesOnlyDocument = post.fileSourcesOnlyDocument()
@@ -211,12 +211,6 @@ class PostDocumentFileSourcesView: UIStackView {
                 }
             }
             setNeedsLayout()
-        }
-    }
-    
-    fileprivate func removeAllArrangedSubview() {
-        for view in arrangedSubviews {
-            view.removeFromSuperview()
         }
     }
     

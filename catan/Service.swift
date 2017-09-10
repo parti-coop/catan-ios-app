@@ -168,3 +168,14 @@ struct PostRequestFactory {
     }
 }
 
+struct VotingRequestFactory {
+    static func post(pollId: Int, choice: String) -> APIRequest<EmptyResponse, Service.JSONError> {
+        return Service.sharedInstance
+            .requestAuthenticated("/api/v1/votings/",
+                                  method: .post,
+                                  parameters: [
+                                    "poll_id": pollId,
+                                    "choice": choice])
+    }
+}
+
