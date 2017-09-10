@@ -59,7 +59,7 @@ struct Post: JSONDecodable {
     //Comment sticky_comment;
     let linkSource: LinkSource?
     var poll: Poll?
-    //Survey survey;
+    var survey: Survey?
     //Wiki wiki;
     //Share share;
     let fileSources: [FileSource];

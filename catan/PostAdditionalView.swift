@@ -18,6 +18,7 @@ class PostAdditionalView: UIStackView {
             if post != nil {
                 fatalError("데이터가 지정되기 전에 폭을 설정해야 합니다")
             }
+            surveyView.forceWidth = forceWidth
             pollView.forceWidth = forceWidth
             linkSourceView.forceWidth = forceWidth
             documentFileSourcesView.forceWidth = forceWidth
@@ -27,6 +28,11 @@ class PostAdditionalView: UIStackView {
     
     let linkSourceView: LinkSourceView = {
         let view = LinkSourceView()
+        return view
+    }()
+    
+    let surveyView: SurveyView = {
+        let view = SurveyView()
         return view
     }()
     
@@ -49,6 +55,7 @@ class PostAdditionalView: UIStackView {
         didSet {
             removeAllArrangedSubviews()
 
+            surveyView.post = post
             pollView.post = post
             linkSourceView.post = post
             imageFileSourcesView.post = post
@@ -64,6 +71,12 @@ class PostAdditionalView: UIStackView {
             addArrangedSubview(linkSourceView)
             linkSourceView.anchor(left: leftAnchor, right: rightAnchor,
                                   leftConstant: Style.dimension.postCell.paddingLeft, rightConstant: Style.dimension.postCell.paddingRight)
+        }
+        
+        if(surveyView.visible()) {
+            addArrangedSubview(surveyView)
+            pollView.anchor(left: leftAnchor, right: rightAnchor,
+                            leftConstant: Style.dimension.postCell.paddingLeft, rightConstant: Style.dimension.postCell.paddingRight)
         }
         
         if(pollView.visible()) {
@@ -115,6 +128,11 @@ class PostAdditionalView: UIStackView {
         var isPostImageFileSourcesViewLastAdditionalView = false
         var rowCount = 0
         
+        let surveyHeight = SurveyView.estimateHeight(post: post, width: width)
+        if surveyHeight > 0 {
+            rowCount += 1
+        }
+        
         let pollHeight = PollView.estimateHeight(post: post, width: width)
         if pollHeight > 0 {
             rowCount += 1
@@ -145,6 +163,6 @@ class PostAdditionalView: UIStackView {
         }
         let rowsSpace = CGFloat(max(0, rowCount - 1)) * Style.dimension.postCell.postAdditionalViewSpace
         
-        return pollHeight + linkSourceHeight + imageFileSourcesHeight + documentFileSourcesHeight + bottomMargin + rowsSpace
+        return surveyHeight + pollHeight + linkSourceHeight + imageFileSourcesHeight + documentFileSourcesHeight + bottomMargin + rowsSpace
     }
 }
