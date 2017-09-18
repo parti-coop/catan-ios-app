@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7E07E995E6BD7319575982DA /* Pods_catan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C84A87796FB7AC1FFC93CE /* Pods_catan.framework */; };
+		98026F081F6FDFFA00E9B27A /* CellRefetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */; };
 		98145B771F42BDD50083349F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98145B761F42BDD50083349F /* AppDelegate.swift */; };
 		98145B7E1F42BDD50083349F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7D1F42BDD50083349F /* Assets.xcassets */; };
 		98392D6F1F6094A80027C966 /* LinkSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98392D6E1F6094A80027C966 /* LinkSourceView.swift */; };
@@ -24,6 +25,8 @@
 		9840295E1F655EF10087692A /* SurveyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9840295D1F655EF10087692A /* SurveyView.swift */; };
 		984029601F6602970087692A /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9840295F1F6602970087692A /* Survey.swift */; };
 		98467F1B1F56A7B3008EEB3D /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98467F1A1F56A7B3008EEB3D /* CommentView.swift */; };
+		984E333F1F6937C500760D97 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E333E1F6937C500760D97 /* Option.swift */; };
+		984E33411F693C7E00760D97 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E33401F693C7E00760D97 /* OptionView.swift */; };
 		985100D71F4CF109009BE875 /* DashboardDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100D61F4CF109009BE875 /* DashboardDatasource.swift */; };
 		985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100D81F4CF3A2009BE875 /* PostCell.swift */; };
 		985100DD1F4D0022009BE875 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100DC1F4D0022009BE875 /* Post.swift */; };
@@ -56,6 +59,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellRefetchable.swift; sourceTree = "<group>"; };
 		98145B731F42BDD50083349F /* catan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = catan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98145B761F42BDD50083349F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98145B7D1F42BDD50083349F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 		9840295D1F655EF10087692A /* SurveyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SurveyView.swift; sourceTree = "<group>"; };
 		9840295F1F6602970087692A /* Survey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Survey.swift; sourceTree = "<group>"; };
 		98467F1A1F56A7B3008EEB3D /* CommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
+		984E333E1F6937C500760D97 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
+		984E33401F693C7E00760D97 /* OptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
 		985100D61F4CF109009BE875 /* DashboardDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDatasource.swift; sourceTree = "<group>"; };
 		985100D81F4CF3A2009BE875 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCell.swift; path = ../PostCell.swift; sourceTree = "<group>"; };
 		985100DC1F4D0022009BE875 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -191,6 +197,8 @@
 				98392D6E1F6094A80027C966 /* LinkSourceView.swift */,
 				98392D721F616B8E0027C966 /* PollView.swift */,
 				9840295D1F655EF10087692A /* SurveyView.swift */,
+				984E33401F693C7E00760D97 /* OptionView.swift */,
+				98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -247,6 +255,7 @@
 				98392D701F6095B80027C966 /* LinkSource.swift */,
 				98392D741F616D7D0027C966 /* Poll.swift */,
 				9840295F1F6602970087692A /* Survey.swift */,
+				984E333E1F6937C500760D97 /* Option.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -366,6 +375,7 @@
 				"${BUILT_PRODUCTS_DIR}/Keys/Keys.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/LBTAComponents/LBTAComponents.framework",
+				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/TRON/TRON.framework",
@@ -389,6 +399,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Keys.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LBTAComponents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TRON.framework",
@@ -452,6 +463,7 @@
 				985101051F52581C009BE875 /* CollapsibleTopConstrain.swift in Sources */,
 				985100FD1F501B2F009BE875 /* PostTitleAndBodyView.swift in Sources */,
 				984029601F6602970087692A /* Survey.swift in Sources */,
+				98026F081F6FDFFA00E9B27A /* CellRefetchable.swift in Sources */,
 				98467F1B1F56A7B3008EEB3D /* CommentView.swift in Sources */,
 				98A5F4FC1F46642000E6D781 /* MainTabBarController.swift in Sources */,
 				98E663541F491AB700455CEB /* User.swift in Sources */,
@@ -460,12 +472,14 @@
 				98145B771F42BDD50083349F /* AppDelegate.swift in Sources */,
 				98E6635B1F4962D500455CEB /* UserSession.swift in Sources */,
 				98A5F4F31F440A3600E6D781 /* Style.swift in Sources */,
+				984E333F1F6937C500760D97 /* Option.swift in Sources */,
 				985101031F5183B7009BE875 /* LatestCommentsView.swift in Sources */,
 				98E663591F49602200455CEB /* ServiceHandler.swift in Sources */,
 				983A11671F5A81FF000D7D7F /* FileSource.swift in Sources */,
 				98A5F4FA1F4510A100E6D781 /* AuthToken.swift in Sources */,
 				985100E71F4D6C1E009BE875 /* IndicatorCell.swift in Sources */,
 				983A11691F5A8E37000D7D7F /* PostAdditionalView.swift in Sources */,
+				984E33411F693C7E00760D97 /* OptionView.swift in Sources */,
 				98E663571F4922AA00455CEB /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

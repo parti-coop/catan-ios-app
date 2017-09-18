@@ -57,7 +57,7 @@ class PollView: UIView {
         let view = UIStackView()
         view.distribution = .equalSpacing
         view.axis = .horizontal
-        view.spacing = 4
+        view.spacing = Style.dimension.smallSpace
         return view
     }()
     
@@ -65,7 +65,7 @@ class PollView: UIView {
         let view = UIStackView()
         view.distribution = .equalSpacing
         view.axis = .horizontal
-        view.spacing = 4
+        view.spacing = Style.dimension.smallSpace
         return view
     }()
     
@@ -228,7 +228,7 @@ class PollView: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: PollView.intrinsicContentWidth(width: forceWidth), height: PollView.estimateHeight(post: post, width: forceWidth))
+        return CGSize(width: forceWidth, height: PollView.estimateHeight(post: post, width: forceWidth))
     }
     
     func visible() -> Bool {
@@ -239,14 +239,10 @@ class PollView: UIView {
         return post?.poll != nil
     }
     
-    static fileprivate func intrinsicContentWidth(width: CGFloat) -> CGFloat {
-        return width - Style.dimension.postCell.paddingLeft - Style.dimension.postCell.paddingRight
-    }
-    
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
         guard let poll = post?.poll, PollView.visible(post) else { return CGFloat(0) }
         
-        let labelWidth = PollView.intrinsicContentWidth(width: width) - (Style.dimension.postCell.pollPadding * 2)
+        let labelWidth = width - (Style.dimension.postCell.pollPadding * 2)
         let titleLableHeight = CatanLabel.estimateHeight(text: poll.title, width: labelWidth, of: PollView.prototype.titleLabel)
 
         return titleLableHeight + CGFloat(Style.dimension.postCell.pollPadding * 2) + estimateVoteButtonHeight() + estimateVoteUsersHeight()

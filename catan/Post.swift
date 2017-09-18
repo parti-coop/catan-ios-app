@@ -9,8 +9,8 @@
 import TRON
 import SwiftyJSON
 
-struct Post: JSONDecodable {
-    init(json: JSON) throws {
+class Post: JSONDecodable {
+    required init(json: JSON) throws {
         id = json["id"].intValue
         parsedTitle = json["parsed_title"].stringValue
         parsedBody = json["parsed_body"].stringValue
@@ -32,6 +32,7 @@ struct Post: JSONDecodable {
             latestComments = [Comment]()
         }
 
+        survey = try json["survey"].decode()
         poll = try json["poll"].decode()
         linkSource = try json["link_source"].decode()
         

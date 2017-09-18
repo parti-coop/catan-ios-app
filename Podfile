@@ -22,6 +22,7 @@ target 'catan' do
   pod 'DateToolsSwift'
   pod 'UICircularProgressRing'
   pod 'KRWordWrapLabel'
+  pod 'M13Checkbox'
 
   plugin 'cocoapods-keys', {
       :project => "xyz.parti.catan"

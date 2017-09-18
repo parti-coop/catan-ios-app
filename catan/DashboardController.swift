@@ -9,7 +9,7 @@
 import UIKit
 import LBTAComponents
 
-class DashboardController: DatasourceController, DashboardDatasourceDelegate {
+class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController {
     //TODO: errorMessageLabel
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -42,6 +42,7 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate {
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 무한스크롤 - 다음페이지 로딩
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         
@@ -52,9 +53,18 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate {
         }
     }
     
+    // MARK: DashboardDatasourceDelegate 구현
+    
     func reloadData() {
-        self.collectionView?.reloadData()
+        collectionView?.reloadData()
         collectionView?.backgroundColor = UIColor.app_light_gray
+    }
+    
+    // MARK: PostRefetchableController 구현
+    
+    func refetch(post: Post) {
+        guard let datasource = datasource as? DashboardDatasource else { return }
+        datasource.fetch(post: post)
     }
     
     // 로그아웃 - 시작

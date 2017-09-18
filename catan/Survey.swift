@@ -19,6 +19,12 @@ class Survey: JSONDecodable {
         isOpen = json["is_open"].boolValue
         isFeedbackedByMe = json["is_feedbacked_by_me"].boolValue
         remainTimeHuman = json["remain_time_human"].stringValue
+        
+        if let optionsJSON = json["options"].array {
+            options = try optionsJSON.decode()
+        } else {
+            options = [Option]()
+        }
     }
     
     let id: Int
@@ -26,7 +32,7 @@ class Survey: JSONDecodable {
     let feedbackUsersCount: Int
     let expiresAt: Date?
     let multipleSelect: Bool
-    //let options
+    let options: [Option]
     let isOpen: Bool
     let isFeedbackedByMe: Bool
     let remainTimeHuman: String

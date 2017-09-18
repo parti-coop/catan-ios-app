@@ -30,11 +30,10 @@ class LinkSourceView: UIStackView {
                 if linkSource.imageUrl.isPresent() {
                     addArrangedSubview(imageView)
                     
-                    let width = LinkSourceView.intrinsicContentWidth(width: forceWidth)
                     let height = Style.dimension.postCell.linkSourceImageSize
-                    imageView.anchor(widthConstant: width, heightConstant: height)
+                    imageView.anchor(widthConstant: forceWidth, heightConstant: height)
                     
-                    let roundedRect = CGRect(x: 0, y: 0, width: width, height: height)
+                    let roundedRect = CGRect(x: 0, y: 0, width: forceWidth, height: height)
                     let path = UIBezierPath(roundedRect: roundedRect, byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: Style.dimension.defaultRadius, height: Style.dimension.defaultRadius))
                     let mask = CAShapeLayer()
                     mask.path = path.cgPath
@@ -163,7 +162,7 @@ class LinkSourceView: UIStackView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: LinkSourceView.intrinsicContentWidth(width: forceWidth), height: LinkSourceView.estimateHeight(post: post, width: forceWidth))
+        return CGSize(width: forceWidth, height: LinkSourceView.estimateHeight(post: post, width: forceWidth))
     }
     
     func visible() -> Bool {
@@ -196,11 +195,7 @@ class LinkSourceView: UIStackView {
         return titleHeight + bodyHeight + siteNameHeight + space
     }
     
-    static func intrinsicContentWidth(width: CGFloat) -> CGFloat {
-        return width - Style.dimension.postCell.paddingLeft - Style.dimension.postCell.paddingRight
-    }
-    
     static func intrinsicDescriptionWidth(width: CGFloat) -> CGFloat {
-        return intrinsicContentWidth(width: width) - 1 - Style.dimension.postCell.linkSourceDesciptionPadding - Style.dimension.postCell.linkSourceDesciptionPadding - 1
+        return width - 1 - Style.dimension.postCell.linkSourceDesciptionPadding - Style.dimension.postCell.linkSourceDesciptionPadding - 1
     }
 }

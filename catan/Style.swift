@@ -24,6 +24,7 @@ struct Style {
         static let defaultBold = UIFont.boldSystemFont(ofSize: 17)
         static let defaultNormal = UIFont.systemFont(ofSize: 17)
         static let smallNormal = UIFont.systemFont(ofSize: 15)
+        static let tinyNormal = UIFont.systemFont(ofSize: 13)
     }
     
     struct dimension {
@@ -53,6 +54,10 @@ struct Style {
             static let pollVoteButtonWidth: CGFloat = 100
             static let pollVoteButtonHeight: CGFloat = 60
             static let postVoteUserImageSize: CGFloat = 14
+            static let optionCheckSize: CGFloat = font.defaultNormal.pointSize
+            static let optionBarHeight: CGFloat = dimension.defautLineHeight
+            static let optionMetaHeight: CGFloat = dimension.largeLineHeight
+            static let surveyPadding: CGFloat = Style.dimension.defaultSpace
         }
         struct commentView {
             static let paddingLeft: CGFloat = 16

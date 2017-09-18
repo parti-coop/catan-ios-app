@@ -11,7 +11,11 @@ import Kingfisher
 import DateToolsSwift
 import BonMot
 
-class PostCell: DatasourceCell {
+protocol PostRefetchableController: NSObjectProtocol {
+    func refetch(post: Post)
+}
+
+class PostCell: DatasourceCell, CellRefetchable {
     static let heightCache = HeightCache()
     
     static let postTitleTextViewFontPointSize = CGFloat(18)
@@ -203,7 +207,8 @@ class PostCell: DatasourceCell {
         
         postAdditionalView.anchor(postTitleAndBodyView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
                                   topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
-        postAdditionalView.forceWidth = frame.width
+        postAdditionalView.forceWidth = PostCell.widthPostAdditionalViews(frame: frame)
+        postAdditionalView.cellRefetchable = self
     }
     
     fileprivate func setupActionButtons() {
@@ -233,7 +238,7 @@ class PostCell: DatasourceCell {
         
         latestCommentsView.anchor(commentingButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
                                   topConstant: Style.dimension.defaultSpace, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
-        latestCommentsView.forceWidth = frame.width
+        latestCommentsView.forceWidth = PostCell.widthLatestCommentsViews(frame: frame)
     }
     
     static func height(_ post: Post, frame: CGRect) -> CGFloat {
@@ -294,7 +299,11 @@ class PostCell: DatasourceCell {
     }
     
     static fileprivate func heightPostAdditionalViews(_ post: Post, frame: CGRect) -> CGFloat {
-        return PostAdditionalView.estimateHeight(post: post, width: frame.width)
+        return PostAdditionalView.estimateHeight(post: post, width: widthPostAdditionalViews(frame: frame))
+    }
+    
+    static fileprivate func widthPostAdditionalViews(frame: CGRect) -> CGFloat {
+        return frame.width
     }
     
     static fileprivate func heightActionButtons() -> CGFloat {
@@ -305,6 +314,19 @@ class PostCell: DatasourceCell {
     }
     
     static fileprivate func heightLatestCommentsViews(_ post: Post, frame: CGRect) -> CGFloat {
-        return LatestCommentsView.estimateHeight(post: post, width: frame.width)
+        return LatestCommentsView.estimateHeight(post: post, width: widthLatestCommentsViews(frame: frame))
+    }
+    
+    static fileprivate func widthLatestCommentsViews(frame: CGRect) -> CGFloat {
+        return frame.width
+    }
+    
+    // Mark: CellReloadable
+    
+    func refetch() {
+        guard let post = datasourceItem as? Post else { return }
+        guard let controller = controller as? PostRefetchableController else { return }
+        PostCell.heightCache.purgeHeight(forKey: post.id, onWidth: frame.width)
+        controller.refetch(post: post)
     }
 }

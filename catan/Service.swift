@@ -166,6 +166,10 @@ struct PostRequestFactory {
         let request: DownloadAPIRequest<EmptyResponse, Service.DownloadError> = Service.sharedInstance.downloadAuthenticated("/api/v1/posts/\(postId)/download_file/\(fileSourceId)", resumingFrom: resumingFrom, to: destination)
         return request
     }
+    
+    static func fetch(postId: Int) -> APIRequest<Post, Service.JSONError> {
+        return Service.sharedInstance.requestAuthenticated("/api/v1/posts/\(postId)")
+    }
 }
 
 struct VotingRequestFactory {
@@ -176,6 +180,17 @@ struct VotingRequestFactory {
                                   parameters: [
                                     "poll_id": pollId,
                                     "choice": choice])
+    }
+}
+
+struct FeedbackRequestFactory {
+    static func post(optionId: Int, selected: Bool) -> APIRequest<EmptyResponse, Service.JSONError> {
+        return Service.sharedInstance
+            .requestAuthenticated("/api/v1/feedbacks/",
+                                  method: .post,
+                                  parameters: [
+                                    "option_id": optionId,
+                                    "selected": selected ? "true" : "false"])
     }
 }
 

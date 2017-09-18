@@ -63,12 +63,13 @@ class DashboardDatasource: Datasource {
         self.isLoadingMore = true
        
         let lastPostId = posts.last?.id
-        PostRequestFactory.fetchPageOnDashBoard(lastPostId: lastPostId).resume { (page, error) in
+        PostRequestFactory.fetchPageOnDashBoard(lastPostId: lastPostId).resume { [weak self] (page, error) in
+            guard let strongSelf = self else { return }
             if let error = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
                 log.error("게시글 로딩 실패 : \(error.localizedDescription)")
-                self.isFinishedPagination = true
-                self.controller?.reloadData()
+                strongSelf.isFinishedPagination = true
+                strongSelf.controller?.reloadData()
                 return
             }
             
@@ -76,20 +77,37 @@ class DashboardDatasource: Datasource {
             
             DispatchQueue.main.async() {
                 for (index, _) in page.items.enumerated() {
-                    var post = page.items[index]
-                    post.titleAndBodyAttributedText = PostTitleAndBodyView.buildText(post)
-                    for (commentIndex, _) in page.items[index].latestComments.enumerated() {
-                        var comment = post.latestComments[commentIndex]
-                        comment.bodyAttributedText = CommentBodyView.buildBodyText(comment)
-                        post.latestComments[commentIndex] = comment
-                    }
-                    page.items[index] = post
+                    strongSelf.setupTexts(post: page.items[index])
                 }
-                self.posts += page.items
-                self.isFinishedPagination = !page.hasMoreItem
-                self.isLoadingMore = false
-                self.controller?.reloadData()
+                strongSelf.posts += page.items
+                strongSelf.isFinishedPagination = !page.hasMoreItem
+                strongSelf.isLoadingMore = false
+                strongSelf.controller?.reloadData()
             }
+        }
+    }
+    
+    func fetch(post: Post) {
+        PostRequestFactory.fetch(postId: post.id).resume { [weak self] (post, error) in
+            guard let strongSelf = self, let reloadedPost = post else { return }
+            
+            guard let index = strongSelf.posts.index(where: { (post) -> Bool in
+                post.id == reloadedPost.id
+            }) else { return }
+            
+            strongSelf.setupTexts(post: reloadedPost)
+            strongSelf.posts[index] = reloadedPost
+            
+            strongSelf.controller?.reloadData()
+        }
+    }
+    
+    func setupTexts(post: Post) {
+        post.titleAndBodyAttributedText = PostTitleAndBodyView.buildText(post)
+        for (commentIndex, _) in post.latestComments.enumerated() {
+            var comment = post.latestComments[commentIndex]
+            comment.bodyAttributedText = CommentBodyView.buildBodyText(comment)
+            post.latestComments[commentIndex] = comment
         }
     }
 }

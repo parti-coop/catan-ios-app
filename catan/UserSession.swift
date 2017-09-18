@@ -53,7 +53,8 @@ class UserSession {
     
     func cacheUser(completion: @escaping (User?, Error?) -> ()) {
         if isLogin() {
-            UserRequestFactory.fetchMe().resume { (user, error) in
+            UserRequestFactory.fetchMe().resume { [weak self] (user, error) in
+                guard let stongSelf = self else { return }
                 if let error = error {
                     // TODO: 로그인한 사용자가 없는지, 네트워크 오류인지 처리 필요
                     log.debug("User not found: \(error)")
@@ -62,8 +63,8 @@ class UserSession {
                     return
                 }
                 
-                self.user = user
-                completion(self.user, nil)
+                stongSelf.user = user
+                completion(stongSelf.user, nil)
             }
         }
     }
