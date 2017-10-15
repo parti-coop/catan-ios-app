@@ -8,6 +8,7 @@
 
 import UIKit
 import BonMot
+import KRWordWrapLabel
 
 class LinkSourceView: UIStackView {
     // TODO: 높이를 캐시합니다.
@@ -64,8 +65,6 @@ class LinkSourceView: UIStackView {
                                          leftConstant: Style.dimension.postCell.linkSourceDesciptionPadding, rightConstant: Style.dimension.postCell.linkSourceDesciptionPadding)
                 }
                 
-            } else {
-                
             }
             
             setNeedsLayout()
@@ -88,8 +87,8 @@ class LinkSourceView: UIStackView {
         return view
     }()
     
-    let titleLabel: CatanLabel = {
-        let label = CatanLabel()
+    let titleLabel: KRWordWrapLabel = {
+        let label = KRWordWrapLabel()
         label.font = Style.font.largeThin
         label.textColor = UIColor.app_gray
         label.numberOfLines = 2
@@ -97,16 +96,16 @@ class LinkSourceView: UIStackView {
         return label
     }()
     
-    let bodyLabel: CatanLabel = {
-        let label = CatanLabel()
+    let bodyLabel: KRWordWrapLabel = {
+        let label = KRWordWrapLabel()
         label.font = Style.font.defaultNormal
         label.textColor = UIColor.app_gray
         label.numberOfLines = 3
         return label
     }()
     
-    let siteNameLabel: CatanLabel = {
-        let label = CatanLabel()
+    let siteNameLabel: UILabel = {
+        let label = UILabel()
         label.font = Style.font.smallNormal
         label.textColor = UIColor.app_gray
         label.numberOfLines = 1
@@ -179,15 +178,15 @@ class LinkSourceView: UIStackView {
     
     static func estimateDescriptionHeight(linkSource: LinkSource, width: CGFloat) -> CGFloat {
         var subviewsCount = 0
-        let titleHeight = CatanLabel.estimateHeight(text: linkSource.title,
+        let titleHeight = UILabel.estimateHeight(text: linkSource.title,
                                                     width: intrinsicDescriptionWidth(width: width),
                                                     of: LinkSourceView.prototype.titleLabel)
         if !linkSource.title.isBlank() { subviewsCount += 1 }
-        let bodyHeight = CatanLabel.estimateHeight(text: linkSource.body,
+        let bodyHeight = UILabel.estimateHeight(text: linkSource.body,
                                                    width: intrinsicDescriptionWidth(width: width),
                                                    of: LinkSourceView.prototype.bodyLabel)
         if !linkSource.body.isBlank() { subviewsCount += 1 }
-        let siteNameHeight = CatanLabel.estimateHeight(attributedText: buildSiteNameText(linkSource: linkSource),
+        let siteNameHeight = UILabel.estimateHeight(attributedText: buildSiteNameText(linkSource: linkSource),
                                                        of: LinkSourceView.prototype.siteNameLabel,
                                                        width: intrinsicDescriptionWidth(width: width))
         if !linkSource.siteName.isBlank() { subviewsCount += 1 }

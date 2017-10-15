@@ -8,12 +8,13 @@
 
 import UIKit
 import BonMot
+import KRWordWrapLabel
 
 class PollView: UIView {
     static let prototype = PollView()
     
-    let titleLabel: CatanLabel = {
-        let label = CatanLabel()
+    let titleLabel: KRWordWrapLabel = {
+        let label = KRWordWrapLabel()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = Style.font.largeThin
@@ -243,7 +244,7 @@ class PollView: UIView {
         guard let poll = post?.poll, PollView.visible(post) else { return CGFloat(0) }
         
         let labelWidth = width - (Style.dimension.postCell.pollPadding * 2)
-        let titleLableHeight = CatanLabel.estimateHeight(text: poll.title, width: labelWidth, of: PollView.prototype.titleLabel)
+        let titleLableHeight = UILabel.estimateHeight(text: poll.title, width: labelWidth, of: PollView.prototype.titleLabel)
 
         return titleLableHeight + CGFloat(Style.dimension.postCell.pollPadding * 2) + estimateVoteButtonHeight() + estimateVoteUsersHeight()
     }

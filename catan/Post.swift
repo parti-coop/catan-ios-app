@@ -33,6 +33,7 @@ class Post: JSONDecodable {
         }
 
         survey = try json["survey"].decode()
+        wiki = try json["wiki"].decode()
         poll = try json["poll"].decode()
         linkSource = try json["link_source"].decode()
         
@@ -61,7 +62,7 @@ class Post: JSONDecodable {
     let linkSource: LinkSource?
     var poll: Poll?
     var survey: Survey?
-    //Wiki wiki;
+    var wiki: Wiki?
     //Share share;
     let fileSources: [FileSource];
     let latestStrokedActivity: String

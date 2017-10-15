@@ -58,6 +58,11 @@ class PostAdditionalView: UIStackView {
         return view
     }()
     
+    let wikiView: WikiView = {
+        let view = WikiView()
+        return view
+    }()
+    
     var post: Post? {
         didSet {
             removeAllArrangedSubviews()
@@ -67,6 +72,7 @@ class PostAdditionalView: UIStackView {
             linkSourceView.post = post
             imageFileSourcesView.post = post
             documentFileSourcesView.post = post
+            wikiView.post = post
             
             setupViews()
             setNeedsLayout()
@@ -89,6 +95,12 @@ class PostAdditionalView: UIStackView {
         if(pollView.visible()) {
             addArrangedSubview(pollView)
             pollView.anchor(left: leftAnchor, right: rightAnchor,
+                            leftConstant: Style.dimension.postCell.paddingLeft, rightConstant: Style.dimension.postCell.paddingRight)
+        }
+        
+        if(wikiView.visible()) {
+            addArrangedSubview(wikiView)
+            wikiView.anchor(left: leftAnchor, right: rightAnchor,
                             leftConstant: Style.dimension.postCell.paddingLeft, rightConstant: Style.dimension.postCell.paddingRight)
         }
         
@@ -151,6 +163,11 @@ class PostAdditionalView: UIStackView {
             rowCount += 1
         }
 
+        let wikiHeight = WikiView.estimateHeight(post: post, width: subviewWidth)
+        if wikiHeight > 0 {
+            rowCount += 1
+        }
+        
         // 양 사이드 마진없이 전체 폭으로 이미지를 위치시킨다.
         let imageFileSourcesWidth = width
         let imageFileSourcesHeight = PostImageFileSourcesView.estimateHeight(post: post, width: imageFileSourcesWidth)
@@ -173,7 +190,7 @@ class PostAdditionalView: UIStackView {
         }
         let rowsSpace = CGFloat(max(0, rowCount - 1)) * Style.dimension.postCell.postAdditionalViewSpace
         
-        return surveyHeight + pollHeight + linkSourceHeight + imageFileSourcesHeight + documentFileSourcesHeight + bottomMargin + rowsSpace
+        return surveyHeight + pollHeight + linkSourceHeight + wikiHeight + imageFileSourcesHeight + documentFileSourcesHeight + bottomMargin + rowsSpace
     }
     
     static func estimateSubviewWidth(width: CGFloat) -> CGFloat {

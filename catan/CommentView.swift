@@ -73,8 +73,8 @@ class CommentView: UIView {
         return button
     }()
     
-    let createdAtLabel: CatanLabel = {
-        let label = CatanLabel()
+    let createdAtLabel: UILabel = {
+        let label = UILabel()
         label.font = Style.font.smallNormal
         label.textColor = UIColor.app_gray
         return label

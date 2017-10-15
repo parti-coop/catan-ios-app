@@ -10,6 +10,7 @@ import LBTAComponents
 import Kingfisher
 import DateToolsSwift
 import BonMot
+import KRWordWrapLabel
 
 protocol PostRefetchableController: NSObjectProtocol {
     func refetch(post: Post)
@@ -74,8 +75,8 @@ class PostCell: DatasourceCell, CellRefetchable {
         return imageView
     }()
     
-    let partiTitleLabel: CatanLabel = {
-        let label = CatanLabel()
+    let partiTitleLabel: KRWordWrapLabel = {
+        let label = KRWordWrapLabel()
         label.font = Style.font.smallNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -91,16 +92,16 @@ class PostCell: DatasourceCell, CellRefetchable {
         return imageView
     }()
     
-    let userNicknameLabel: CatanLabel = {
-        let label = CatanLabel()
+    let userNicknameLabel: UILabel = {
+        let label = UILabel()
         label.font = Style.font.defaultBold
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         return label
     }()
     
-    let createdAtLabel: CatanLabel = {
-        let label = CatanLabel()
+    let createdAtLabel: UILabel = {
+        let label = UILabel()
         label.font = Style.font.smallNormal
         label.textColor = UIColor.app_gray
         return label
@@ -171,7 +172,7 @@ class PostCell: DatasourceCell, CellRefetchable {
         partiLogoImageView.anchor(baseTopAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: Style.dimension.defaultSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.defautLineHeight, heightConstant: Style.dimension.defautLineHeight)
         
         partiTitleLabel.anchor(baseTopAnchor, left: partiLogoImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.defaultSpace, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingLeft)
-        partiTitleLabel.greaterThanOrEqualToHeight(Style.dimension.defautLineHeight)
+        partiTitleLabel.anchorHeightGreaterThanOrEqualTo(Style.dimension.defautLineHeight)
         
         partiTitleDividerView.backgroundColor = UIColor.app_light_gray
         addSubview(partiTitleDividerView)
@@ -188,10 +189,10 @@ class PostCell: DatasourceCell, CellRefetchable {
         userImageView.anchor(baseTopAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: Style.dimension.defaultSpace, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.largeLineHeight, heightConstant: Style.dimension.largeLineHeight)
         
         userNicknameLabel.anchor(baseTopAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.defaultSpace, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingRight, widthConstant: 0)
-        userNicknameLabel.greaterThanOrEqualToHeight(Style.dimension.defautLineHeight)
+        userNicknameLabel.anchorHeightGreaterThanOrEqualTo(Style.dimension.defautLineHeight)
         
         createdAtLabel.anchor(userNicknameLabel.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: Style.dimension.xsmallSpace, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.postCell.paddingLeft, widthConstant: 0)
-        createdAtLabel.greaterThanOrEqualToHeight(Style.dimension.smallLineHeight)
+        createdAtLabel.anchorHeightGreaterThanOrEqualTo(Style.dimension.smallLineHeight)
     }
     
     fileprivate func setupPostBasicViews() {
@@ -253,7 +254,7 @@ class PostCell: DatasourceCell, CellRefetchable {
             - partiLogoImageViewWidth
             - Style.dimension.defaultSpace
             - Style.dimension.postCell.paddingRight
-        let partiTitleLabelHeight = CatanLabel.estimateHeight(text: PostCell.buildPartiTitleText(post), width: partiTitleLabelWidth, of: PostCell.prototype.partiTitleLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
+        let partiTitleLabelHeight = UILabel.estimateHeight(text: PostCell.buildPartiTitleText(post), width: partiTitleLabelWidth, of: PostCell.prototype.partiTitleLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
         let partiViewHeight = Style.dimension.defaultSpace
             + max(partiTitleLabelHeight, Style.dimension.defautLineHeight)
             + Style.dimension.defaultSpace
@@ -267,8 +268,8 @@ class PostCell: DatasourceCell, CellRefetchable {
             - userImageViewWidth
             - Style.dimension.defaultSpace
             - Style.dimension.postCell.paddingRight
-        let userNickNameLabelHeight = CatanLabel.estimateHeight(text: post.user.nickname, width: userNickNameLabelWidth, of: PostCell.prototype.userNicknameLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
-        let createdAtLabelHeight = CatanLabel.estimateHeight(text: PostCell.buildCreatedAtText(post), width: userNickNameLabelWidth, of: PostCell.prototype.createdAtLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
+        let userNickNameLabelHeight = UILabel.estimateHeight(text: post.user.nickname, width: userNickNameLabelWidth, of: PostCell.prototype.userNicknameLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
+        let createdAtLabelHeight = UILabel.estimateHeight(text: PostCell.buildCreatedAtText(post), width: userNickNameLabelWidth, of: PostCell.prototype.createdAtLabel, greaterThanOrEqualToHeight: Style.dimension.defautLineHeight)
         let userViewHeight = Style.dimension.defaultSpace
             + max(userImageViewHeight,
                 userNickNameLabelHeight

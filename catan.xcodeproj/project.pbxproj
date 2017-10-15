@@ -37,7 +37,6 @@
 		985100E91F4D82BC009BE875 /* Parti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100E81F4D82BC009BE875 /* Parti.swift */; };
 		985100EB1F4D84F1009BE875 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100EA1F4D84F1009BE875 /* Group.swift */; };
 		985100F01F4E9F71009BE875 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 985100F21F4E9F71009BE875 /* Localizable.strings */; };
-		985100FB1F4FCF8C009BE875 /* CatanLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100FA1F4FCF8C009BE875 /* CatanLabel.swift */; };
 		985100FD1F501B2F009BE875 /* PostTitleAndBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */; };
 		985100FF1F515CBA009BE875 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100FE1F515CBA009BE875 /* String.swift */; };
 		985101011F517A6C009BE875 /* HeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101001F517A6C009BE875 /* HeightCache.swift */; };
@@ -51,6 +50,10 @@
 		98A5F4F71F449AD600E6D781 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F61F449AD600E6D781 /* Service.swift */; };
 		98A5F4FA1F4510A100E6D781 /* AuthToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F91F4510A100E6D781 /* AuthToken.swift */; };
 		98A5F4FC1F46642000E6D781 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4FB1F46642000E6D781 /* MainTabBarController.swift */; };
+		98BE39691F9360F3007A15D7 /* WikiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE39681F9360F3007A15D7 /* WikiView.swift */; };
+		98BE396B1F937742007A15D7 /* Wiki.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE396A1F937742007A15D7 /* Wiki.swift */; };
+		98BE396D1F93AAEC007A15D7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE396C1F93AAEC007A15D7 /* UILabel+Extension.swift */; };
+		98BE396F1F93B0A7007A15D7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE396E1F93B0A7007A15D7 /* PaddingLabel.swift */; };
 		98E663521F490CE400455CEB /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E663511F490CE400455CEB /* DashboardController.swift */; };
 		98E663541F491AB700455CEB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E663531F491AB700455CEB /* User.swift */; };
 		98E663571F4922AA00455CEB /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E663561F4922AA00455CEB /* LoginController.swift */; };
@@ -91,7 +94,6 @@
 		985100EA1F4D84F1009BE875 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		985100F41F4E9F95009BE875 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		985100F51F4E9FC9009BE875 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		985100FA1F4FCF8C009BE875 /* CatanLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatanLabel.swift; sourceTree = "<group>"; };
 		985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTitleAndBodyView.swift; sourceTree = "<group>"; };
 		985100FE1F515CBA009BE875 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		985101001F517A6C009BE875 /* HeightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightCache.swift; sourceTree = "<group>"; };
@@ -106,6 +108,10 @@
 		98A5F4F61F449AD600E6D781 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		98A5F4F91F4510A100E6D781 /* AuthToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthToken.swift; sourceTree = "<group>"; };
 		98A5F4FB1F46642000E6D781 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		98BE39681F9360F3007A15D7 /* WikiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiView.swift; sourceTree = "<group>"; };
+		98BE396A1F937742007A15D7 /* Wiki.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wiki.swift; sourceTree = "<group>"; };
+		98BE396C1F93AAEC007A15D7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		98BE396E1F93B0A7007A15D7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		98E663511F490CE400455CEB /* DashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		98E663531F491AB700455CEB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		98E663561F4922AA00455CEB /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -183,10 +189,9 @@
 		985100DA1F4CFA0C009BE875 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				985101041F52581C009BE875 /* CollapsibleTopConstrain.swift */,
+				98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */,
 				985100D81F4CF3A2009BE875 /* PostCell.swift */,
 				985100E61F4D6C1E009BE875 /* IndicatorCell.swift */,
-				985100FA1F4FCF8C009BE875 /* CatanLabel.swift */,
 				985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */,
 				985101021F5183B7009BE875 /* LatestCommentsView.swift */,
 				98467F1A1F56A7B3008EEB3D /* CommentView.swift */,
@@ -198,7 +203,7 @@
 				98392D721F616B8E0027C966 /* PollView.swift */,
 				9840295D1F655EF10087692A /* SurveyView.swift */,
 				984E33401F693C7E00760D97 /* OptionView.swift */,
-				98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */,
+				98BE39681F9360F3007A15D7 /* WikiView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -227,6 +232,9 @@
 				983A11641F59B9AF000D7D7F /* Date+Extension.swift */,
 				984029591F6506980087692A /* String+Extension.swift */,
 				9840295B1F65540E0087692A /* UIStackView+Extension.swift */,
+				98BE396C1F93AAEC007A15D7 /* UILabel+Extension.swift */,
+				985101041F52581C009BE875 /* CollapsibleTopConstrain.swift */,
+				98BE396E1F93B0A7007A15D7 /* PaddingLabel.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -256,6 +264,7 @@
 				98392D741F616D7D0027C966 /* Poll.swift */,
 				9840295F1F6602970087692A /* Survey.swift */,
 				984E333E1F6937C500760D97 /* Option.swift */,
+				98BE396A1F937742007A15D7 /* Wiki.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -438,6 +447,7 @@
 				985100D71F4CF109009BE875 /* DashboardDatasource.swift in Sources */,
 				985101011F517A6C009BE875 /* HeightCache.swift in Sources */,
 				985100E51F4D27FC009BE875 /* Collection+Extension.swift in Sources */,
+				98BE396D1F93AAEC007A15D7 /* UILabel+Extension.swift in Sources */,
 				985100FF1F515CBA009BE875 /* String.swift in Sources */,
 				985100DF1F4D19DC009BE875 /* JSON+Extension.swift in Sources */,
 				985100EB1F4D84F1009BE875 /* Group.swift in Sources */,
@@ -451,12 +461,12 @@
 				98392D711F6095B80027C966 /* LinkSource.swift in Sources */,
 				9840295E1F655EF10087692A /* SurveyView.swift in Sources */,
 				9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */,
-				985100FB1F4FCF8C009BE875 /* CatanLabel.swift in Sources */,
 				983A11651F59B9AF000D7D7F /* Date+Extension.swift in Sources */,
 				98392D731F616B8E0027C966 /* PollView.swift in Sources */,
 				98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */,
 				98A5F4F71F449AD600E6D781 /* Service.swift in Sources */,
 				9840295C1F65540E0087692A /* UIStackView+Extension.swift in Sources */,
+				98BE39691F9360F3007A15D7 /* WikiView.swift in Sources */,
 				983A116D1F5BEF2B000D7D7F /* PostImageFileSourcesView.swift in Sources */,
 				98392D6F1F6094A80027C966 /* LinkSourceView.swift in Sources */,
 				985100DD1F4D0022009BE875 /* Post.swift in Sources */,
@@ -475,7 +485,9 @@
 				984E333F1F6937C500760D97 /* Option.swift in Sources */,
 				985101031F5183B7009BE875 /* LatestCommentsView.swift in Sources */,
 				98E663591F49602200455CEB /* ServiceHandler.swift in Sources */,
+				98BE396B1F937742007A15D7 /* Wiki.swift in Sources */,
 				983A11671F5A81FF000D7D7F /* FileSource.swift in Sources */,
+				98BE396F1F93B0A7007A15D7 /* PaddingLabel.swift in Sources */,
 				98A5F4FA1F4510A100E6D781 /* AuthToken.swift in Sources */,
 				985100E71F4D6C1E009BE875 /* IndicatorCell.swift in Sources */,
 				983A11691F5A8E37000D7D7F /* PostAdditionalView.swift in Sources */,

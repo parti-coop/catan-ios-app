@@ -58,6 +58,7 @@ struct Style {
             static let optionBarHeight: CGFloat = dimension.defautLineHeight
             static let optionMetaHeight: CGFloat = dimension.largeLineHeight
             static let surveyPadding: CGFloat = Style.dimension.defaultSpace
+            static let wikiPadding: CGFloat = Style.dimension.defaultSpace
         }
         struct commentView {
             static let paddingLeft: CGFloat = 16

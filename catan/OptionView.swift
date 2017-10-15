@@ -8,6 +8,7 @@
 
 import UIKit
 import M13Checkbox
+import KRWordWrapLabel
 
 class OptionView: UIView {
     static let prototype = OptionView(forceWidth: 0)
@@ -16,8 +17,8 @@ class OptionView: UIView {
     
     // MARK: 컴포넌트
     
-    let bodyLabel: CatanLabel = {
-        let label = CatanLabel()
+    let bodyLabel: KRWordWrapLabel = {
+        let label = KRWordWrapLabel()
         label.font = Style.font.defaultNormal
         label.textColor = UIColor.app_gray
         label.numberOfLines = 0
@@ -193,7 +194,7 @@ class OptionView: UIView {
         
         let bodyTextWidth = OptionView.estimateOptionBodyViewWidth(width: width)
         
-        return CatanLabel.estimateHeight(text: option.body, width: bodyTextWidth, of: OptionView.prototype.bodyLabel)
+        return UILabel.estimateHeight(text: option.body, width: bodyTextWidth, of: OptionView.prototype.bodyLabel)
     }
     
     static fileprivate func estimateOptionBodyViewWidth(width: CGFloat) -> CGFloat {
