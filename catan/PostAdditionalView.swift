@@ -151,7 +151,9 @@ class PostAdditionalView: UIStackView {
             rowCount += 1
         }
 
-        let imageFileSourcesHeight = PostImageFileSourcesView.estimateHeight(post: post, width: subviewWidth)
+        // 양 사이드 마진없이 전체 폭으로 이미지를 위치시킨다.
+        let imageFileSourcesWidth = width
+        let imageFileSourcesHeight = PostImageFileSourcesView.estimateHeight(post: post, width: imageFileSourcesWidth)
         if imageFileSourcesHeight > 0 {
             rowCount += 1
             isPostImageFileSourcesViewLastAdditionalView = true
