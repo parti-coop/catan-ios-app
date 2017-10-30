@@ -11,6 +11,7 @@
 		98026F081F6FDFFA00E9B27A /* CellRefetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */; };
 		98145B771F42BDD50083349F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98145B761F42BDD50083349F /* AppDelegate.swift */; };
 		98145B7E1F42BDD50083349F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7D1F42BDD50083349F /* Assets.xcassets */; };
+		982377421FA7E75300CA5360 /* PostActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982377411FA7E75300CA5360 /* PostActionBarView.swift */; };
 		98392D6F1F6094A80027C966 /* LinkSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98392D6E1F6094A80027C966 /* LinkSourceView.swift */; };
 		98392D711F6095B80027C966 /* LinkSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98392D701F6095B80027C966 /* LinkSource.swift */; };
 		98392D731F616B8E0027C966 /* PollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98392D721F616B8E0027C966 /* PollView.swift */; };
@@ -68,6 +69,7 @@
 		98145B761F42BDD50083349F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98145B7D1F42BDD50083349F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98145B821F42BDD50083349F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		982377411FA7E75300CA5360 /* PostActionBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostActionBarView.swift; sourceTree = "<group>"; };
 		98392D6E1F6094A80027C966 /* LinkSourceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkSourceView.swift; sourceTree = "<group>"; };
 		98392D701F6095B80027C966 /* LinkSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkSource.swift; sourceTree = "<group>"; };
 		98392D721F616B8E0027C966 /* PollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollView.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 			children = (
 				98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */,
 				985100D81F4CF3A2009BE875 /* PostCell.swift */,
+				982377411FA7E75300CA5360 /* PostActionBarView.swift */,
 				985100E61F4D6C1E009BE875 /* IndicatorCell.swift */,
 				985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */,
 				985101021F5183B7009BE875 /* LatestCommentsView.swift */,
@@ -487,6 +490,7 @@
 				98E6635B1F4962D500455CEB /* UserSession.swift in Sources */,
 				98A5F4F31F440A3600E6D781 /* Style.swift in Sources */,
 				984E333F1F6937C500760D97 /* Option.swift in Sources */,
+				982377421FA7E75300CA5360 /* PostActionBarView.swift in Sources */,
 				985101031F5183B7009BE875 /* LatestCommentsView.swift in Sources */,
 				98E663591F49602200455CEB /* ServiceHandler.swift in Sources */,
 				98BE396B1F937742007A15D7 /* Wiki.swift in Sources */,

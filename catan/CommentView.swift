@@ -70,8 +70,13 @@ class CommentView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("댓글달기", for: .normal)
         button.setTitleColor(.brand_primary, for: .normal)
+        button.addTarget(self, action: #selector(handleCommenting), for: .touchUpInside)
         return button
     }()
+    
+    func handleCommenting() {
+        print("click comment")
+    }
     
     let createdAtLabel: UILabel = {
         let label = UILabel()

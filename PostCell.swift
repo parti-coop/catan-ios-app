@@ -37,9 +37,9 @@ class PostCell: DatasourceCell, CellRefetchable {
             
             postTitleAndBodyView.post = post
             postAdditionalView.post = post
+            postActionBarView.post = post
             latestCommentsView.post = post
-            upvoteLabel.attributedText = buildUpvoteLabelText(post)
-
+            
             setNeedsLayout()
         }
     }
@@ -54,19 +54,6 @@ class PostCell: DatasourceCell, CellRefetchable {
     
     static fileprivate func buildCreatedAtText(_ post: Post) -> String {
         return post.createdAt?.timeAgoSinceNowApproximately ?? ""
-    }
-    
-    fileprivate func buildUpvoteLabelText(_ post: Post) -> NSAttributedString? {
-        if post.upvotesCount <= 0 { return nil }
-        
-        let color = (post.isUpvotedByMe ? UIColor.brand_primary : UIColor.gray)
-        let heartImage = #imageLiteral(resourceName: "hearts_filled").withRenderingMode(.alwaysTemplate).tintedImage(color: color)
-        
-        return NSAttributedString.composed(of: [
-            heartImage.styled(with: .baselineOffset(-2)),
-            Special.noBreakSpace,
-            String(post.upvotesCount).styled(with: Style.string.defaultSmall, .color(color))
-            ])
     }
     
     let partiLogoImageView: UIImageView = {
@@ -123,26 +110,11 @@ class PostCell: DatasourceCell, CellRefetchable {
         return view
     }()
     
-    let upvoteButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("공감해요", for: .normal)
-        button.setTitleColor(.gray, for: .normal)
-        return button
+    let postActionBarView: PostActionBarView = {
+        let view = PostActionBarView()
+        view.backgroundColor = .red
+        return view
     }()
-    
-    let commentingButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("댓글달기", for: .normal)
-        button.setTitleColor(.gray, for: .normal)
-        return button
-    }()
-    
-    let upvoteLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    let actionButtonsBottomView = UIView()
     
     let latestCommentsView: LatestCommentsView = {
         let view = LatestCommentsView()
@@ -214,31 +186,20 @@ class PostCell: DatasourceCell, CellRefetchable {
     
     fileprivate func setupActionButtons() {
         addSubview(actionDividerView)
-        addSubview(upvoteButton)
-        addSubview(commentingButton)
-        addSubview(upvoteLabel)
+        addSubview(postActionBarView)
         
         actionDividerView.anchor(postAdditionalView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
                                  topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: Style.dimension.defaultDividerHeight)
-        
-        let margin = Style.dimension.defaultSpace
-        
-        upvoteButton.anchor(actionDividerView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil,
-                            topConstant: margin, leftConstant: Style.dimension.postCell.paddingLeft, bottomConstant: 0, rightConstant: 0,
-                            heightConstant: Style.dimension.defautLineHeight)
-        commentingButton.anchor(actionDividerView.bottomAnchor, left: upvoteButton.rightAnchor, bottom: nil, right: nil,
-                                topConstant: margin, leftConstant: Style.dimension.largeSpace, bottomConstant: 0, rightConstant: 0,
-                                heightConstant: Style.dimension.defautLineHeight)
-        upvoteLabel.anchor(actionDividerView.bottomAnchor, left: commentingButton.rightAnchor, bottom: nil, right: nil,
-                           topConstant: margin, leftConstant: Style.dimension.largeSpace, bottomConstant: 0, rightConstant: 0,
-                           widthConstant: 0, heightConstant: Style.dimension.defautLineHeight)
+        postActionBarView.anchor(actionDividerView.topAnchor, left: leftAnchor, right: rightAnchor,
+                                 topConstant: 0, leftConstant: 0, rightConstant: 0)
+        postActionBarView.forceWidth = PostCell.widthPostActionBarView(frame: frame)
     }
     
     fileprivate func setupLatestCommentsViews() {
         addSubview(latestCommentsView)
         
-        latestCommentsView.anchor(commentingButton.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
-                                  topConstant: Style.dimension.defaultSpace, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
+        latestCommentsView.anchor(postActionBarView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
+                                  topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
         latestCommentsView.forceWidth = PostCell.widthLatestCommentsViews(frame: frame)
     }
     
@@ -308,14 +269,15 @@ class PostCell: DatasourceCell, CellRefetchable {
     }
     
     static fileprivate func heightActionButtons() -> CGFloat {
-        return Style.dimension.defaultDividerHeight
-            + Style.dimension.defaultSpace
-            + Style.dimension.defautLineHeight
-            + Style.dimension.defaultSpace
+        return PostActionBarView.estimateHeight()
     }
     
     static fileprivate func heightLatestCommentsViews(_ post: Post, frame: CGRect) -> CGFloat {
         return LatestCommentsView.estimateHeight(post: post, width: widthLatestCommentsViews(frame: frame))
+    }
+    
+    static fileprivate func widthPostActionBarView(frame: CGRect) -> CGFloat {
+        return frame.width
     }
     
     static fileprivate func widthLatestCommentsViews(frame: CGRect) -> CGFloat {
