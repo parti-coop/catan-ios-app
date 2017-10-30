@@ -9,6 +9,7 @@
 import UIKit
 
 class PostTitleAndBodyView: UITextView {
+    // TODO: 높이를 캐시합니다.
     static let heightCache = HeightCache()
     var forceWidth = CGFloat(0) {
         didSet {

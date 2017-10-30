@@ -9,7 +9,7 @@
 import UIKit
 import BonMot
 
-class WikiView: UIStackView {
+class WikiView: UIView {
     // TODO: 높이를 캐시합니다.
     static let heightCache = HeightCache()
     static let prototype = WikiView()
@@ -19,6 +19,8 @@ class WikiView: UIStackView {
             if post != nil {
                 fatalError("데이터가 지정되기 전에 폭을 설정해야 합니다")
             }
+            
+            previewView.forceWidth = forceWidth
         }
     }
     
@@ -35,20 +37,26 @@ class WikiView: UIStackView {
         return label
     }()
     
+    let previewView: WikiPreviewView = {
+        let view = WikiPreviewView()
+        return view
+    }()
+    
     var post: Post? {
         didSet {
-            removeAllArrangedSubviews()
             
             if let wiki = post?.wiki {
                 if let latestActivityBodyLabelText = WikiView.buildLatestActivityBodyLabelText(wiki.latestActivityBody) {
-                    addArrangedSubview(latestActivityBodyLabel)
                     latestActivityBodyLabel.attributedText = latestActivityBodyLabelText
-                    latestActivityBodyLabel.anchor(topAnchor, left: leftAnchor, right: rightAnchor,
-                                                   topConstant: Style.dimension.postCell.wikiPadding)
+                } else {
+                    latestActivityBodyLabel.text = "무제"
                 }
+
+                previewView.post = post
             }
             
             setNeedsLayout()
+            invalidateIntrinsicContentSize()
         }
     }
     
@@ -64,13 +72,26 @@ class WikiView: UIStackView {
         return nil
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        invalidateIntrinsicContentSize()
+    init() {
+        super.init(frame: .zero)
+        setupViews()
     }
     
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: WikiView.intrinsicContentWidth(width: forceWidth), height: WikiView.estimateHeight(post: post, width: forceWidth))
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupViews() {
+        addSubview(latestActivityBodyLabel)
+        addSubview(previewView)
+        
+        latestActivityBodyLabel.anchor(topAnchor, left: leftAnchor, right: rightAnchor,
+                                       topConstant: Style.dimension.postCell.wikiPreviewSpace,
+                                       leftConstant: 0,
+                                       rightConstant: 0)
+        previewView.anchor(latestActivityBodyLabel.bottomAnchor, left: leftAnchor, right: rightAnchor,
+                           topConstant: Style.dimension.postCell.wikiPreviewSpace,
+                           leftConstant: 0, rightConstant: 0)
     }
     
     func visible() -> Bool {
@@ -81,21 +102,25 @@ class WikiView: UIStackView {
         return post?.wiki != nil
     }
     
-    static fileprivate func intrinsicContentWidth(width: CGFloat) -> CGFloat {
-        return width
+    override var intrinsicContentSize: CGSize {
+        if post == nil || forceWidth <= 0 {
+            return super.intrinsicContentSize
+        }
+        
+        return CGSize(width: forceWidth, height: WikiView.estimateHeight(post: self.post, width: forceWidth))
     }
     
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
         guard let wiki = post?.wiki else { return CGFloat(0) }
         
-        let topPadding = Style.dimension.postCell.wikiPadding
-        
-        var result = CGFloat(topPadding)
+        var result = CGFloat(Style.dimension.postCell.wikiPreviewSpace)
         
         if let latestActivityBodyLabelText = WikiView.buildLatestActivityBodyLabelText(wiki.latestActivityBody) {
             result += UILabel.estimateHeight(attributedText: latestActivityBodyLabelText, of: WikiView.prototype.latestActivityBodyLabel, width: width)
+            result += Style.dimension.postCell.wikiPreviewSpace
         }
-
+        
+        result += WikiPreviewView.estimateHeight(post: post, width: width)
         return result
     }
 }

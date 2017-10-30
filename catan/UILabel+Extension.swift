@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import KRWordWrapLabel
 
 extension UILabel {
     func anchorHeightGreaterThanOrEqualTo(_ constant: CGFloat) {
@@ -15,7 +16,7 @@ extension UILabel {
     }
     
     static func estimateHeight(text: String, width: CGFloat, of prototype: UILabel, greaterThanOrEqualToHeight: CGFloat = 0) -> CGFloat {
-        let dummyView = UILabel()
+        let dummyView = type(of: prototype) == KRWordWrapLabel.self ? KRWordWrapLabel() : UILabel()
         dummyView.text = text
         dummyView.font = prototype.font
         dummyView.numberOfLines = prototype.numberOfLines
@@ -24,7 +25,7 @@ extension UILabel {
     }
     
     static func estimateHeight(attributedText: NSAttributedString, of prototype: UILabel, width: CGFloat) -> CGFloat {
-        let dummyView = UILabel()
+        let dummyView = type(of: prototype) == KRWordWrapLabel.self ? KRWordWrapLabel() : UILabel()
         dummyView.attributedText = attributedText
         dummyView.numberOfLines = prototype.numberOfLines
         dummyView.lineBreakMode = prototype.lineBreakMode

@@ -27,6 +27,7 @@ class PostAdditionalView: UIStackView {
             let subviewWidth = PostAdditionalView.estimateSubviewWidth(width: forceWidth)
             surveyView.forceWidth = subviewWidth
             pollView.forceWidth = subviewWidth
+            wikiView.forceWidth = subviewWidth
             linkSourceView.forceWidth = subviewWidth
             documentFileSourcesView.forceWidth = subviewWidth
             imageFileSourcesView.forceWidth = forceWidth
@@ -76,6 +77,7 @@ class PostAdditionalView: UIStackView {
             
             setupViews()
             setNeedsLayout()
+            invalidateIntrinsicContentSize()
         }
     }
     
@@ -136,11 +138,6 @@ class PostAdditionalView: UIStackView {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        invalidateIntrinsicContentSize()
     }
     
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {

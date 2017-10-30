@@ -37,6 +37,7 @@ struct Style {
         static let largeLineHeight: CGFloat = 42
         static let smallLineHeight: CGFloat = font.smallNormal.pointSize + dimension.smallSpace
         static let defaultDividerHeight: CGFloat = 1
+        static let defaultBorderWidth: CGFloat = 1
         
         struct postCell {
             static let paddingLeft: CGFloat = 16
@@ -58,7 +59,9 @@ struct Style {
             static let optionBarHeight: CGFloat = dimension.defautLineHeight
             static let optionMetaHeight: CGFloat = dimension.largeLineHeight
             static let surveyPadding: CGFloat = Style.dimension.defaultSpace
-            static let wikiPadding: CGFloat = Style.dimension.defaultSpace
+            static let wikiPreviewPadding: CGFloat = Style.dimension.defaultSpace
+            static let wikiPreviewSpace: CGFloat = Style.dimension.defaultSpace
+            static let wikiPreviewImageMaxHeight: CGFloat = 400
         }
         struct commentView {
             static let paddingLeft: CGFloat = 16
