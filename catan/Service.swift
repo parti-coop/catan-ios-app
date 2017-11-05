@@ -170,6 +170,11 @@ struct PostRequestFactory {
     static func fetch(postId: Int) -> APIRequest<Post, Service.JSONError> {
         return Service.sharedInstance.requestAuthenticated("/api/v1/posts/\(postId)")
     }
+
+    static func fetchComments(postId: Int) -> APIRequest<Page<Comment>, Service.JSONError> {
+        let request: APIRequest<Page<Comment>, Service.JSONError> = Service.sharedInstance.requestAuthenticated("/api/v1/posts/\(postId)/comments")
+        return request
+    }
 }
 
 struct VotingRequestFactory {

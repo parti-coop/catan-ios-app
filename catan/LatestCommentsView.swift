@@ -36,7 +36,8 @@ class LatestCommentsView: UIView {
         
         var currentTopAnchor = topAnchor
         for comment in post.latestComments {
-            let commentView = CommentView(forceWidth: forceWidth)
+            let commentView = CommentView()
+            commentView.forceWidth = self.forceWidth
             addSubview(commentView)
             commentView.anchor(currentTopAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
             commentView.comment = comment

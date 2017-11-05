@@ -9,7 +9,7 @@
 import UIKit
 import LBTAComponents
 
-class CommentsController: DatasourceController, UIGestureRecognizerDelegate {
+class CommentsController: DatasourceController, UIGestureRecognizerDelegate, CommentsDatasourceDelegate {
     var post: Post?
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -30,11 +30,25 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.backgroundColor = .red
+        collectionView?.backgroundColor = .white
+        
+        navigationItem.title = "댓글"
+        if let post = post {
+            self.datasource = CommentsDatasource(controller: self, post: post)
+        }
     }
+    
+    // MARK: UIGestureRecognizerDelegate 구현
     
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
+    }
+    
+    // MARK: CommentsDatasourceDelegate 구현
+    
+    func reloadData() {
+        collectionView?.reloadData()
+//        collectionView?.backgroundColor = UIColor.app_light_gray
     }
 
     lazy var containerView: UIView = {

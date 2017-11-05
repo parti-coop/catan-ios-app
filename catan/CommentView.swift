@@ -11,8 +11,16 @@ import BonMot
 
 class CommentView: UIView {
     static let bodyFontPointSize = Style.font.defaultNormal.pointSize
-    let forceWidth: CGFloat
-
+    var forceWidth = CGFloat(0) {
+        didSet {
+            if comment != nil {
+                fatalError("데이터가 지정되기 전에 폭을 설정해야 합니다")
+            }
+            
+            bodyTextView.forceWidth = CommentView.widthCommentBodyViews(width: forceWidth)
+        }
+    }
+    
     var comment: Comment? {
         didSet {
             guard let comment = comment else { return }
@@ -90,8 +98,7 @@ class CommentView: UIView {
         return label
     }()
     
-    init(forceWidth: CGFloat) {
-        self.forceWidth = forceWidth
+    init() {
         super.init(frame: .zero)
         setupView()
     }
@@ -119,7 +126,6 @@ class CommentView: UIView {
         let contentMargin = Style.dimension.defaultSpace
         userImageView.anchor(dividerView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: contentMargin, leftConstant: Style.dimension.commentView.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.commentView.userImage, heightConstant: Style.dimension.commentView.userImage)
         bodyTextView.anchor(dividerView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: contentMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.commentView.paddingRight, widthConstant: 0, heightConstant: 0)
-        bodyTextView.forceWidth = CommentView.widthCommentBodyViews(width: forceWidth)
         
         let actionButtonsMargin = CGFloat(0)
         upvoteButton.anchor(bodyTextView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: nil,

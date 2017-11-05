@@ -9,8 +9,8 @@
 import SwiftyJSON
 import TRON
 
-struct Comment: JSONDecodable {
-    init(json: JSON) throws {
+class Comment: JSONDecodable {
+    required init(json: JSON) throws {
         id = json["id"].intValue
         body = json["body"].stringValue
         truncatedBody = json["truncated_body"].stringValue
