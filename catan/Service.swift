@@ -194,3 +194,13 @@ struct FeedbackRequestFactory {
     }
 }
 
+struct CommentRequestFactory {
+    static func post(postId: Int, body: String) -> APIRequest<Comment, Service.JSONError> {
+        return Service.sharedInstance
+            .requestAuthenticated("/api/v1/comments/",
+                                  method: .post,
+                                  parameters: [
+                                    "comment[post_id]": postId,
+                                    "comment[body]": body])
+    }
+}

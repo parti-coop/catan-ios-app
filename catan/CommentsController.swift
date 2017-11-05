@@ -10,6 +10,8 @@ import UIKit
 import LBTAComponents
 
 class CommentsController: DatasourceController {
+    var post: Post?
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
     }
@@ -30,7 +32,7 @@ class CommentsController: DatasourceController {
         collectionView?.backgroundColor = .red
     }
     
-    var containerView: UIView = {
+    lazy var containerView: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = .white
         containerView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
@@ -43,15 +45,30 @@ class CommentsController: DatasourceController {
         containerView.addSubview(submitButton)
         submitButton.anchor(containerView.topAnchor, left: nil, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 0)
         
-        let textField = UITextField()
-        textField.placeholder = "댓글을 입력하세요"
-        containerView.addSubview(textField)
-        textField.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: submitButton.leftAnchor, topConstant: 0, leftConstant: 12, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        containerView.addSubview(self.commentTextField)
+        self.commentTextField.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: submitButton.leftAnchor, topConstant: 0, leftConstant: 12, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         return containerView
     }()
     
+    let commentTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "댓글을 입력하세요"
+        return textField
+    }()
+    
     func handleSubmit() {
-        print("submit comment")
+        guard let post = post, let body = commentTextField.text else { return }
+        CommentRequestFactory.post(postId: post.id, body: body).resume { [weak self] (response, error) in
+//            guard let strongSelf = self, let poll = strongSelf.post?.poll else { return }
+//            if let _ = error {
+//                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
+//                return
+//            }
+//
+//            poll.vote(choice, by: user)
+//            strongSelf.setupVoteButtons(poll: poll)
+//            strongSelf.setupVoteUsers(poll: poll)
+        }
     }
     
     override var inputAccessoryView: UIView? {
