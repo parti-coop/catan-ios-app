@@ -14,13 +14,19 @@ class CommentsController: DatasourceController {
         collectionViewLayout.invalidateLayout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         collectionView?.backgroundColor = .red
-        
-//        navigationItem.title = "내 피드"
-//        setupLogOutButton()
-//        self.datasource = DashboardDatasource(controller: self)
     }
 }
