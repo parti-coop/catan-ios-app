@@ -72,7 +72,6 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
     
     func didTapComment(post: Post) {
         let commentsController = CommentsController()
-        print(post.id)
         navigationController?.pushViewController(commentsController, animated: true)
     }
     
