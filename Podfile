@@ -25,6 +25,6 @@ target 'catan' do
   pod 'M13Checkbox'
 
   plugin 'cocoapods-keys', {
-      :project => "xyz.parti.catan"
+      :project => "Catan"
   }
 end
