@@ -9,7 +9,8 @@
 import UIKit
 import LBTAComponents
 
-class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController {
+class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate {
+    
     //TODO: errorMessageLabel
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -19,7 +20,7 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView?.backgroundColor = UIColor.white
+        collectionView?.backgroundColor = .white
         
         navigationItem.title = "내 피드"
         setupLogOutButton()
@@ -66,6 +67,15 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         guard let datasource = datasource as? DashboardDatasource else { return }
         datasource.fetch(post: post)
     }
+    
+    // MARK: PostActionBarDelegate 구현
+    
+    func didTapComment(post: Post) {
+        let commentsController = CommentsController()
+        print(post.id)
+        navigationController?.pushViewController(commentsController, animated: true)
+    }
+    
     
     // 로그아웃 - 시작
     

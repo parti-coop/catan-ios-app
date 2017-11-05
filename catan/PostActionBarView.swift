@@ -9,7 +9,13 @@
 import UIKit
 import BonMot
 
+protocol PostActionBarDelegate {
+    func didTapComment(post: Post)
+}
+
 class PostActionBarView: UIView {
+    var delegate: PostActionBarDelegate?
+    
     var forceWidth = CGFloat(0) {
         didSet {
             if post != nil {
@@ -17,7 +23,7 @@ class PostActionBarView: UIView {
             }
         }
     }
-
+    
     let upvoteButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("공감해요", for: .normal)
@@ -39,7 +45,10 @@ class PostActionBarView: UIView {
     }
     
     func handleCommenting() {
-        print("click comment")
+        print("click comment1")
+        
+        guard let post = post else { return }
+        delegate?.didTapComment(post: post)
     }
 
     let upvoteLabel: UILabel = {

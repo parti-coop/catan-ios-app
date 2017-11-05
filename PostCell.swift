@@ -44,6 +44,12 @@ class PostCell: DatasourceCell, CellRefetchable {
         }
     }
     
+    override weak var controller: DatasourceController? {
+        didSet {
+            postActionBarView.delegate = controller as? PostActionBarDelegate
+        }
+    }
+    
     static fileprivate func buildPartiTitleText(_ post: Post) -> String {
         var partiTitle = post.parti.title
         if !post.parti.group.isIndie() {
@@ -112,7 +118,6 @@ class PostCell: DatasourceCell, CellRefetchable {
     
     let postActionBarView: PostActionBarView = {
         let view = PostActionBarView()
-        view.backgroundColor = .red
         return view
     }()
     
@@ -126,7 +131,7 @@ class PostCell: DatasourceCell, CellRefetchable {
         separatorLineView.isHidden = false
         separatorLineView.backgroundColor = UIColor.app_light_gray
         backgroundColor = .white
-
+        
         setupPartiViews()
         setupUserViews()
         setupPostBasicViews()

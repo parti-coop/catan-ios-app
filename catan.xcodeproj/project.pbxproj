@@ -45,6 +45,7 @@
 		985101051F52581C009BE875 /* CollapsibleTopConstrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101041F52581C009BE875 /* CollapsibleTopConstrain.swift */; };
 		985101071F52FFF2009BE875 /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985101061F52FFF2009BE875 /* NSAttributedString+Extension.swift */; };
 		985BED801F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985BED7F1F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift */; };
+		9892CEF71FAF1FD000616909 /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9892CEF61FAF1FD000616909 /* CommentsController.swift */; };
 		9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989798591F54D8BE00A5F67B /* Comment.swift */; };
 		98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */; };
 		98A5F4F31F440A3600E6D781 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F21F440A3600E6D781 /* Style.swift */; };
@@ -104,6 +105,7 @@
 		985101041F52581C009BE875 /* CollapsibleTopConstrain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollapsibleTopConstrain.swift; sourceTree = "<group>"; };
 		985101061F52FFF2009BE875 /* NSAttributedString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extension.swift"; sourceTree = "<group>"; };
 		985BED7F1F5D4CD300BAAA5E /* PostDocumentFileSourcesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDocumentFileSourcesView.swift; sourceTree = "<group>"; };
+		9892CEF61FAF1FD000616909 /* CommentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsController.swift; sourceTree = "<group>"; };
 		989798591F54D8BE00A5F67B /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		98A5F4F21F440A3600E6D781 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				98E663511F490CE400455CEB /* DashboardController.swift */,
 				985100D61F4CF109009BE875 /* DashboardDatasource.swift */,
 				98E663561F4922AA00455CEB /* LoginController.swift */,
+				9892CEF61FAF1FD000616909 /* CommentsController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				985100E51F4D27FC009BE875 /* Collection+Extension.swift in Sources */,
 				98BE396D1F93AAEC007A15D7 /* UILabel+Extension.swift in Sources */,
 				985100FF1F515CBA009BE875 /* String.swift in Sources */,
+				9892CEF71FAF1FD000616909 /* CommentsController.swift in Sources */,
 				985100DF1F4D19DC009BE875 /* JSON+Extension.swift in Sources */,
 				985100EB1F4D84F1009BE875 /* Group.swift in Sources */,
 				985100E91F4D82BC009BE875 /* Parti.swift in Sources */,

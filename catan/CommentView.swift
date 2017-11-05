@@ -75,7 +75,7 @@ class CommentView: UIView {
     }()
     
     func handleCommenting() {
-        print("click comment")
+        print("click comment2")
     }
     
     let createdAtLabel: UILabel = {
