@@ -9,7 +9,7 @@
 import UIKit
 import LBTAComponents
 
-class CommentsController: DatasourceController {
+class CommentsController: DatasourceController, UIGestureRecognizerDelegate {
     var post: Post?
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -19,6 +19,7 @@ class CommentsController: DatasourceController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -32,6 +33,10 @@ class CommentsController: DatasourceController {
         collectionView?.backgroundColor = .red
     }
     
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
     lazy var containerView: UIView = {
         let containerView = UIView()
         containerView.backgroundColor = .white
