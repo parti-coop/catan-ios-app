@@ -38,7 +38,7 @@ class OptionView: UIView {
     
     func handleFeedback() {
         guard let option = option else { return }
-        FeedbackRequestFactory.post(optionId: option.id, selected: option.isMySelect == false).resume { [weak self] (response, error) in
+        FeedbackRequestFactory.create(optionId: option.id, selected: option.isMySelect == false).resume { [weak self] (response, error) in
             guard let strongSelf = self else { return }
             if let _ = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요

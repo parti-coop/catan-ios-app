@@ -80,7 +80,7 @@ class PollView: UIView {
 
     func handleVote(poll: Poll, choice: String) {
         guard let user = UserSession.sharedInstance.user else { return }
-        VotingRequestFactory.post(pollId: poll.id, choice: choice).resume { [weak self] (response, error) in
+        VotingRequestFactory.create(pollId: poll.id, choice: choice).resume { [weak self] (response, error) in
             guard let strongSelf = self, let poll = strongSelf.post?.poll else { return }
             if let _ = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요

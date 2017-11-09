@@ -77,7 +77,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     
     func handleSubmit() {
         guard let post = post, let body = commentTextField.text else { return }
-        CommentRequestFactory.post(postId: post.id, body: body).resume { [weak self] (response, error) in
+        CommentRequestFactory.create(postId: post.id, body: body).resume { [weak self] (response, error) in
 //            guard let strongSelf = self, let poll = strongSelf.post?.poll else { return }
 //            if let _ = error {
 //                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요

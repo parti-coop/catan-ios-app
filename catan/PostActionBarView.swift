@@ -41,12 +41,35 @@ class PostActionBarView: UIView {
     }()
 
     func handleUpvote() {
-        print("click upvote")
+        guard let post = post else { return }
+        if post.isUpvotedByMe {
+            UpvoteRequestFactory.destroy(postId: post.id).resume { [weak self] (response, error) in
+                guard let strongSelf = self else { return }
+                if let _ = error {
+                    // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
+                    return
+                }
+                
+                post.upvotesCount -= 1
+                post.isUpvotedByMe = false
+                strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(post)
+            }
+        } else {
+            UpvoteRequestFactory.create(postId: post.id).resume { [weak self] (response, error) in
+                guard let strongSelf = self else { return }
+                if let _ = error {
+                    // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
+                    return
+                }
+                
+                post.upvotesCount += 1
+                post.isUpvotedByMe = true
+                strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(post)
+            }
+        }
     }
     
     func handleCommenting() {
-        print("click comment1")
-        
         guard let post = post else { return }
         delegate?.didTapComment(post: post)
     }

@@ -54,8 +54,8 @@ class Post: JSONDecodable {
     let user: User;
     let createdAt: Date?
     let lastStrokedAt: Date?
-    let isUpvotedByMe: Bool
-    let upvotesCount: Int
+    var isUpvotedByMe: Bool
+    var upvotesCount: Int
     let commentsCount: Int
     var latestComments: [Comment]
     //Comment sticky_comment;

@@ -178,7 +178,7 @@ struct PostRequestFactory {
 }
 
 struct VotingRequestFactory {
-    static func post(pollId: Int, choice: String) -> APIRequest<EmptyResponse, Service.JSONError> {
+    static func create(pollId: Int, choice: String) -> APIRequest<EmptyResponse, Service.JSONError> {
         return Service.sharedInstance
             .requestAuthenticated("/api/v1/votings/",
                                   method: .post,
@@ -189,7 +189,7 @@ struct VotingRequestFactory {
 }
 
 struct FeedbackRequestFactory {
-    static func post(optionId: Int, selected: Bool) -> APIRequest<EmptyResponse, Service.JSONError> {
+    static func create(optionId: Int, selected: Bool) -> APIRequest<EmptyResponse, Service.JSONError> {
         return Service.sharedInstance
             .requestAuthenticated("/api/v1/feedbacks/",
                                   method: .post,
@@ -200,12 +200,32 @@ struct FeedbackRequestFactory {
 }
 
 struct CommentRequestFactory {
-    static func post(postId: Int, body: String) -> APIRequest<Comment, Service.JSONError> {
+    static func create(postId: Int, body: String) -> APIRequest<Comment, Service.JSONError> {
         return Service.sharedInstance
             .requestAuthenticated("/api/v1/comments/",
                                   method: .post,
                                   parameters: [
                                     "comment[post_id]": postId,
                                     "comment[body]": body])
+    }
+}
+
+struct UpvoteRequestFactory {
+    static func create(postId: Int) -> APIRequest<EmptyResponse, Service.JSONError> {
+        return Service.sharedInstance
+            .requestAuthenticated("/api/v1/upvotes/",
+                                  method: .post,
+                                  parameters: [
+                                    "upvote[upvotable_type]": "Post",
+                                    "upvote[upvotable_id]": postId])
+    }
+    
+    static func destroy(postId: Int) -> APIRequest<EmptyResponse, Service.JSONError> {
+        return Service.sharedInstance
+            .requestAuthenticated("/api/v1/upvotes/",
+                                  method: .delete,
+                                  parameters: [
+                                    "upvote[upvotable_type]": "Post",
+                                    "upvote[upvotable_id]": postId])
     }
 }

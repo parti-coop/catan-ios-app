@@ -76,7 +76,6 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         navigationController?.pushViewController(commentsController, animated: true)
     }
     
-    
     // 로그아웃 - 시작
     
     fileprivate func setupLogOutButton() {
