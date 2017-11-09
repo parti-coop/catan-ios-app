@@ -71,8 +71,38 @@ class CommentView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("공감해요", for: .normal)
         button.setTitleColor(.brand_primary, for: .normal)
+        button.addTarget(self, action: #selector(handleUpvote), for: .touchUpInside)
         return button
     }()
+    
+    func handleUpvote() {
+        guard let comment = comment else { return }
+        if comment.isUpvotedByMe {
+            UpvoteRequestFactory.destroy(commentId: comment.id).resume { [weak self] (response, error) in
+                guard let strongSelf = self, let strongComment = strongSelf.comment else { return }
+                if let _ = error {
+                    // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
+                    return
+                }
+                
+                strongComment.upvotesCount -= 1
+                strongComment.isUpvotedByMe = false
+                strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(strongComment)
+            }
+        } else {
+            UpvoteRequestFactory.create(commentId: comment.id).resume { [weak self] (response, error) in
+                guard let strongSelf = self, let strongComment = strongSelf.comment else { return }
+                if let _ = error {
+                    // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
+                    return
+                }
+                
+                strongComment.upvotesCount += 1
+                strongComment.isUpvotedByMe = true
+                strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(strongComment)
+            }
+        }
+    }
 
     let commentingButton: UIButton = {
         let button = UIButton(type: .system)

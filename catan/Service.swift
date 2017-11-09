@@ -212,20 +212,36 @@ struct CommentRequestFactory {
 
 struct UpvoteRequestFactory {
     static func create(postId: Int) -> APIRequest<EmptyResponse, Service.JSONError> {
+        return create(upvotableId: postId, upvotableType: "Post")
+    }
+    
+    static func create(commentId: Int) -> APIRequest<EmptyResponse, Service.JSONError> {
+        return create(upvotableId: commentId, upvotableType: "Comment")
+    }
+    
+    fileprivate static func create(upvotableId: Int, upvotableType: String) -> APIRequest<EmptyResponse, Service.JSONError> {
         return Service.sharedInstance
             .requestAuthenticated("/api/v1/upvotes/",
                                   method: .post,
                                   parameters: [
-                                    "upvote[upvotable_type]": "Post",
-                                    "upvote[upvotable_id]": postId])
+                                    "upvote[upvotable_type]": upvotableType,
+                                    "upvote[upvotable_id]": upvotableId])
     }
     
     static func destroy(postId: Int) -> APIRequest<EmptyResponse, Service.JSONError> {
+        return create(upvotableId: postId, upvotableType: "Post")
+    }
+    
+    static func destroy(commentId: Int) -> APIRequest<EmptyResponse, Service.JSONError> {
+        return create(upvotableId: commentId, upvotableType: "Comment")
+    }
+    
+    fileprivate static func destroy(upvotableId: Int, upvotableType: String) -> APIRequest<EmptyResponse, Service.JSONError> {
         return Service.sharedInstance
             .requestAuthenticated("/api/v1/upvotes/",
                                   method: .delete,
                                   parameters: [
-                                    "upvote[upvotable_type]": "Post",
-                                    "upvote[upvotable_id]": postId])
+                                    "upvote[upvotable_type]": upvotableType,
+                                    "upvote[upvotable_id]": upvotableId])
     }
 }

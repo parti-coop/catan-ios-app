@@ -27,11 +27,11 @@ class Comment: JSONDecodable {
     let id: Int
     let body: String
     let truncatedBody: String
-    let upvotesCount: Int
+    var upvotesCount: Int
     let user: User
     let createdAt: Date?
     let isMentionable: Bool
-    let isUpvotedByMe: Bool
+    var isUpvotedByMe: Bool
     let isBlinded: Bool
     let choice: String
     let isDestroyable: Bool
