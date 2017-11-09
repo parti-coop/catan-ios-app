@@ -38,7 +38,7 @@ class DashboardDatasource: Datasource {
         if section == DashboardDatasource.POST_SECTION {
             return posts.count
         } else if section == DashboardDatasource.BOTTOM_INDICATOR_SECTION {
-            return isLoadingMore ? 1 : 0
+            return isFinishedPagination ? 0 : 1
         }
         
         return super.numberOfItems(section)
@@ -69,6 +69,7 @@ class DashboardDatasource: Datasource {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
                 log.error("게시글 로딩 실패 : \(error.localizedDescription)")
                 strongSelf.isFinishedPagination = true
+                strongSelf.isLoadingMore = false
                 strongSelf.controller?.reloadData()
                 return
             }

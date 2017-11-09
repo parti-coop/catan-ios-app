@@ -50,7 +50,6 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         if offsetY > contentHeight - scrollView.frame.size.height {
             guard let datasource = datasource as? DashboardDatasource else { return }
             datasource.fetchPosts()
-            collectionView?.reloadData()
         }
     }
     
