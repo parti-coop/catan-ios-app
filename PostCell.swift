@@ -10,7 +10,6 @@ import LBTAComponents
 import Kingfisher
 import DateToolsSwift
 import BonMot
-import KRWordWrapLabel
 
 protocol PostRefetchableController: NSObjectProtocol {
     func refetch(post: Post)
@@ -68,8 +67,8 @@ class PostCell: DatasourceCell, CellRefetchable {
         return imageView
     }()
     
-    let partiTitleLabel: KRWordWrapLabel = {
-        let label = KRWordWrapLabel()
+    let partiTitleLabel: UILabel = {
+        let label = UILabel()
         label.font = Style.font.smallNormal
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping

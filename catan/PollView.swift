@@ -8,13 +8,12 @@
 
 import UIKit
 import BonMot
-import KRWordWrapLabel
 
 class PollView: UIView {
     static let prototype = PollView()
     
-    let titleLabel: KRWordWrapLabel = {
-        let label = KRWordWrapLabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = Style.font.largeThin

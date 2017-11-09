@@ -8,7 +8,6 @@
 
 import UIKit
 import BonMot
-import KRWordWrapLabel
 
 class LinkSourceView: UIStackView {
     // TODO: 높이를 캐시합니다.
@@ -87,8 +86,8 @@ class LinkSourceView: UIStackView {
         return view
     }()
     
-    let titleLabel: KRWordWrapLabel = {
-        let label = KRWordWrapLabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
         label.font = Style.font.largeThin
         label.textColor = UIColor.app_gray
         label.numberOfLines = 2
@@ -96,8 +95,8 @@ class LinkSourceView: UIStackView {
         return label
     }()
     
-    let bodyLabel: KRWordWrapLabel = {
-        let label = KRWordWrapLabel()
+    let bodyLabel: UILabel = {
+        let label = UILabel()
         label.font = Style.font.defaultNormal
         label.textColor = UIColor.app_gray
         label.numberOfLines = 3

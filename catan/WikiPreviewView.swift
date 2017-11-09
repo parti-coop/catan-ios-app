@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import KRWordWrapLabel
 
 class WikiPreviewView: UIView {
     // TODO: 높이를 캐시합니다.
@@ -22,8 +21,8 @@ class WikiPreviewView: UIView {
         }
     }
     
-    let titleLabel: KRWordWrapLabel = {
-        let label = KRWordWrapLabel()
+    let titleLabel: UILabel = {
+        let label = UILabel()
         label.numberOfLines = 0
         label.font = Style.font.defaultBold
         label.textColor = UIColor.app_gray

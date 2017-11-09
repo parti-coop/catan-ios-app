@@ -21,7 +21,6 @@ target 'catan' do
   pod 'Kingfisher', '~> 3.0'
   pod 'DateToolsSwift'
   pod 'UICircularProgressRing'
-  pod 'KRWordWrapLabel'
   pod 'M13Checkbox'
 
   plugin 'cocoapods-keys', {
