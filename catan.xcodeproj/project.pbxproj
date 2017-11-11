@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7E07E995E6BD7319575982DA /* Pods_catan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C84A87796FB7AC1FFC93CE /* Pods_catan.framework */; };
 		98026F081F6FDFFA00E9B27A /* CellRefetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */; };
+		980BCE621FB682D7006AFAB6 /* CommentFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BCE611FB682D7006AFAB6 /* CommentFormView.swift */; };
 		98145B771F42BDD50083349F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98145B761F42BDD50083349F /* AppDelegate.swift */; };
 		98145B7E1F42BDD50083349F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98145B7D1F42BDD50083349F /* Assets.xcassets */; };
 		982377421FA7E75300CA5360 /* PostActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982377411FA7E75300CA5360 /* PostActionBarView.swift */; };
@@ -68,6 +69,7 @@
 
 /* Begin PBXFileReference section */
 		98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellRefetchable.swift; sourceTree = "<group>"; };
+		980BCE611FB682D7006AFAB6 /* CommentFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentFormView.swift; sourceTree = "<group>"; };
 		98145B731F42BDD50083349F /* catan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = catan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98145B761F42BDD50083349F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98145B7D1F42BDD50083349F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				985100D81F4CF3A2009BE875 /* PostCell.swift */,
 				985100E61F4D6C1E009BE875 /* IndicatorCell.swift */,
 				987F85071FAFBF280055DD7A /* CommentCell.swift */,
+				980BCE611FB682D7006AFAB6 /* CommentFormView.swift */,
 				982377411FA7E75300CA5360 /* PostActionBarView.swift */,
 				985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */,
 				985101021F5183B7009BE875 /* LatestCommentsView.swift */,
@@ -471,6 +474,7 @@
 				985100E11F4D1CBC009BE875 /* Page.swift in Sources */,
 				98E663521F490CE400455CEB /* DashboardController.swift in Sources */,
 				985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */,
+				980BCE621FB682D7006AFAB6 /* CommentFormView.swift in Sources */,
 				983A11631F590D5E000D7D7F /* CommentBodyView.swift in Sources */,
 				987F85041FAFBB7D0055DD7A /* CommentsDatasource.swift in Sources */,
 				98392D711F6095B80027C966 /* LinkSource.swift in Sources */,

@@ -9,8 +9,9 @@
 import UIKit
 import LBTAComponents
 
-class CommentsController: DatasourceController, UIGestureRecognizerDelegate, CommentsDatasourceDelegate {
+class CommentsController: DatasourceController, UIGestureRecognizerDelegate, CommentsDatasourceDelegate, CommentFormViewDelegate {
     var post: Post?
+    var hideLoadingFooter: Bool = false
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
@@ -31,10 +32,33 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         super.viewDidLoad()
         
         collectionView?.backgroundColor = .white
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.keyboardDismissMode = .interactive
         
         navigationItem.title = "댓글"
+        
         if let post = post {
             self.datasource = CommentsDatasource(controller: self, post: post)
+        }
+        commentFormView.delegate = self
+    }
+    
+    // MARK: 각 셀의 크기 설정 및 DatasourceController 확장
+    
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let comment = self.datasource?.item(indexPath) as? Comment else { return .zero }
+        return CGSize(width: view.frame.width, height: CommentCell.height(comment, frame: view.frame))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if hideLoadingFooter {
+            return CGSize.zero
+        } else {
+            return CGSize(width: view.frame.width, height: 50)
         }
     }
     
@@ -46,57 +70,48 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     
     // MARK: CommentsDatasourceDelegate 구현
     
-    func reloadData() {
+    func reloadData(isScrollToBottom: Bool) {
+        self.hideLoadingFooter = true
         collectionView?.reloadData()
-//        collectionView?.backgroundColor = UIColor.app_light_gray
-    }
-
-    lazy var containerView: UIView = {
-        let containerView = UIView()
-        containerView.backgroundColor = .white
-        containerView.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
-        
-        let submitButton = UIButton(type: .system)
-        submitButton.setTitle("저장", for: .normal)
-        submitButton.setTitleColor(.black, for: .normal)
-        submitButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        submitButton.addTarget(self, action: #selector(handleSubmit), for: .touchUpInside)
-        containerView.addSubview(submitButton)
-        submitButton.anchor(containerView.topAnchor, left: nil, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 50, heightConstant: 0)
-        
-        containerView.addSubview(self.commentTextField)
-        self.commentTextField.anchor(containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: submitButton.leftAnchor, topConstant: 0, leftConstant: 12, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
-        return containerView
-    }()
-    
-    let commentTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "댓글을 입력하세요"
-        return textField
-    }()
-    
-    func handleSubmit() {
-        guard let post = post, let body = commentTextField.text else { return }
-        CommentRequestFactory.create(postId: post.id, body: body).resume { [weak self] (response, error) in
-//            guard let strongSelf = self, let poll = strongSelf.post?.poll else { return }
-//            if let _ = error {
-//                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-//                return
-//            }
-//
-//            poll.vote(choice, by: user)
-//            strongSelf.setupVoteButtons(poll: poll)
-//            strongSelf.setupVoteUsers(poll: poll)
+        if isScrollToBottom {
+            scrollToBottom()
         }
     }
     
+    func scrollToBottom() {
+        guard let datasource = self.datasource as? CommentsDatasource else { return }
+        collectionView?.scrollToItem(at: datasource.lastIndex(), at: .bottom, animated: true)
+    }
+    
+    // MARK: CommentFormViewDelegate 구현
+    
+    func handleCommentSubmit(body: String) {
+        guard let datasource = self.datasource as? CommentsDatasource else { return }
+        datasource.createComment(body: body)
+        self.hideLoadingFooter = false
+        collectionView?.reloadData()
+        scrollToBottom()
+    }
+
+    // MARK: 하단 입력폼
+
+    let commentFormView: CommentFormView = {
+        let view = CommentFormView()
+        return view
+    }()
+    
     override var inputAccessoryView: UIView? {
         get {
-            return containerView
+            return commentFormView
         }
     }
     
     override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        commentFormView.handleSubmit()
         return true
     }
 }

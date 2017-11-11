@@ -56,7 +56,7 @@ class Post: JSONDecodable {
     let lastStrokedAt: Date?
     var isUpvotedByMe: Bool
     var upvotesCount: Int
-    let commentsCount: Int
+    var commentsCount: Int
     var latestComments: [Comment]
     //Comment sticky_comment;
     let linkSource: LinkSource?
@@ -88,5 +88,10 @@ class Post: JSONDecodable {
         return fileSources.filter { (fileSource) -> Bool in
             return !fileSource.isImage()
         }
+    }
+    
+    func add(comment: Comment) {
+        commentsCount += 1
+        latestComments.append(comment)
     }
 }
