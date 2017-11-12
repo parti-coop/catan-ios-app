@@ -208,7 +208,7 @@ class PostCell: DatasourceCell, CellRefetchable {
     }
     
     static func height(_ post: Post, frame: CGRect) -> CGFloat {
-        if let cached = heightCache.height(forKey: post.id, onWidth: frame.width) {
+        if let cached = heightCache.height(for: post, onWidth: frame.width) {
             return cached
         }
         
@@ -247,7 +247,7 @@ class PostCell: DatasourceCell, CellRefetchable {
             + heightActionButtons()
             + heightLatestCommentsViews(post, frame: frame)
         
-        heightCache.setHeight(result, forKey: post.id, onWidth: frame.width)
+        heightCache.setHeight(result, for: post, onWidth: frame.width)
         
         return result
     }
@@ -293,7 +293,6 @@ class PostCell: DatasourceCell, CellRefetchable {
     func refetch() {
         guard let post = datasourceItem as? Post else { return }
         guard let controller = controller as? PostRefetchableController else { return }
-        PostCell.heightCache.purgeHeight(forKey: post.id, onWidth: frame.width)
         controller.refetch(post: post)
     }
 }

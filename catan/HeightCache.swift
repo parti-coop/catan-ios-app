@@ -8,23 +8,41 @@
 
 import UIKit
 
+protocol HeightCacheKey {
+    func keyForHeightCache() -> Int
+    func timestampForHeightCache() -> Double
+}
+
 class HeightCache {
-    var caches = [CGFloat : NSCache<NSString, NSNumber>]()
+    var heightCaches = [CGFloat : NSCache<NSString, NSNumber>]()
+    var timestampCaches = [CGFloat : NSCache<NSString, NSNumber>]()
     
-    func height(forKey key: Int, onWidth width: CGFloat) -> CGFloat? {
-        guard let cache = caches[width], let number = cache.object(forKey: NSString(string: "\(key)")) else { return nil }
-        return CGFloat(number)
-    }
-    
-    func setHeight(_ height: CGFloat, forKey key: Int, onWidth width: CGFloat) {
-        if caches[width] == nil {
-            caches[width] = NSCache<NSString, NSNumber>()
+    func height(for keyItem: HeightCacheKey, onWidth width: CGFloat) -> CGFloat? {
+        let cacheKeyString = NSString(string: "\(keyItem.keyForHeightCache())")
+        guard let heightCache = heightCaches[width],
+            let lastHeight = heightCache.object(forKey: cacheKeyString),
+            let timestampCache = timestampCaches[width],
+            let lastTimestamp = timestampCache.object(forKey: cacheKeyString)
+        else { return nil }
+        
+        if lastTimestamp != NSNumber(value: Double(keyItem.timestampForHeightCache())) {
+            heightCache.removeObject(forKey: cacheKeyString)
+            timestampCache.removeObject(forKey: cacheKeyString)
+            return nil
         }
-        caches[width]?.setObject(NSNumber(value: Float(height)), forKey: NSString(string: "\(key)"))
+        return CGFloat(lastHeight)
     }
     
-    func purgeHeight(forKey key: Int, onWidth width: CGFloat) {
-        guard let cache = caches[width] else { return }
-        cache.removeObject(forKey: NSString(string: "\(key)"))
+    func setHeight(_ height: CGFloat, for keyItem: HeightCacheKey, onWidth width: CGFloat) {
+        if heightCaches[width] == nil {
+            heightCaches[width] = NSCache<NSString, NSNumber>()
+        }
+        if timestampCaches[width] == nil {
+            timestampCaches[width] = NSCache<NSString, NSNumber>()
+        }
+        
+        let cacheKeyString = NSString(string: "\(keyItem.keyForHeightCache())")
+        heightCaches[width]?.setObject(NSNumber(value: Float(height)), forKey: cacheKeyString)
+        timestampCaches[width]?.setObject(NSNumber(value: Float(keyItem.timestampForHeightCache())), forKey: cacheKeyString)
     }
 }

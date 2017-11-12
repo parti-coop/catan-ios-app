@@ -117,7 +117,7 @@ class CommentBodyView: UITextView {
     static func estimateHeight(comment: Comment?, width: CGFloat) -> CGFloat {
         guard let comment = comment else { return CGFloat(0) }
         
-        if let cached = heightCache.height(forKey: comment.id, onWidth: width) {
+        if let cached = heightCache.height(for: comment, onWidth: width) {
             return cached
         }
         
@@ -125,7 +125,7 @@ class CommentBodyView: UITextView {
         let textHeight = bodyAttributedText.heightWithConstrainedWidth(width: width)
         let height = max(textHeight - redundantBottomPaddingHeight(comment: comment) + 1, CGFloat(0))
         
-        heightCache.setHeight(height, forKey: comment.id, onWidth: width)
+        heightCache.setHeight(height, for: comment, onWidth: width)
         return height
     }
 }

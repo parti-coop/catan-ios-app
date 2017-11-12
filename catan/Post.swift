@@ -9,7 +9,9 @@
 import TRON
 import SwiftyJSON
 
-class Post: JSONDecodable {
+class Post: JSONDecodable, HeightCacheKey {
+    var heightCacheTimestamp = Date().timeIntervalSince1970
+        
     required init(json: JSON) throws {
         id = json["id"].intValue
         parsedTitle = json["parsed_title"].stringValue
@@ -94,8 +96,21 @@ class Post: JSONDecodable {
         }
     }
     
-    func add(comment: Comment) {
+    func add(newComment: Comment) {
         commentsCount += 1
-        latestComments.append(comment)
+        latestComments.append(newComment)
+        bufferComments.append(newComment)
+        
+        heightCacheTimestamp = Date().timeIntervalSince1970
+    }
+    
+    // MARK: HeightCacheKey 구현
+
+    func keyForHeightCache() -> Int {
+        return id
+    }
+    
+    func timestampForHeightCache() -> Double {
+        return heightCacheTimestamp
     }
 }

@@ -9,6 +9,10 @@
 import UIKit
 import LBTAComponents
 
+protocol CommentsControllerDelegate {
+    func needToUpdateComments(of: Post)
+}
+
 class CommentsController: DatasourceController, UIGestureRecognizerDelegate, CommentsDatasourceDelegate, CommentFormViewDelegate {
     var post: Post? {
         didSet {
@@ -16,6 +20,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
             self.datasource = CommentsDatasource(controller: self, post: post)
         }
     }
+    var delegate: CommentsControllerDelegate?
     var hideLoadingFooter: Bool = true
     var hideLoadingHeader: Bool = true
     
@@ -35,6 +40,10 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         
         if let datasource = self.datasource as? CommentsDatasource {
             datasource.resetComments()
+        }
+        
+        if let delegate = delegate, let post = post {
+            delegate.needToUpdateComments(of: post)
         }
     }
     

@@ -13,6 +13,7 @@ import UIKit
 
 protocol DashboardDatasourceDelegate: NSObjectProtocol {
     func reloadData()
+    func reloadItem(at: IndexPath)
 }
 
 class DashboardDatasource: Datasource {
@@ -103,10 +104,17 @@ class DashboardDatasource: Datasource {
         }
     }
     
+    func reloadItem(post: Post) {
+        guard let index = (posts.index { (element) -> Bool in
+            return element.id == post.id
+        }) else { return }
+        controller?.reloadItem(at: IndexPath(item: index, section: DashboardDatasource.POST_SECTION))
+    }
+    
     func setupTexts(post: Post) {
         post.titleAndBodyAttributedText = PostTitleAndBodyView.buildText(post)
         for (commentIndex, _) in post.latestComments.enumerated() {
-            var comment = post.latestComments[commentIndex]
+            let comment = post.latestComments[commentIndex]
             comment.bodyAttributedText = CommentBodyView.buildBodyText(comment)
             post.latestComments[commentIndex] = comment
         }

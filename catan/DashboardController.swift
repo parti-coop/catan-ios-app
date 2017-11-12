@@ -9,8 +9,7 @@
 import UIKit
 import LBTAComponents
 
-class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate {
-    
+class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate, CommentsControllerDelegate {
     //TODO: errorMessageLabel
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -60,6 +59,10 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         collectionView?.backgroundColor = UIColor.app_light_gray
     }
     
+    func reloadItem(at indexPath: IndexPath) {
+        collectionView?.reloadItems(at: [indexPath])
+    }
+    
     // MARK: PostRefetchableController 구현
     
     func refetch(post: Post) {
@@ -72,7 +75,15 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
     func didTapComment(post: Post) {
         let commentsController = CommentsController()
         commentsController.post = post
+        commentsController.delegate = self
         navigationController?.pushViewController(commentsController, animated: true)
+    }
+    
+    // MARK: CommentsControllerDelegate 구현
+    
+    func needToUpdateComments(of post: Post) {
+        guard let datasource = datasource as? DashboardDatasource else { return }
+        datasource.reloadItem(post: post)
     }
     
     // 로그아웃 - 시작

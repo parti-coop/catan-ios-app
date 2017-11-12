@@ -9,7 +9,9 @@
 import SwiftyJSON
 import TRON
 
-class Comment: JSONDecodable {
+class Comment: JSONDecodable, HeightCacheKey {
+    let heightCacheTimestamp = Date().timeIntervalSince1970
+    
     required init(json: JSON) throws {
         id = json["id"].intValue
         body = json["body"].stringValue
@@ -37,4 +39,15 @@ class Comment: JSONDecodable {
     let isDestroyable: Bool
     
     var bodyAttributedText: NSAttributedString?
+    
+    // MARK: HeightCacheKey 구현
+    
+    func keyForHeightCache() -> Int {
+        return id
+    }
+    
+    func timestampForHeightCache() -> Double {
+        return heightCacheTimestamp
+    }
+    
 }

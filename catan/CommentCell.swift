@@ -31,13 +31,13 @@ class CommentCell: DatasourceCell {
     }
     
     static func height(_ comment: Comment, frame: CGRect) -> CGFloat {
-        if let cached = heightCache.height(forKey: comment.id, onWidth: frame.width) {
+        if let cached = heightCache.height(for: comment, onWidth: frame.width) {
             return cached
         }
         
         let result = CommentView.estimateHeight(comment: comment, width: frame.width)
         
-        heightCache.setHeight(result, forKey: comment.id, onWidth: frame.width)
+        heightCache.setHeight(result, for: comment, onWidth: frame.width)
         return result
     }
 }

@@ -100,8 +100,7 @@ class CommentsDatasource: Datasource {
             
             self?.setupTexts(comment: comment)
             
-            strongSelf.post.add(comment: comment)
-            strongSelf.post.bufferComments.append(comment)
+            strongSelf.post.add(newComment: comment)
             strongSelf.controller?.reloadData(isScrollToBottom: true)
         }
     }

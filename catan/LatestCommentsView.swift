@@ -79,7 +79,7 @@ class LatestCommentsView: UIView {
     
     static func estimateHeight(post: Post?, width: CGFloat) -> CGFloat {
         guard let post = post, !post.hasNoComments() else { return 0 }
-        if let cached = heightCache.height(forKey: post.id, onWidth: width) {
+        if let cached = heightCache.height(for: post, onWidth: width) {
             return cached
         }
         
@@ -88,7 +88,7 @@ class LatestCommentsView: UIView {
             height += CommentView.estimateHeight(comment: comment, width: width)
         }
         
-        heightCache.setHeight(height, forKey: post.id, onWidth: width)
+        heightCache.setHeight(height, for: post, onWidth: width)
         return height
     }
 }
