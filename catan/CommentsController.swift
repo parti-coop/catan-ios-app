@@ -39,7 +39,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         tabBarController?.tabBar.isHidden = false
         
         if let datasource = self.datasource as? CommentsDatasource {
-            datasource.resetComments()
+            datasource.leaveOnlyLastPageComments()
         }
         
         if let delegate = delegate, let post = post {
@@ -50,7 +50,6 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     override func viewDidAppear(_ animated: Bool) {
         guard let datasource = self.datasource as? CommentsDatasource else { return }
         
-        showLoadingHeader()
         datasource.firstFetchComments()
     }
     
@@ -105,13 +104,13 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         self.hideLoadingFooter = true
         collectionView?.reloadData()
         if isScrollToBottom {
-            scrollToBottom()
+            scrollToBottom(animated: false)
         }
     }
     
-    func scrollToBottom() {
+    func scrollToBottom(animated: Bool) {
         guard let datasource = self.datasource as? CommentsDatasource else { return }
-        collectionView?.scrollToItem(at: datasource.lastIndex(), at: .bottom, animated: true)
+        collectionView?.scrollToItem(at: datasource.lastIndex(), at: .bottom, animated: animated)
     }
     
     // MARK: CommentFormViewDelegate 구현
@@ -120,6 +119,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         guard let datasource = self.datasource as? CommentsDatasource else { return }
         
         showLoadingFooter()
+        scrollToBottom(animated: true)
         datasource.createComment(body: body)
     }
 
@@ -150,12 +150,10 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     func showLoadingHeader() {
         self.hideLoadingHeader = false
         collectionView?.reloadData()
-        scrollToBottom()
     }
     
     func showLoadingFooter() {
         self.hideLoadingFooter = false
         collectionView?.reloadData()
-        scrollToBottom()
     }
 }

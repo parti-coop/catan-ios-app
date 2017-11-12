@@ -35,7 +35,7 @@ class LatestCommentsView: UIView {
         guard let post = post else { return }
         
         var currentTopAnchor = topAnchor
-        for comment in post.latestComments {
+        for comment in post.latestComments() {
             let commentView = CommentView()
             commentView.forceWidth = self.forceWidth
             addSubview(commentView)
@@ -84,11 +84,12 @@ class LatestCommentsView: UIView {
         }
         
         var height = CGFloat(0)
-        for comment in post.latestComments {
+        for comment in post.latestComments() {
             height += CommentView.estimateHeight(comment: comment, width: width)
         }
         
         heightCache.setHeight(height, for: post, onWidth: width)
         return height
     }
+    
 }

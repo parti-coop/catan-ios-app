@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LargeCollection<T> {
+class LargeCollection<T>: Sequence {
     fileprivate var elements = [T]()
     var isLoadingCompleted = false
     
@@ -20,18 +20,31 @@ class LargeCollection<T> {
         elements += newElements
     }
     
-    func prependAll(_ newElements: [T]) {
-        elements.insert(contentsOf: newElements, at: 0)
+    func prependAll(_ newElements: [T], before beforeIndex: Int = 0) {
+        elements.insert(contentsOf: newElements, at: beforeIndex)
     }
     
-    func leaveLast(_ n: Int){
-        //with: latestComments, isLoadingCompleted: (commentsCount <= latestComments.count)
-        if elements.count <= n {
+    func lighten(count: Int){
+        if elements.count <= count {
             return
         }
         
-        elements.removeFirst(elements.count - n)
+        elements.removeFirst(elements.count - count)
         self.isLoadingCompleted = false
+    }
+    
+    func lighten(where predicate: (T) -> Bool) {
+        guard let index = self.index(where: predicate) else { return }
+        elements.removeFirst(index + 1)
+        self.isLoadingCompleted = false
+    }
+    
+    func clear() {
+        elements.removeAll()
+    }
+    
+    func last(_ n: Int) -> [T] {
+        return Array(elements.suffix(n))
     }
     
     func first() -> T? {
@@ -46,7 +59,20 @@ class LargeCollection<T> {
         return elements[index]
     }
     
+    func index(where predicate: (T) -> Bool) -> Int? {
+        return elements.index(where: predicate)
+    }
+    
     func lastIndex() -> Int {
         return elements.count - 1
+    }
+    
+    public func makeIterator() -> AnyIterator<T> {
+        var nextIndex = 0
+        return AnyIterator {
+            let currentIndex = nextIndex
+            nextIndex += 1
+            return self.elements.count > currentIndex ? self.elements[currentIndex] : nil
+        }
     }
 }

@@ -14,7 +14,6 @@ protocol CommentsDatasourceDelegate: NSObjectProtocol {
 }
 
 class CommentsDatasource: Datasource {
-    let recommendedMinCommentsCount = 30
     let post: Post
     weak var controller: CommentsDatasourceDelegate?
     
@@ -49,21 +48,17 @@ class CommentsDatasource: Datasource {
     }
     
     func firstFetchComments() {
-        if post.bufferComments.isLoadingCompleted || post.bufferComments.currentCount() > recommendedMinCommentsCount {
-            controller?.reloadData(isScrollToBottom: true)
-            return
-        }
-        
-        fetchComments(isScrollToBottom: true)
+        fetchComments(isFirst: true)
     }
     
-    func fetchComments(isScrollToBottom: Bool = false) {
-        if post.bufferComments.isLoadingCompleted {
-            controller?.reloadData(isScrollToBottom: isScrollToBottom)
+    func fetchComments(isFirst: Bool = false) {
+        if post.bufferComments.isLoadingCompleted && isFirst == false {
+            controller?.reloadData(isScrollToBottom: false)
             return
         }
         
-        PostRequestFactory.fetchComments(postId: post.id, lastCommentId: post.bufferComments.first()?.id).resume { [weak self] (page, error) in
+        let lastCommentId = isFirst ? nil : post.bufferComments.first()?.id
+        PostRequestFactory.fetchComments(postId: post.id, lastCommentId: lastCommentId).resume { [weak self] (page, error) in
             guard let strongSelf = self else { return }
             if let error = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
@@ -72,21 +67,32 @@ class CommentsDatasource: Datasource {
                 return
             }
             
-            guard var page = page else { return }
+            guard let page = page else { return }
+            
+            for comment in page.items {
+                strongSelf.setupTexts(comment: comment)
+            }
+            
+            let post = strongSelf.post
+            
+            if isFirst {
+                post.bufferComments.clear()
+            } else {
+                post.bufferComments.lighten(where: { (comment) -> Bool in
+                    comment.id == lastCommentId
+                })
+            }
+            post.bufferComments.prependAll(page.items)
+            post.bufferComments.isLoadingCompleted = !page.hasMoreItem
             
             DispatchQueue.main.async() {
-                for (index, _) in page.items.enumerated() {
-                    strongSelf.setupTexts(comment: page.items[index])
-                }
-                strongSelf.post.bufferComments.prependAll(page.items)
-                strongSelf.post.bufferComments.isLoadingCompleted = !page.hasMoreItem
-                strongSelf.controller?.reloadData(isScrollToBottom: isScrollToBottom)
+                strongSelf.controller?.reloadData(isScrollToBottom: isFirst)
             }
         }
     }
     
-    func resetComments() {
-        post.bufferComments.leaveLast(recommendedMinCommentsCount)
+    func leaveOnlyLastPageComments() {
+        post.bufferComments.lighten(count: 30)
     }
     
     func createComment(body: String) {

@@ -75,11 +75,11 @@ class DashboardDatasource: Datasource {
                 return
             }
             
-            guard var page = page else { return }
+            guard let page = page else { return }
             
             DispatchQueue.main.async() {
-                for (index, _) in page.items.enumerated() {
-                    strongSelf.setupTexts(post: page.items[index])
+                for post in page.items {
+                    strongSelf.setupTexts(post: post)
                 }
                 strongSelf.posts += page.items
                 strongSelf.isFinishedPagination = !page.hasMoreItem
@@ -113,10 +113,8 @@ class DashboardDatasource: Datasource {
     
     func setupTexts(post: Post) {
         post.titleAndBodyAttributedText = PostTitleAndBodyView.buildText(post)
-        for (commentIndex, _) in post.latestComments.enumerated() {
-            let comment = post.latestComments[commentIndex]
+        for comment in post.bufferComments {
             comment.bodyAttributedText = CommentBodyView.buildBodyText(comment)
-            post.latestComments[commentIndex] = comment
         }
     }
 }

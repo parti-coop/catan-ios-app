@@ -29,12 +29,12 @@ class Post: JSONDecodable, HeightCacheKey {
         
         commentsCount = json["comments_count"].intValue
         if let commentsJSON = json["latest_comments"].array {
-            latestComments = try commentsJSON.decode()
+            let latestComments: [Comment] = try commentsJSON.decode()
             bufferComments.appendAll(latestComments)
+            bufferComments.isLoadingCompleted = (commentsCount <= latestComments.count)
         } else {
-            latestComments = [Comment]()
+            bufferComments.isLoadingCompleted = true
         }
-        bufferComments.isLoadingCompleted = (commentsCount <= latestComments.count)
         
         survey = try json["survey"].decode()
         wiki = try json["wiki"].decode()
@@ -61,7 +61,6 @@ class Post: JSONDecodable, HeightCacheKey {
     var isUpvotedByMe: Bool
     var upvotesCount: Int
     var commentsCount: Int
-    var latestComments: [Comment]
     //Comment sticky_comment;
     let linkSource: LinkSource?
     var poll: Poll?
@@ -98,10 +97,13 @@ class Post: JSONDecodable, HeightCacheKey {
     
     func add(newComment: Comment) {
         commentsCount += 1
-        latestComments.append(newComment)
         bufferComments.append(newComment)
         
         heightCacheTimestamp = Date().timeIntervalSince1970
+    }
+    
+    func latestComments() -> [Comment] {
+        return bufferComments.last(3)
     }
     
     // MARK: HeightCacheKey 구현
