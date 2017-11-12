@@ -22,15 +22,17 @@ class Post: JSONDecodable {
         lastStrokedAt = json["last_stroked_at"].dateTime
         isUpvotedByMe = json["is_upvoted_by_me"].boolValue
         upvotesCount = json["upvotes_count"].intValue
-        commentsCount = json["comments_count"].intValue
         latestStrokedActivity = json["latest_stroked_activity"].stringValue
         expiredAfter = json["expired_after"].intValue
         
+        commentsCount = json["comments_count"].intValue
         if let commentsJSON = json["latest_comments"].array {
             latestComments = try commentsJSON.decode()
+            bufferComments.appendAll(latestComments)
         } else {
             latestComments = [Comment]()
         }
+        bufferComments.isLoadingCompleted = (commentsCount <= latestComments.count)
 
         survey = try json["survey"].decode()
         wiki = try json["wiki"].decode()
@@ -67,6 +69,8 @@ class Post: JSONDecodable {
     let fileSources: [FileSource];
     let latestStrokedActivity: String
     let expiredAfter: Int
+    
+    let bufferComments = LargeCollection<Comment>()
     
     var titleAndBodyAttributedText: NSAttributedString?
     

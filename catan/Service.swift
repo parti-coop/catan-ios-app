@@ -171,8 +171,13 @@ struct PostRequestFactory {
         return Service.sharedInstance.requestAuthenticated("/api/v1/posts/\(postId)")
     }
 
-    static func fetchComments(postId: Int) -> APIRequest<Page<Comment>, Service.JSONError> {
-        let request: APIRequest<Page<Comment>, Service.JSONError> = Service.sharedInstance.requestAuthenticated("/api/v1/posts/\(postId)/comments")
+    static func fetchComments(postId: Int, lastCommentId: Int?) -> APIRequest<Page<Comment>, Service.JSONError> {
+        let request: APIRequest<Page<Comment>, Service.JSONError> = Service.sharedInstance
+            .requestAuthenticated("/api/v1/posts/\(postId)/comments",
+                                  method: .get,
+                                  parameters: [
+                                    "last_comment_id": lastCommentId ?? ""
+                                  ])
         return request
     }
 }

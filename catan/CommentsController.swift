@@ -10,8 +10,14 @@ import UIKit
 import LBTAComponents
 
 class CommentsController: DatasourceController, UIGestureRecognizerDelegate, CommentsDatasourceDelegate, CommentFormViewDelegate {
-    var post: Post?
-    var hideLoadingFooter: Bool = false
+    var post: Post? {
+        didSet {
+            guard let post = post else { return }
+            self.datasource = CommentsDatasource(controller: self, post: post)
+        }
+    }
+    var hideLoadingFooter: Bool = true
+    var hideLoadingHeader: Bool = false
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
@@ -28,6 +34,11 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         tabBarController?.tabBar.isHidden = false
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        guard let datasource = self.datasource as? CommentsDatasource else { return }
+        datasource.firstFetchComments()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,10 +47,6 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         collectionView?.keyboardDismissMode = .interactive
         
         navigationItem.title = "댓글"
-        
-        if let post = post {
-            self.datasource = CommentsDatasource(controller: self, post: post)
-        }
         commentFormView.delegate = self
     }
     
@@ -62,6 +69,14 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if hideLoadingHeader {
+            return CGSize.zero
+        } else {
+            return CGSize(width: view.frame.width, height: 50)
+        }
+    }
+    
     // MARK: UIGestureRecognizerDelegate 구현
     
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -71,6 +86,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     // MARK: CommentsDatasourceDelegate 구현
     
     func reloadData(isScrollToBottom: Bool) {
+        self.hideLoadingHeader = true
         self.hideLoadingFooter = true
         collectionView?.reloadData()
         if isScrollToBottom {
@@ -88,6 +104,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     func handleCommentSubmit(body: String) {
         guard let datasource = self.datasource as? CommentsDatasource else { return }
         datasource.createComment(body: body)
+        
         self.hideLoadingFooter = false
         collectionView?.reloadData()
         scrollToBottom()

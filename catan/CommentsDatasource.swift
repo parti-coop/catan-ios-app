@@ -15,14 +15,12 @@ protocol CommentsDatasourceDelegate: NSObjectProtocol {
 
 class CommentsDatasource: Datasource {
     let post: Post
-    var comments = [Comment]()
     weak var controller: CommentsDatasourceDelegate?
     
     init(controller: CommentsDatasourceDelegate, post: Post) {
         self.post = post
         self.controller = controller
         super.init()
-        fetchComments()
     }
     
     override func cellClasses() -> [DatasourceCell.Type] {
@@ -30,11 +28,15 @@ class CommentsDatasource: Datasource {
     }
     
     override func numberOfItems(_ section: Int) -> Int {
-        return comments.count
+        return post.bufferComments.currentCount()
     }
     
     override func item(_ indexPath: IndexPath) -> Any? {
-        return comments[indexPath.item]
+        return post.bufferComments.get(indexOf: indexPath.item)
+    }
+    
+    override func headerClasses() -> [DatasourceCell.Type]? {
+        return [IndicatorCell.self]
     }
     
     override func footerClasses() -> [DatasourceCell.Type]? {
@@ -45,8 +47,22 @@ class CommentsDatasource: Datasource {
         return nil
     }
     
-    func fetchComments() {
-        PostRequestFactory.fetchComments(postId: post.id).resume { [weak self] (page, error) in
+    func firstFetchComments() {
+        if post.bufferComments.isLoadingCompleted || post.bufferComments.currentCount() > 30 {
+            controller?.reloadData(isScrollToBottom: true)
+            return
+        }
+        
+        fetchComments(isScrollToBottom: true)
+    }
+    
+    func fetchComments(isScrollToBottom: Bool = false) {
+        if post.bufferComments.isLoadingCompleted {
+            controller?.reloadData(isScrollToBottom: isScrollToBottom)
+            return
+        }
+        
+        PostRequestFactory.fetchComments(postId: post.id, lastCommentId: post.bufferComments.first()?.id).resume { [weak self] (page, error) in
             guard let strongSelf = self else { return }
             if let error = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
@@ -61,9 +77,9 @@ class CommentsDatasource: Datasource {
                 for (index, _) in page.items.enumerated() {
                     strongSelf.setupTexts(comment: page.items[index])
                 }
-                let isFirst = strongSelf.comments.isEmpty
-                strongSelf.comments += page.items
-                strongSelf.controller?.reloadData(isScrollToBottom: isFirst)
+                strongSelf.post.bufferComments.prependAll(page.items)
+                strongSelf.post.bufferComments.isLoadingCompleted = !page.hasMoreItem
+                strongSelf.controller?.reloadData(isScrollToBottom: isScrollToBottom)
             }
         }
     }
@@ -80,7 +96,7 @@ class CommentsDatasource: Datasource {
             self?.setupTexts(comment: comment)
             
             strongSelf.post.add(comment: comment)
-            strongSelf.comments.append(comment)
+            strongSelf.post.bufferComments.append(comment)
             strongSelf.controller?.reloadData(isScrollToBottom: true)
         }
     }
@@ -90,6 +106,6 @@ class CommentsDatasource: Datasource {
     }
     
     func lastIndex() -> IndexPath {
-        return IndexPath(item: comments.count - 1, section: 0)
+        return IndexPath(item: post.bufferComments.lastIndex(), section: 0)
     }
 }

@@ -50,6 +50,7 @@
 		987F85081FAFBF280055DD7A /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 987F85071FAFBF280055DD7A /* CommentCell.swift */; };
 		9892CEF71FAF1FD000616909 /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9892CEF61FAF1FD000616909 /* CommentsController.swift */; };
 		9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989798591F54D8BE00A5F67B /* Comment.swift */; };
+		9898F0461FB7C81500FDF5FF /* LargeCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9898F0451FB7C81500FDF5FF /* LargeCollection.swift */; };
 		98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */; };
 		98A5F4F31F440A3600E6D781 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F21F440A3600E6D781 /* Style.swift */; };
 		98A5F4F71F449AD600E6D781 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A5F4F61F449AD600E6D781 /* Service.swift */; };
@@ -113,6 +114,7 @@
 		987F85071FAFBF280055DD7A /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		9892CEF61FAF1FD000616909 /* CommentsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsController.swift; sourceTree = "<group>"; };
 		989798591F54D8BE00A5F67B /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		9898F0451FB7C81500FDF5FF /* LargeCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeCollection.swift; sourceTree = "<group>"; };
 		98A5F4F01F42D9B400E6D781 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		98A5F4F21F440A3600E6D781 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		98A5F4F41F4439F400E6D781 /* catan.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = catan.entitlements; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				98BE396C1F93AAEC007A15D7 /* UILabel+Extension.swift */,
 				985101041F52581C009BE875 /* CollapsibleTopConstrain.swift */,
 				98BE396E1F93B0A7007A15D7 /* PaddingLabel.swift */,
+				9898F0451FB7C81500FDF5FF /* LargeCollection.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				98E663521F490CE400455CEB /* DashboardController.swift in Sources */,
 				985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */,
 				980BCE621FB682D7006AFAB6 /* CommentFormView.swift in Sources */,
+				9898F0461FB7C81500FDF5FF /* LargeCollection.swift in Sources */,
 				983A11631F590D5E000D7D7F /* CommentBodyView.swift in Sources */,
 				987F85041FAFBB7D0055DD7A /* CommentsDatasource.swift in Sources */,
 				98392D711F6095B80027C966 /* LinkSource.swift in Sources */,
