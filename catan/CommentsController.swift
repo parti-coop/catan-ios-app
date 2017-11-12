@@ -109,8 +109,17 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     }
     
     func scrollToBottom(animated: Bool) {
-        guard let datasource = self.datasource as? CommentsDatasource else { return }
-        collectionView?.scrollToItem(at: datasource.lastIndex(), at: .bottom, animated: animated)
+        guard let datasource = self.datasource as? CommentsDatasource, let collectionView = self.collectionView else { return }
+        
+        let collectionViewContentHeight = collectionView.collectionViewLayout.collectionViewContentSize.height
+        let isContentTooSmall: Bool = (collectionViewContentHeight < collectionView.bounds.size.height)
+        
+        if isContentTooSmall {
+            collectionView.scrollRectToVisible(CGRect(x: 0, y: collectionViewContentHeight - 1, width: 1, height: 1), animated: animated)
+            return
+        }
+        
+        collectionView.scrollToItem(at: datasource.lastIndex(), at: .top, animated: animated)
     }
     
     // MARK: CommentFormViewDelegate 구현
