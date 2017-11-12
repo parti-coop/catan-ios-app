@@ -67,9 +67,9 @@ class CommentBodyView: UITextView {
         
         // 맨 마지막에 공백 라인을 방지하기 위해 맨 끝에 더미로 빈 라인을 둔다
         let pTag = "</p>"
-        let lastToken = String(parsedText.characters.suffix(pTag.characters.count))
+        let lastToken = String(parsedText.suffix(pTag.count))
         if lastToken == pTag {
-            let start = parsedText.index(parsedText.endIndex, offsetBy: -1 * (pTag.characters.count))
+            let start = parsedText.index(parsedText.endIndex, offsetBy: -1 * (pTag.count))
             let end = parsedText.endIndex
             parsedText.replaceSubrange(start..<end, with: "<br></p>")
         }
