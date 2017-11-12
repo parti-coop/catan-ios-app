@@ -75,7 +75,7 @@ class Post: JSONDecodable, HeightCacheKey {
     let latestStrokedActivity: String
     let expiredAfter: Int
     
-    let bufferComments = LargeCollection<Comment>()
+    let bufferComments = BufferCollection<Comment>()
     
     var titleAndBodyAttributedText: NSAttributedString?
     

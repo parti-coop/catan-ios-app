@@ -18,13 +18,17 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         didSet {
             guard let post = post else { return }
             self.datasource = CommentsDatasource(controller: self, post: post)
+            if let datasource = self.datasource as? CommentsDatasource {
+                datasource.initComments()
+            }
         }
     }
     var toComment: Comment?
-    var needToShowKeyboardOnViewDidAppear: Bool = false
+    var needToShowKeyboardOnViewDidAppear = false
     weak var delegate: CommentsControllerDelegate?
-    var hideLoadingFooter: Bool = true
-    var hideLoadingHeader: Bool = true
+    var hideLoadingFooter = true
+    var hideLoadingHeader = true
+    var readyToLoadMore = false
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
@@ -34,6 +38,16 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if needToShowKeyboardOnViewDidAppear, let post = post {
+            didTapAddingComment(post: post, toComment: toComment)
+        }
+        if let datasource = self.datasource as? CommentsDatasource {
+            showLoadingHeader()
+            datasource.fetchComments()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,16 +63,6 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        guard let datasource = self.datasource as? CommentsDatasource else { return }
-        
-        if needToShowKeyboardOnViewDidAppear, let post = post {
-            didTapAddingComment(post: post, toComment: toComment)
-        }
-        scrollToBottom(animated: true)
-        datasource.firstFetchComments()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,6 +72,35 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         
         navigationItem.title = post?.specificDescStripedTags ?? "댓글"
         commentFormView.delegate = self
+    }
+    
+    override init() {
+        super.init()
+        collectionView?.collectionViewLayout = ContentSizePreservedCollectionViewFlowLayout()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        if let post = post, post.bufferComments.isLoadingCompleted {
+            return
+        }
+        
+        guard readyToLoadMore, hideLoadingHeader,
+            let collectionView = collectionView,
+            collectionView.contentOffset.y < CGFloat(0),
+            let collectionViewLayout = collectionView.collectionViewLayout as? ContentSizePreservedCollectionViewFlowLayout,
+            let datasource = self.datasource as? CommentsDatasource else { return }
+        
+        readyToLoadMore = false
+        showLoadingHeader()
+        collectionViewLayout.keeingBeforeContentSize = true
+        datasource.fetchComments()
+        collectionView.reloadData()
     }
     
     // MARK: 각 셀의 크기 설정 및 DatasourceController 확장
@@ -93,7 +126,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         if hideLoadingHeader {
             return CGSize.zero
         } else {
-            return CGSize(width: view.frame.width, height: 50)
+            return CGSize(width: view.frame.width, height: 30)
         }
     }
     
@@ -111,7 +144,14 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         collectionView?.reloadData()
         if isScrollToBottom {
             scrollToBottom(animated: true)
+        } else {
+            guard let collectionViewLayout = collectionView?.collectionViewLayout as? ContentSizePreservedCollectionViewFlowLayout,
+                collectionViewLayout.keeingBeforeContentSize else { print("guard block reloadData"); return }
+            
+            collectionViewLayout.maintainScrollPosition()
         }
+        
+        self.readyToLoadMore = true
     }
     
     func scrollToBottom(animated: Bool) {

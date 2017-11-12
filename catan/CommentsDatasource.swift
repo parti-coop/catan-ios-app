@@ -47,17 +47,17 @@ class CommentsDatasource: Datasource {
         return nil
     }
     
-    func firstFetchComments() {
-        fetchComments(isFirst: true)
+    func initComments() {
+        post.bufferComments.lightenAll()
     }
     
-    func fetchComments(isFirst: Bool = false) {
-        if post.bufferComments.isLoadingCompleted && isFirst == false {
+    func fetchComments() {
+        if post.bufferComments.isLoadingCompleted {
             controller?.reloadData(isScrollToBottom: false)
             return
         }
         
-        let lastCommentId = isFirst ? nil : post.bufferComments.first()?.id
+        let lastCommentId = post.bufferComments.first()?.id
         PostRequestFactory.fetchComments(post: post, lastCommentId: lastCommentId).resume { [weak self] (page, error) in
             guard let strongSelf = self else { return }
             if let error = error {
@@ -75,9 +75,7 @@ class CommentsDatasource: Datasource {
             
             let post = strongSelf.post
             
-            if isFirst {
-                post.bufferComments.clear()
-            } else {
+            if let lastCommentId = lastCommentId {
                 post.bufferComments.lighten(where: { (comment) -> Bool in
                     comment.id == lastCommentId
                 })
@@ -86,7 +84,7 @@ class CommentsDatasource: Datasource {
             post.bufferComments.isLoadingCompleted = !page.hasMoreItem
             
             DispatchQueue.main.async() {
-                strongSelf.controller?.reloadData(isScrollToBottom: isFirst)
+                strongSelf.controller?.reloadData(isScrollToBottom: lastCommentId == nil)
             }
         }
     }

@@ -1,5 +1,5 @@
 //
-//  LargeCollection.swift
+//  BufferCollection.swift
 //  catan
 //
 //  Created by Youngmin Kim on 2017. 11. 12..
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LargeCollection<T>: Sequence {
+class BufferCollection<T>: Sequence {
     fileprivate var elements = [T]()
     var isLoadingCompleted = false
     
@@ -35,12 +35,17 @@ class LargeCollection<T>: Sequence {
     
     func lighten(where predicate: (T) -> Bool) {
         guard let index = self.index(where: predicate) else { return }
-        elements.removeFirst(index + 1)
+        elements.removeFirst(index)
         self.isLoadingCompleted = false
     }
     
-    func clear() {
+    func lightenAll() {
+        if elements.count <= 0 {
+            return
+        }
+        
         elements.removeAll()
+        self.isLoadingCompleted = false
     }
     
     func last(_ n: Int) -> [T] {
