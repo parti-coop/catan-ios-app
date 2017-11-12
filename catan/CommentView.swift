@@ -67,7 +67,7 @@ class CommentView: UIView {
         return textView
     }()
     
-    let upvoteButton: UIButton = {
+    lazy var upvoteButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("공감해요", for: .normal)
         button.setTitleColor(.brand_primary, for: .normal)
