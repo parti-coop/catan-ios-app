@@ -33,7 +33,7 @@ class Post: JSONDecodable {
             latestComments = [Comment]()
         }
         bufferComments.isLoadingCompleted = (commentsCount <= latestComments.count)
-
+        
         survey = try json["survey"].decode()
         wiki = try json["wiki"].decode()
         poll = try json["poll"].decode()

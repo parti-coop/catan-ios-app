@@ -14,6 +14,7 @@ protocol CommentsDatasourceDelegate: NSObjectProtocol {
 }
 
 class CommentsDatasource: Datasource {
+    let recommendedMinCommentsCount = 30
     let post: Post
     weak var controller: CommentsDatasourceDelegate?
     
@@ -48,7 +49,7 @@ class CommentsDatasource: Datasource {
     }
     
     func firstFetchComments() {
-        if post.bufferComments.isLoadingCompleted || post.bufferComments.currentCount() > 30 {
+        if post.bufferComments.isLoadingCompleted || post.bufferComments.currentCount() > recommendedMinCommentsCount {
             controller?.reloadData(isScrollToBottom: true)
             return
         }
@@ -82,6 +83,10 @@ class CommentsDatasource: Datasource {
                 strongSelf.controller?.reloadData(isScrollToBottom: isScrollToBottom)
             }
         }
+    }
+    
+    func resetComments() {
+        post.bufferComments.leaveLast(recommendedMinCommentsCount)
     }
     
     func createComment(body: String) {

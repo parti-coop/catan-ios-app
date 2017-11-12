@@ -17,7 +17,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         }
     }
     var hideLoadingFooter: Bool = true
-    var hideLoadingHeader: Bool = false
+    var hideLoadingHeader: Bool = true
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
@@ -32,10 +32,16 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
+        
+        if let datasource = self.datasource as? CommentsDatasource {
+            datasource.resetComments()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         guard let datasource = self.datasource as? CommentsDatasource else { return }
+        
+        showLoadingHeader()
         datasource.firstFetchComments()
     }
     
@@ -103,11 +109,9 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     
     func handleCommentSubmit(body: String) {
         guard let datasource = self.datasource as? CommentsDatasource else { return }
-        datasource.createComment(body: body)
         
-        self.hideLoadingFooter = false
-        collectionView?.reloadData()
-        scrollToBottom()
+        showLoadingFooter()
+        datasource.createComment(body: body)
     }
 
     // MARK: 하단 입력폼
@@ -130,5 +134,19 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         commentFormView.handleSubmit()
         return true
+    }
+    
+    // MARK: 로딩 인디케이터
+    
+    func showLoadingHeader() {
+        self.hideLoadingHeader = false
+        collectionView?.reloadData()
+        scrollToBottom()
+    }
+    
+    func showLoadingFooter() {
+        self.hideLoadingFooter = false
+        collectionView?.reloadData()
+        scrollToBottom()
     }
 }

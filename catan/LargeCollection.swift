@@ -24,6 +24,16 @@ class LargeCollection<T> {
         elements.insert(contentsOf: newElements, at: 0)
     }
     
+    func leaveLast(_ n: Int){
+        //with: latestComments, isLoadingCompleted: (commentsCount <= latestComments.count)
+        if elements.count <= n {
+            return
+        }
+        
+        elements.removeFirst(elements.count - n)
+        self.isLoadingCompleted = false
+    }
+    
     func first() -> T? {
         return elements.first
     }
