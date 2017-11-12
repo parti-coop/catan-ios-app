@@ -64,7 +64,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         collectionView?.alwaysBounceVertical = true
         collectionView?.keyboardDismissMode = .interactive
         
-        navigationItem.title = "댓글"
+        navigationItem.title = post?.specificDescStripedTags ?? "댓글"
         commentFormView.delegate = self
     }
     
