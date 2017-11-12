@@ -19,6 +19,12 @@ class CommentCell: DatasourceCell {
         }
     }
     
+    override weak var controller: DatasourceController? {
+        didSet {
+            commentView.delegate = controller as? CommentViewDelegate
+        }
+    }
+    
     let commentView: CommentView = {
         let view = CommentView()
         return view

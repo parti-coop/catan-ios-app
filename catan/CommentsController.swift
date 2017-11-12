@@ -13,13 +13,14 @@ protocol CommentsControllerDelegate: class {
     func needToUpdateComments(of: Post)
 }
 
-class CommentsController: DatasourceController, UIGestureRecognizerDelegate, CommentsDatasourceDelegate, CommentFormViewDelegate {
+class CommentsController: DatasourceController, UIGestureRecognizerDelegate, CommentsDatasourceDelegate, CommentFormViewDelegate, CommentViewDelegate {
     var post: Post? {
         didSet {
             guard let post = post else { return }
             self.datasource = CommentsDatasource(controller: self, post: post)
         }
     }
+    var toComment: Comment?
     var needToShowKeyboardOnViewDidAppear: Bool = false
     weak var delegate: CommentsControllerDelegate?
     var hideLoadingFooter: Bool = true
@@ -51,8 +52,8 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     override func viewDidAppear(_ animated: Bool) {
         guard let datasource = self.datasource as? CommentsDatasource else { return }
         
-        if needToShowKeyboardOnViewDidAppear {
-            commentFormView.textField.becomeFirstResponder()
+        if needToShowKeyboardOnViewDidAppear, let post = post {
+            didTapAddingComment(post: post, toComment: toComment)
         }
         scrollToBottom(animated: true)
         datasource.firstFetchComments()
@@ -135,6 +136,18 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         showLoadingFooter()
         scrollToBottom(animated: true)
         datasource.createComment(body: body)
+    }
+    
+    // MARK: CommentViewDelegate 구현
+    
+    func didTapAddingComment(post: Post, toComment: Comment?) {
+        if let toComment = toComment {
+            let pattern = "\\@\(toComment.user.nickname)\\b"
+            if commentFormView.textField.text?.range(of: pattern, options: .regularExpression) == nil {
+                commentFormView.textField.text = "@\(toComment.user.nickname) \(commentFormView.textField.text ?? "")"
+            }
+        }
+        commentFormView.textField.becomeFirstResponder()
     }
 
     // MARK: 하단 입력폼

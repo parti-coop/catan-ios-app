@@ -40,6 +40,8 @@ class Comment: JSONDecodable, HeightCacheKey {
     
     var bodyAttributedText: NSAttributedString?
     
+    weak var post: Post?
+    
     // MARK: HeightCacheKey 구현
     
     func keyForHeightCache() -> Int {
@@ -49,5 +51,4 @@ class Comment: JSONDecodable, HeightCacheKey {
     func timestampForHeightCache() -> Double {
         return heightCacheTimestamp
     }
-    
 }

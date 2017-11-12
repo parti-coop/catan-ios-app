@@ -9,8 +9,13 @@
 import UIKit
 import BonMot
 
+protocol CommentViewDelegate: class {
+    func didTapAddingComment(post: Post, toComment: Comment?)
+}
+
 class CommentView: UIView {
     static let bodyFontPointSize = Style.font.defaultNormal.pointSize
+    weak var delegate: CommentViewDelegate?
     var forceWidth = CGFloat(0) {
         didSet {
             if comment != nil {
@@ -104,7 +109,7 @@ class CommentView: UIView {
         }
     }
 
-    let commentingButton: UIButton = {
+    lazy var commentingButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("댓글달기", for: .normal)
         button.setTitleColor(.brand_primary, for: .normal)
@@ -113,7 +118,8 @@ class CommentView: UIView {
     }()
     
     func handleAddingComment() {
-        print("click comment2")
+        guard let delegate = delegate, let comment = comment, let post = comment.post else { return }
+        delegate.didTapAddingComment(post: post, toComment: comment)
     }
     
     let createdAtLabel: UILabel = {

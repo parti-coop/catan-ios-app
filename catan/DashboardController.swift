@@ -9,7 +9,7 @@
 import UIKit
 import LBTAComponents
 
-class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate, CommentsControllerDelegate, LatestCommentsViewDelegate {
+class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate, CommentsControllerDelegate, LatestCommentsViewDelegate, CommentViewDelegate {
     //TODO: errorMessageLabel
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -94,6 +94,17 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         commentsController.post = post
         commentsController.delegate = self
         commentsController.needToShowKeyboardOnViewDidAppear = false
+        navigationController?.pushViewController(commentsController, animated: true)
+    }
+    
+    // MARK: CommentViewDelegate 구현
+    
+    func didTapAddingComment(post: Post, toComment: Comment?) {
+        let commentsController = CommentsController()
+        commentsController.post = post
+        commentsController.toComment = toComment
+        commentsController.delegate = self
+        commentsController.needToShowKeyboardOnViewDidAppear = true
         navigationController?.pushViewController(commentsController, animated: true)
     }
     

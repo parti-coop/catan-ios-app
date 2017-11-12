@@ -46,6 +46,10 @@ class Post: JSONDecodable, HeightCacheKey {
         } else {
             fileSources = [FileSource]()
         }
+        
+        bufferComments.forEach({ (comment) in
+            comment.post = self
+        })
     }
     
     // TODO: 연결된 모델을 만듭니다
@@ -98,6 +102,7 @@ class Post: JSONDecodable, HeightCacheKey {
     func add(newComment: Comment) {
         commentsCount += 1
         bufferComments.append(newComment)
+        newComment.post = self
         
         heightCacheTimestamp = Date().timeIntervalSince1970
     }

@@ -72,6 +72,8 @@ class LatestCommentsView: UIView {
         for (index, comment) in post.latestComments().enumerated() {
             let commentView = CommentView(hasDivider: index != 0)
             commentView.forceWidth = self.forceWidth
+            commentView.delegate = delegate as? CommentViewDelegate
+            
             addSubview(commentView)
             commentView.anchor(currentTopAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
             commentView.comment = comment

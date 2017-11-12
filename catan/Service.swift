@@ -122,6 +122,26 @@ extension APIRequest where Model : Any {
     }
 }
 
+class APIRequestSuccessDecorator<Model, E> {
+    let origin: APIRequest<Model, E>
+    let successBlock: ((Model) -> Void)
+    
+    init(origin: APIRequest<Model, E>, withSuccess successBlock: @escaping ((Model) -> Void)) {
+        self.origin = origin
+        self.successBlock = successBlock
+    }
+    
+    func resume(_ completion: @escaping (Model?, Error?) -> ()) {
+        origin.perform(withSuccess: { (model) in
+            self.successBlock(model)
+            completion(model, nil)
+        }) { (err) in
+            log.error(err)
+            completion(nil, err)
+        }
+    }
+}
+
 struct AuthTokenRequestFactory {
     static func create(provider: AuthToken.provider, assertion: String, secret: String?) -> APIRequest<AuthToken, Service.JSONError> {
         let request: APIRequest<AuthToken, Service.JSONError> = Service.sharedInstance
@@ -171,14 +191,18 @@ struct PostRequestFactory {
         return Service.sharedInstance.requestAuthenticated("/api/v1/posts/\(postId)")
     }
 
-    static func fetchComments(postId: Int, lastCommentId: Int?) -> APIRequest<Page<Comment>, Service.JSONError> {
+    static func fetchComments(post: Post, lastCommentId: Int?) -> APIRequestSuccessDecorator<Page<Comment>, Service.JSONError> {
         let request: APIRequest<Page<Comment>, Service.JSONError> = Service.sharedInstance
-            .requestAuthenticated("/api/v1/posts/\(postId)/comments",
+            .requestAuthenticated("/api/v1/posts/\(post.id)/comments",
                                   method: .get,
                                   parameters: [
                                     "last_comment_id": lastCommentId ?? ""
                                   ])
-        return request
+        return APIRequestSuccessDecorator(origin: request, withSuccess: { (page) in
+            for comment in page.items {
+                comment.post = post
+            }
+        })
     }
 }
 

@@ -58,7 +58,7 @@ class CommentsDatasource: Datasource {
         }
         
         let lastCommentId = isFirst ? nil : post.bufferComments.first()?.id
-        PostRequestFactory.fetchComments(postId: post.id, lastCommentId: lastCommentId).resume { [weak self] (page, error) in
+        PostRequestFactory.fetchComments(post: post, lastCommentId: lastCommentId).resume { [weak self] (page, error) in
             guard let strongSelf = self else { return }
             if let error = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
