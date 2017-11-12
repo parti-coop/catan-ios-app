@@ -9,12 +9,12 @@
 import UIKit
 import BonMot
 
-protocol PostActionBarDelegate {
+protocol PostActionBarDelegate: class {
     func didTapAddingComment(post: Post)
 }
 
 class PostActionBarView: UIView {
-    var delegate: PostActionBarDelegate?
+    weak var delegate: PostActionBarDelegate?
     
     var forceWidth = CGFloat(0) {
         didSet {
@@ -36,7 +36,7 @@ class PostActionBarView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("댓글달기", for: .normal)
         button.setTitleColor(.gray, for: .normal)
-        button.addTarget(self, action: #selector(handleCommenting), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleAddingComment), for: .touchUpInside)
         return button
     }()
 
@@ -69,7 +69,7 @@ class PostActionBarView: UIView {
         }
     }
     
-    func handleCommenting() {
+    func handleAddingComment() {
         guard let post = post else { return }
         delegate?.didTapAddingComment(post: post)
     }

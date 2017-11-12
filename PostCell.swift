@@ -46,6 +46,7 @@ class PostCell: DatasourceCell, CellRefetchable {
     override weak var controller: DatasourceController? {
         didSet {
             postActionBarView.delegate = controller as? PostActionBarDelegate
+            latestCommentsView.delegate = controller as? LatestCommentsViewDelegate
         }
     }
     

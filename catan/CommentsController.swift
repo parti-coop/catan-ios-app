@@ -9,7 +9,7 @@
 import UIKit
 import LBTAComponents
 
-protocol CommentsControllerDelegate {
+protocol CommentsControllerDelegate: class {
     func needToUpdateComments(of: Post)
 }
 
@@ -21,7 +21,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         }
     }
     var needToShowKeyboardOnViewDidAppear: Bool = false
-    var delegate: CommentsControllerDelegate?
+    weak var delegate: CommentsControllerDelegate?
     var hideLoadingFooter: Bool = true
     var hideLoadingHeader: Bool = true
     
@@ -54,6 +54,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         if needToShowKeyboardOnViewDidAppear {
             commentFormView.textField.becomeFirstResponder()
         }
+        scrollToBottom(animated: true)
         datasource.firstFetchComments()
     }
     

@@ -9,7 +9,7 @@
 import UIKit
 import LBTAComponents
 
-class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate, CommentsControllerDelegate {
+class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate, CommentsControllerDelegate, LatestCommentsViewDelegate {
     //TODO: errorMessageLabel
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -85,6 +85,16 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
     func needToUpdateComments(of post: Post) {
         guard let datasource = datasource as? DashboardDatasource else { return }
         datasource.reloadItem(post: post)
+    }
+    
+    // MARK: LatestCommentsViewDelegate 구현
+    
+    func didTapMoreComments(post: Post) {
+        let commentsController = CommentsController()
+        commentsController.post = post
+        commentsController.delegate = self
+        commentsController.needToShowKeyboardOnViewDidAppear = false
+        navigationController?.pushViewController(commentsController, animated: true)
     }
     
     // 로그아웃 - 시작

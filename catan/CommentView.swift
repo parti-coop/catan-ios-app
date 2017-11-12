@@ -108,11 +108,11 @@ class CommentView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("댓글달기", for: .normal)
         button.setTitleColor(.brand_primary, for: .normal)
-        button.addTarget(self, action: #selector(handleCommenting), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleAddingComment), for: .touchUpInside)
         return button
     }()
     
-    func handleCommenting() {
+    func handleAddingComment() {
         print("click comment2")
     }
     
@@ -128,9 +128,9 @@ class CommentView: UIView {
         return label
     }()
     
-    init() {
+    init(hasDivider: Bool = true) {
         super.init(frame: .zero)
-        setupView()
+        setupView(hasDivider: hasDivider)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -142,8 +142,10 @@ class CommentView: UIView {
         invalidateIntrinsicContentSize()
     }
     
-    fileprivate func setupView() {
-        addSubview(dividerView)
+    fileprivate func setupView(hasDivider: Bool) {
+        if hasDivider {
+            addSubview(dividerView)
+        }
         addSubview(userImageView)
         addSubview(bodyTextView)
         addSubview(upvoteButton)
@@ -151,11 +153,13 @@ class CommentView: UIView {
         addSubview(createdAtLabel)
         addSubview(upvoteLabel)
 
-        dividerView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: Style.dimension.defaultSpace, rightConstant: 0, heightConstant: Style.dimension.defaultDividerHeight)
+        if hasDivider {
+            dividerView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: Style.dimension.defaultSpace, rightConstant: 0, heightConstant: Style.dimension.defaultDividerHeight)
+        }
         
-        let contentMargin = Style.dimension.defaultSpace
-        userImageView.anchor(dividerView.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: contentMargin, leftConstant: Style.dimension.commentView.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.commentView.userImage, heightConstant: Style.dimension.commentView.userImage)
-        bodyTextView.anchor(dividerView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: contentMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.commentView.paddingRight, widthConstant: 0, heightConstant: 0)
+        let contentMargin = Style.dimension.defaultSpace + (hasDivider ? Style.dimension.defaultDividerHeight : 0)
+        userImageView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: contentMargin, leftConstant: Style.dimension.commentView.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.commentView.userImage, heightConstant: Style.dimension.commentView.userImage)
+        bodyTextView.anchor(topAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: contentMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.commentView.paddingRight, widthConstant: 0, heightConstant: 0)
         
         let actionButtonsMargin = CGFloat(0)
         upvoteButton.anchor(bodyTextView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: nil,

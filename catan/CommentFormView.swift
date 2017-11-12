@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol CommentFormViewDelegate {
+protocol CommentFormViewDelegate: class {
     func handleCommentSubmit(body: String)
 }
 
 class CommentFormView: UIView {
-    var delegate: CommentFormViewDelegate?
+    weak var delegate: CommentFormViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
