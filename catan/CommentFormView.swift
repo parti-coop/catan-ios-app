@@ -52,6 +52,12 @@ class CommentFormView: UIView {
         return textField
     }()
     
+    let dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .app_light_gray
+        return view
+    }()
+    
     fileprivate func setupViews() {
         backgroundColor = .white
         frame = CGRect(x: 0, y: 0, width: frame.width, height: 50)
@@ -61,6 +67,9 @@ class CommentFormView: UIView {
 
         addSubview(self.textField)
         self.textField.anchor(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: submitButton.leftAnchor, topConstant: 0, leftConstant: 12, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        addSubview(self.dividerView)
+        self.dividerView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0.5)
     }
     
     func clearForm() {
