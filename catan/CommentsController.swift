@@ -20,6 +20,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
             self.datasource = CommentsDatasource(controller: self, post: post)
         }
     }
+    var needToShowKeyboardOnViewDidAppear: Bool = false
     var delegate: CommentsControllerDelegate?
     var hideLoadingFooter: Bool = true
     var hideLoadingHeader: Bool = true
@@ -50,6 +51,9 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
     override func viewDidAppear(_ animated: Bool) {
         guard let datasource = self.datasource as? CommentsDatasource else { return }
         
+        if needToShowKeyboardOnViewDidAppear {
+            commentFormView.textField.becomeFirstResponder()
+        }
         datasource.firstFetchComments()
     }
     
@@ -104,7 +108,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
         self.hideLoadingFooter = true
         collectionView?.reloadData()
         if isScrollToBottom {
-            scrollToBottom(animated: false)
+            scrollToBottom(animated: true)
         }
     }
     

@@ -72,10 +72,11 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
     
     // MARK: PostActionBarDelegate 구현
     
-    func didTapComment(post: Post) {
+    func didTapAddingComment(post: Post) {
         let commentsController = CommentsController()
         commentsController.post = post
         commentsController.delegate = self
+        commentsController.needToShowKeyboardOnViewDidAppear = true
         navigationController?.pushViewController(commentsController, animated: true)
     }
     

@@ -10,7 +10,7 @@ import UIKit
 import BonMot
 
 protocol PostActionBarDelegate {
-    func didTapComment(post: Post)
+    func didTapAddingComment(post: Post)
 }
 
 class PostActionBarView: UIView {
@@ -71,7 +71,7 @@ class PostActionBarView: UIView {
     
     func handleCommenting() {
         guard let post = post else { return }
-        delegate?.didTapComment(post: post)
+        delegate?.didTapAddingComment(post: post)
     }
 
     let upvoteLabel: UILabel = {
