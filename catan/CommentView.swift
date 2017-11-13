@@ -34,6 +34,9 @@ class CommentView: UIView {
             userImageView.kf.setImage(with: URL(string: comment.user.imageUrl))
             createdAtLabel.text = buildCreatedAtText(comment)
             upvoteLabel.attributedText = buildUpvoteLabelText(comment)
+            
+            setupActionButtons(comment: comment)
+            
             setNeedsLayout()
         }
     }
@@ -167,21 +170,39 @@ class CommentView: UIView {
         userImageView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: contentMargin, leftConstant: Style.dimension.commentView.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.commentView.userImage, heightConstant: Style.dimension.commentView.userImage)
         bodyTextView.anchor(topAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: contentMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.commentView.paddingRight, widthConstant: 0, heightConstant: 0)
         
-        let actionButtonsMargin = CGFloat(0)
-        upvoteButton.anchor(bodyTextView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: nil,
-                            topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
-                            heightConstant: Style.dimension.defautLineHeight)
-        commentingButton.anchor(bodyTextView.bottomAnchor, left: upvoteButton.rightAnchor, bottom: nil, right: nil,
-                                topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
-                                heightConstant: Style.dimension.defautLineHeight)
-        createdAtLabel.anchor(bodyTextView.bottomAnchor, left: commentingButton.rightAnchor, bottom: nil, right: nil,
-                              topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
-                              heightConstant: Style.dimension.defautLineHeight)
-        upvoteLabel.anchor(bodyTextView.bottomAnchor, left: createdAtLabel.rightAnchor, bottom: nil, right: nil,
-                           topConstant: actionButtonsMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
-                           widthConstant: 0, heightConstant: 0)
+        //setupActionButtons()
         
         layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: Style.dimension.defaultSpace, right: 0)
+    }
+    
+    func setupActionButtons(comment: Comment) {
+        if let currentUser = UserSession.sharedInstance.user {
+            if comment.user.id == currentUser.id {
+                upvoteButton.isHidden = true
+                commentingButton.isHidden = true
+                
+                createdAtLabel.anchor(bodyTextView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: nil,
+                                      topConstant: 0, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                                      heightConstant: Style.dimension.defautLineHeight)
+            } else {
+                upvoteButton.isHidden = false
+                commentingButton.isHidden = false
+                
+                upvoteButton.anchor(bodyTextView.bottomAnchor, left: userImageView.rightAnchor, bottom: nil, right: nil,
+                                    topConstant: 0, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                                    heightConstant: Style.dimension.defautLineHeight)
+                commentingButton.anchor(bodyTextView.bottomAnchor, left: upvoteButton.rightAnchor, bottom: nil, right: nil,
+                                        topConstant: 0, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                                        heightConstant: Style.dimension.defautLineHeight)
+                createdAtLabel.anchor(bodyTextView.bottomAnchor, left: commentingButton.rightAnchor, bottom: nil, right: nil,
+                                      topConstant: 0, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                                      heightConstant: Style.dimension.defautLineHeight)
+            }
+            
+            upvoteLabel.anchor(bodyTextView.bottomAnchor, left: createdAtLabel.rightAnchor, bottom: nil, right: nil,
+                               topConstant: 0, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: 0,
+                               widthConstant: 0, heightConstant: 0)
+        }
     }
     
     override var intrinsicContentSize: CGSize {
