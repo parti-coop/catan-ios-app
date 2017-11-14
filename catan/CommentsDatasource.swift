@@ -47,7 +47,7 @@ class CommentsDatasource: Datasource {
         return nil
     }
     
-    func initComments() {
+    func emptyComments() {
         post.bufferComments.lightenAll()
     }
     

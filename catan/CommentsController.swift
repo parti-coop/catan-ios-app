@@ -19,7 +19,7 @@ class CommentsController: DatasourceController, UIGestureRecognizerDelegate, Com
             guard let post = post else { return }
             self.datasource = CommentsDatasource(controller: self, post: post)
             if let datasource = self.datasource as? CommentsDatasource {
-                datasource.initComments()
+                datasource.emptyComments()
             }
         }
     }

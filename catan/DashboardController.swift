@@ -20,6 +20,9 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         super.viewDidLoad()
         
         collectionView?.backgroundColor = .white
+        collectionView?.refreshControl = getRefreshControl()
+        collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.showsVerticalScrollIndicator = false
         
         navigationItem.title = "내 피드"
         setupLogOutButton()
@@ -57,6 +60,7 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
     func reloadData() {
         collectionView?.reloadData()
         collectionView?.backgroundColor = UIColor.app_light_gray
+        collectionView?.refreshControl?.endRefreshing()
     }
     
     func reloadItem(at indexPath: IndexPath) {
@@ -108,7 +112,7 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         navigationController?.pushViewController(commentsController, animated: true)
     }
     
-    // 로그아웃 - 시작
+    // MARK: 로그아웃
     
     fileprivate func setupLogOutButton() {
         navigationController?.navigationBar.tintColor = .black
@@ -129,5 +133,11 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         present(alertController, animated: true, completion: nil)
     }
     
-    // 로그아웃 - 끝
+    // MARK: 리프레쉬
+    
+    override func handleRefresh() {
+        guard let datasource = datasource as? DashboardDatasource else { return }
+        datasource.emptyPosts()
+        datasource.fetchPosts()
+    }
 }

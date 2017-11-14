@@ -51,10 +51,17 @@ class DashboardDatasource: Datasource {
     
     override func item(_ indexPath: IndexPath) -> Any? {
         if indexPath.section == DashboardDatasource.POST_SECTION {
+            if posts.count < indexPath.item {
+                return nil
+            }
             return posts[indexPath.item]
         }
         
         return super.item(indexPath)
+    }
+    
+    func emptyPosts() {
+        self.posts.removeAll()
     }
     
     func fetchPosts() {
@@ -66,6 +73,7 @@ class DashboardDatasource: Datasource {
         let lastPostId = posts.last?.id
         PostRequestFactory.fetchPageOnDashBoard(lastPostId: lastPostId).resume { [weak self] (page, error) in
             guard let strongSelf = self else { return }
+            
             if let error = error {
                 // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
                 log.error("게시글 로딩 실패 : \(error.localizedDescription)")
