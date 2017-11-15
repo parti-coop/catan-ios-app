@@ -115,7 +115,7 @@ class FileSource: JSONDecodable {
                 strongSelf.forceRemoveDownloaded()
                 if strongSelf.currentDownloadStatus != .pause {
                     //TODO 오류 로깅
-                    print(response.error ?? "")
+                    log.error(response.error ?? "")
                     strongSelf.currentDownloadStatus = .error
                     fileSourceDownloadDelegate?.fileSourceDownloadOnReady()
                 }

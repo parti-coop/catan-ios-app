@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     fileprivate func setupLog() {
         let console = ConsoleDestination()  // log to Xcode Console
+        console.format = "$DHH:mm:ss$d $N.$F():$l $T $L: $M"
         log.addDestination(console)
     }
     

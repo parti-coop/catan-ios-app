@@ -52,7 +52,6 @@ class Post: JSONDecodable, HeightCacheKey {
         })
     }
     
-    // TODO: 연결된 모델을 만듭니다
     let id: Int
     let parsedTitle: String
     let parsedBody: String

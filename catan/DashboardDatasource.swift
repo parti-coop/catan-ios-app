@@ -71,45 +71,43 @@ class DashboardDatasource: Datasource {
         self.isLoadingMore = true
        
         let lastPostId = posts.last?.id
-        PostRequestFactory.fetchPageOnDashBoard(lastPostId: lastPostId).resume { [weak self] (page, error) in
-            guard let strongSelf = self else { return }
-            
-            if let error = error {
-                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                log.error("게시글 로딩 실패 : \(error.localizedDescription)")
-                strongSelf.isFinishedPagination = true
-                strongSelf.isLoadingMore = false
-                strongSelf.controller?.reloadData()
-                return
-            }
-            
-            guard let page = page else { return }
-            
-            DispatchQueue.main.async() {
+        PostRequestFactory.fetchPageOnDashBoard(lastPostId: lastPostId).perform(
+            with: { [weak self] (page, error) in
+                guard let strongSelf = self else { return }
+                
+                if let _ = error {
+                    strongSelf.isFinishedPagination = true
+                    UIAlertController.alertError()
+                    return
+                }
+                
+                guard let page = page else { return }
                 for post in page.items {
                     strongSelf.setupTexts(post: post)
                 }
                 strongSelf.posts += page.items
                 strongSelf.isFinishedPagination = !page.hasMoreItem
+            }, finally: { [weak self] in
+                guard let strongSelf = self else { return }
                 strongSelf.isLoadingMore = false
                 strongSelf.controller?.reloadData()
-            }
-        }
+        })
     }
     
     func fetch(post: Post) {
-        PostRequestFactory.fetch(postId: post.id).resume { [weak self] (post, error) in
-            guard let strongSelf = self, let reloadedPost = post else { return }
-            
-            guard let index = strongSelf.posts.index(where: { (post) -> Bool in
-                post.id == reloadedPost.id
-            }) else { return }
-            
-            strongSelf.setupTexts(post: reloadedPost)
-            strongSelf.posts[index] = reloadedPost
-            
-            strongSelf.controller?.reloadData()
-        }
+        PostRequestFactory.fetch(postId: post.id).perform(
+            withSuccess: { [weak self] (reloadedPost) in
+                guard let strongSelf = self else { return }
+                
+                guard let index = strongSelf.posts.index(where: { (post) -> Bool in
+                    post.id == reloadedPost.id
+                }) else { return }
+                
+                strongSelf.setupTexts(post: reloadedPost)
+                strongSelf.posts[index] = reloadedPost
+                
+                strongSelf.controller?.reloadData()
+        })
     }
     
     func reloadItem(post: Post) {

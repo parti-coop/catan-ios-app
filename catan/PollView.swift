@@ -79,17 +79,14 @@ class PollView: UIView {
 
     func handleVote(poll: Poll, choice: String) {
         guard let user = UserSession.sharedInstance.user else { return }
-        VotingRequestFactory.create(pollId: poll.id, choice: choice).resume { [weak self] (response, error) in
-            guard let strongSelf = self, let poll = strongSelf.post?.poll else { return }
-            if let _ = error {
-                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                return
-            }
-            
-            poll.vote(choice, by: user)
-            strongSelf.setupVoteButtons(poll: poll)
-            strongSelf.setupVoteUsers(poll: poll)
-        }
+        VotingRequestFactory.create(pollId: poll.id, choice: choice).perform(
+            withSuccess: { [weak self] (response) in
+                guard let strongSelf = self, let poll = strongSelf.post?.poll else { return }
+                
+                poll.vote(choice, by: user)
+                strongSelf.setupVoteButtons(poll: poll)
+                strongSelf.setupVoteUsers(poll: poll)
+        })
     }
     
     var forceWidth = CGFloat(0) {

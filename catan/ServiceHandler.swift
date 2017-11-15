@@ -57,28 +57,28 @@ class ServiceHandler: RequestAdapter, RequestRetrier {
             requestsToRetry.append(completion)
             
             if !isRefreshing, let refreshToken = self.userSession.refreshToken() {
-                AuthTokenRequestFactory.create(refreshToken: refreshToken)
-                .resume { [weak self] (authToken, error) in
-                    guard let strongSelf = self else { return }
+                AuthTokenRequestFactory.create(refreshToken: refreshToken).perform(
+                    with: { [weak self] (authToken, error) in
+                        guard let strongSelf = self else { return }
 
-                    strongSelf.lock.lock() ; defer { strongSelf.lock.unlock() }
+                        strongSelf.lock.lock() ; defer { strongSelf.lock.unlock() }
 
-                    var succeeded = true
-                    if let error = error {
-                        succeeded = false
-                        log.error("Refresh authentication fails :", error.localizedDescription)
-                    }
-                    
-                    if let authToken = authToken {
-                        strongSelf.userSession.logIn(accessToken: authToken.accessToken, refreshToken: authToken.refreshToken)
-                    } else {
-                        succeeded = false
-                        log.error("Refresh authentication fails. Tokens is empty.")
-                    }
-                    
-                    strongSelf.requestsToRetry.forEach { $0(succeeded, 0.0) }
-                    strongSelf.requestsToRetry.removeAll()
-                }
+                        var succeeded = true
+                        if let error = error {
+                            succeeded = false
+                            log.error("Refresh authentication fails :", error.localizedDescription)
+                        }
+                        
+                        if let authToken = authToken {
+                            strongSelf.userSession.logIn(accessToken: authToken.accessToken, refreshToken: authToken.refreshToken)
+                        } else {
+                            succeeded = false
+                            log.error("Refresh authentication fails. Tokens is empty.")
+                        }
+                        
+                        strongSelf.requestsToRetry.forEach { $0(succeeded, 0.0) }
+                        strongSelf.requestsToRetry.removeAll()
+                })
             }
         } else {
             completion(false, 0.0)

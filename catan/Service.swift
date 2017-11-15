@@ -26,15 +26,13 @@ struct Service {
     
     class JSONError: JSONDecodable {
         required init(json: JSON) throws {
-            //TODO: 오류처리
-            print("오류가 발생했습니다")
+            log.error("오류가 발생했습니다")
         }
     }
     
     class DownloadError: JSONDecodable {
         required init(json: JSON) throws {
-            //TODO: 오류처리
-            print("다운로드가 취소됩니다")
+            log.error("다운로드가 취소됩니다")
         }
     }
     
@@ -94,7 +92,7 @@ struct Service {
     
     func auth(facebookAccessToken: String, withSuccess successBlock: (() -> Void)?, failure failureBlock: ((Error) -> Void)?) {
         AuthTokenRequestFactory.create(provider: AuthToken.provider.facebook, assertion: facebookAccessToken, secret: nil)
-            .resume { (authToken, err) in
+            .perform(with: { (authToken, err) in
                 if let err = err, let failureBlock = failureBlock {
                     failureBlock(err)
                     return
@@ -107,38 +105,60 @@ struct Service {
                         successBlock()
                     }
                 }
-            }
+        })
     }
 }
 
 extension APIRequest where Model : Any {
-    func resume(_ completion: @escaping (Model?, Error?) -> ()) {
+    func perform(with handler: @escaping (Model?, APIError<ErrorModel>?) -> (), beforeSuccess: ((Model) -> Void)? = nil, finally: (() -> Void)? = nil) {
         perform(withSuccess: { (model) in
-            completion(model, nil)
+            beforeSuccess?(model)
+            handler(model, nil)
+            finally?()
         }) { (err) in
             log.error(err)
-            completion(nil, err)
+            handler(nil, err)
+            finally?()
+        }
+    }
+
+    func perform(withSuccess handler: @escaping (Model) -> (), beforeSuccess: ((Model) -> Void)? = nil, finally: (() -> Void)? = nil, alertError: Bool = true) {
+        perform(withSuccess: { (model) in
+            beforeSuccess?(model)
+            handler(model)
+            finally?()
+        }) { (err) in
+            log.error(err)
+            if alertError {
+                UIAlertController.alertError()
+            }
         }
     }
 }
 
-class APIRequestSuccessDecorator<Model, E> {
-    let origin: APIRequest<Model, E>
+class APIRequestSuccessDecorator<Model, ErrorModel> {
+    let origin: APIRequest<Model, ErrorModel>
     let successBlock: ((Model) -> Void)
     
-    init(origin: APIRequest<Model, E>, withSuccess successBlock: @escaping ((Model) -> Void)) {
+    init(origin: APIRequest<Model, ErrorModel>, withSuccess successBlock: @escaping ((Model) -> Void)) {
         self.origin = origin
         self.successBlock = successBlock
     }
     
-    func resume(_ completion: @escaping (Model?, Error?) -> ()) {
-        origin.perform(withSuccess: { (model) in
-            self.successBlock(model)
-            completion(model, nil)
-        }) { (err) in
-            log.error(err)
-            completion(nil, err)
-        }
+    func perform(with handler: @escaping (Model?, APIError<ErrorModel>?) -> (), beforeSuccess originSuccessBlock: ((Model) -> Void)? = nil, finally: (() -> Void)? = nil) {
+        origin.perform(with: handler, beforeSuccess: { [weak self] (model) in
+            guard let strongSelf = self else { return }
+            strongSelf.successBlock(model)
+            originSuccessBlock?(model)
+        }, finally: finally)
+    }
+    
+    func perform(withSuccess handler: @escaping (Model) -> (), beforeSuccess originSuccessBlock: ((Model) -> Void)? = nil, finally: (() -> Void)? = nil, alertError: Bool = true) {
+        origin.perform(withSuccess: handler, beforeSuccess: { [weak self] (model) in
+            guard let strongSelf = self else { return }
+            strongSelf.successBlock(model)
+            originSuccessBlock?(model)
+        }, finally: finally, alertError: alertError)
     }
 }
 

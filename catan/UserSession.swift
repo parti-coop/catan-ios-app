@@ -13,7 +13,7 @@ class UserSession {
     static let sharedInstance = UserSession()
     private let keychain = Keychain(service: "xyz.parti.catan")
     
-    var user: User?
+    private(set) var user: User?
     
     func logIn(authToken: AuthToken) {
         logIn(accessToken: authToken.accessToken, refreshToken: authToken.refreshToken)
@@ -53,19 +53,22 @@ class UserSession {
     
     func cacheUser(completion: @escaping (User?, Error?) -> ()) {
         if isLogin() {
-            UserRequestFactory.fetchMe().resume { [weak self] (user, error) in
+            UserRequestFactory.fetchMe().perform(with: { [weak self] (user, error) in
                 guard let stongSelf = self else { return }
                 if let error = error {
-                    // TODO: 로그인한 사용자가 없는지, 네트워크 오류인지 처리 필요
-                    log.debug("User not found: \(error)")
-                    //logOut()
+                    if error.response?.statusCode == 200 {
+                        log.debug("User not found: \(error)")
+                        UIAlertController.alertError(message: "회원으로 가입되어 있지 않습니다.")
+                        stongSelf.logOut()
+                    }
+                    
                     completion(nil, error)
                     return
                 }
                 
                 stongSelf.user = user
                 completion(stongSelf.user, nil)
-            }
+            })
         }
     }
 }

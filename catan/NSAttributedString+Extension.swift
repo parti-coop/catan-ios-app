@@ -55,7 +55,6 @@ extension NSAttributedString {
             ranges.append(lineRange)
         })
         
-        // TODO: 버그가 있는지 체크 필요
         for range in ranges.reversed() {
             if dummyTextStorage.attributedSubstring(from: range).string.isBlank() {
                 dummyTextStorage.deleteCharacters(in: range)

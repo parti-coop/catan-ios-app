@@ -43,29 +43,19 @@ class PostActionBarView: UIView {
     func handleUpvote() {
         guard let post = post else { return }
         if post.isUpvotedByMe {
-            UpvoteRequestFactory.destroy(postId: post.id).resume { [weak self] (response, error) in
+            UpvoteRequestFactory.destroy(postId: post.id).perform(withSuccess: { [weak self] (response) in
                 guard let strongSelf = self, let strongPost = strongSelf.post else { return }
-                if let _ = error {
-                    // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                    return
-                }
-                
                 strongPost.upvotesCount -= 1
                 strongPost.isUpvotedByMe = false
                 strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(strongPost)
-            }
+            })
         } else {
-            UpvoteRequestFactory.create(postId: post.id).resume { [weak self] (response, error) in
+            UpvoteRequestFactory.create(postId: post.id).perform(withSuccess: { [weak self] (response) in
                 guard let strongSelf = self, let strongPost = strongSelf.post else { return }
-                if let _ = error {
-                    // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                    return
-                }
-                
                 strongPost.upvotesCount += 1
                 strongPost.isUpvotedByMe = true
                 strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(strongPost)
-            }
+            })
         }
     }
     

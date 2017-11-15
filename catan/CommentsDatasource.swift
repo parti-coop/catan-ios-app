@@ -58,35 +58,35 @@ class CommentsDatasource: Datasource {
         }
         
         let lastCommentId = post.bufferComments.first()?.id
-        PostRequestFactory.fetchComments(post: post, lastCommentId: lastCommentId).resume { [weak self] (page, error) in
-            guard let strongSelf = self else { return }
-            if let error = error {
-                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                log.error("댓글 로딩 실패 : \(error.localizedDescription)")
-                strongSelf.controller?.reloadData(isScrollToBottom: false)
-                return
-            }
-            
-            guard let page = page else { return }
-            
-            for comment in page.items {
-                strongSelf.setupTexts(comment: comment)
-            }
-            
-            let post = strongSelf.post
-            
-            if let lastCommentId = lastCommentId {
-                post.bufferComments.lighten(where: { (comment) -> Bool in
-                    comment.id == lastCommentId
-                })
-            }
-            post.bufferComments.prependAll(page.items)
-            post.bufferComments.isLoadingCompleted = !page.hasMoreItem
-            
-            DispatchQueue.main.async() {
-                strongSelf.controller?.reloadData(isScrollToBottom: lastCommentId == nil)
-            }
-        }
+        PostRequestFactory.fetchComments(post: post, lastCommentId: lastCommentId).perform(
+            with: { [weak self] (page, error) in
+                guard let strongSelf = self else { return }
+                if let error = error {
+                    log.error("댓글 로딩 실패 : \(error.localizedDescription)")
+                    strongSelf.controller?.reloadData(isScrollToBottom: false)
+                    return
+                }
+                
+                guard let page = page else { return }
+                
+                for comment in page.items {
+                    strongSelf.setupTexts(comment: comment)
+                }
+                
+                let post = strongSelf.post
+                
+                if let lastCommentId = lastCommentId {
+                    post.bufferComments.lighten(where: { (comment) -> Bool in
+                        comment.id == lastCommentId
+                    })
+                }
+                post.bufferComments.prependAll(page.items)
+                post.bufferComments.isLoadingCompleted = !page.hasMoreItem
+                
+                DispatchQueue.main.async() {
+                    strongSelf.controller?.reloadData(isScrollToBottom: lastCommentId == nil)
+                }
+        })
     }
     
     func leaveOnlyLastPageComments() {
@@ -94,19 +94,15 @@ class CommentsDatasource: Datasource {
     }
     
     func createComment(body: String) {
-        CommentRequestFactory.create(postId: post.id, body: body).resume { [weak self] (comment, error) in
-            guard let strongSelf = self, let comment = comment else { return }
-            
-            if let _ = error {
-                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                return
-            }
-            
-            self?.setupTexts(comment: comment)
-            
-            strongSelf.post.add(newComment: comment)
-            strongSelf.controller?.reloadData(isScrollToBottom: true)
-        }
+        CommentRequestFactory.create(postId: post.id, body: body).perform(
+            withSuccess: { [weak self] (comment) in
+                guard let strongSelf = self else { return }
+                strongSelf.setupTexts(comment: comment)
+                strongSelf.post.add(newComment: comment)
+            }, finally: { [weak self] in
+                guard let strongSelf = self else { return }
+                strongSelf.controller?.reloadData(isScrollToBottom: true)
+            })
     }
     
     func setupTexts(comment: Comment) {

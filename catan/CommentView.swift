@@ -86,29 +86,21 @@ class CommentView: UIView {
     func handleUpvote() {
         guard let comment = comment else { return }
         if comment.isUpvotedByMe {
-            UpvoteRequestFactory.destroy(commentId: comment.id).resume { [weak self] (response, error) in
-                guard let strongSelf = self, let strongComment = strongSelf.comment else { return }
-                if let _ = error {
-                    // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                    return
-                }
-                
-                strongComment.upvotesCount -= 1
-                strongComment.isUpvotedByMe = false
-                strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(strongComment)
-            }
+            UpvoteRequestFactory.destroy(commentId: comment.id).perform(
+                withSuccess: { [weak self] (response) in
+                    guard let strongSelf = self, let strongComment = strongSelf.comment else { return }
+                    strongComment.upvotesCount -= 1
+                    strongComment.isUpvotedByMe = false
+                    strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(strongComment)
+            })
         } else {
-            UpvoteRequestFactory.create(commentId: comment.id).resume { [weak self] (response, error) in
-                guard let strongSelf = self, let strongComment = strongSelf.comment else { return }
-                if let _ = error {
-                    // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                    return
-                }
-                
-                strongComment.upvotesCount += 1
-                strongComment.isUpvotedByMe = true
-                strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(strongComment)
-            }
+            UpvoteRequestFactory.create(commentId: comment.id).perform(
+                withSuccess: { [weak self] (response) in
+                    guard let strongSelf = self, let strongComment = strongSelf.comment else { return }
+                    strongComment.upvotesCount += 1
+                    strongComment.isUpvotedByMe = true
+                    strongSelf.upvoteLabel.attributedText = strongSelf.buildUpvoteLabelText(strongComment)
+            })
         }
     }
 
