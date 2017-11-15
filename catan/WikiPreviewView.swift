@@ -9,8 +9,6 @@
 import UIKit
 
 class WikiPreviewView: UIView {
-    // TODO: 높이를 캐시합니다.
-    static let heightCache = HeightCache()
     static let prototype = WikiPreviewView()
     
     var forceWidth = CGFloat(0) {

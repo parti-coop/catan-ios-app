@@ -148,9 +148,8 @@ class LoginController: UIViewController {
     
     fileprivate func handleSignIn() {
         UserSession.sharedInstance.cacheUser { (user, error) in
-            if let error = error {
-                // TODO: 일반 오류인지, 네트워크 오류인지 처리 필요
-                log.error("로그인 실패 : \(error.localizedDescription)")
+            if let _ = error {
+                UIAlertController.alertError(message: "회원으로 가입되어 있지 않습니다. 먼저 회원가입을 해주세요.")
                 return
             }
                         

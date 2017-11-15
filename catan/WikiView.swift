@@ -10,8 +10,6 @@ import UIKit
 import BonMot
 
 class WikiView: UIView {
-    // TODO: 높이를 캐시합니다.
-    static let heightCache = HeightCache()
     static let prototype = WikiView()
     
     var forceWidth = CGFloat(0) {

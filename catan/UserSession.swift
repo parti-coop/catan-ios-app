@@ -58,7 +58,6 @@ class UserSession {
                 if let error = error {
                     if error.response?.statusCode == 200 {
                         log.debug("User not found: \(error)")
-                        UIAlertController.alertError(message: "회원으로 가입되어 있지 않습니다.")
                         stongSelf.logOut()
                     }
                     

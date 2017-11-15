@@ -10,9 +10,6 @@ import UIKit
 import Kingfisher
 
 class PostAdditionalView: UIStackView {
-    // TODO: 높이를 캐시합니다.
-    static let heightCache = HeightCache()
-    
     weak var cellRefetchable: CellRefetchable? {
         didSet {
             surveyView.cellRefetchable = cellRefetchable

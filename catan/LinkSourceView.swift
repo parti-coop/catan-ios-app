@@ -10,9 +10,6 @@ import UIKit
 import BonMot
 
 class LinkSourceView: UIStackView {
-    // TODO: 높이를 캐시합니다.
-    static let heightCache = HeightCache()
-    
     static let prototype = LinkSourceView()
     
     var forceWidth = CGFloat(0) {

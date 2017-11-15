@@ -10,8 +10,6 @@ import UIKit
 import LBTAComponents
 
 class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate, CommentsControllerDelegate, LatestCommentsViewDelegate, CommentViewDelegate {
-    //TODO: errorMessageLabel
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
     }

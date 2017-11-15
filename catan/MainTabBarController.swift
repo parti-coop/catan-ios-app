@@ -23,9 +23,8 @@ class MainTabBarController: UITabBarController {
         UserSession.sharedInstance.cacheUser { user, error in
             // TODO: 로딩화면 닫기
             
-            if let error = error {
-                //TODO: 로그인 정보에 해당하는 사용자가 없는 경우 혹은 네트워크 오류
-                log.error("다시 로그인해야 합니다. \(error)")
+            if let _ = error {
+                log.error("앱의 회원 정보가 없거나 해당 회원이 탈퇴한 상태입니다. 다시 로그인해야 합니다.")
                 self.showLoginView()
             }
             self.setupViewController()
@@ -34,10 +33,6 @@ class MainTabBarController: UITabBarController {
     
     fileprivate func showLoginView() {
         DispatchQueue.main.async {
-            //TODO: 삭제필요
-            if let currentDispatch = OperationQueue.current?.underlyingQueue {
-                print(currentDispatch)
-            }
             let loginController = LoginController()
             let navController = UINavigationController(rootViewController: loginController)
             self.present(navController, animated: true, completion: nil)
