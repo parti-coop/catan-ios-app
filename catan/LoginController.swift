@@ -130,16 +130,16 @@ class LoginController: UIViewController {
         loginManager.logIn([.publicProfile], viewController: self) { (loginResult) in
             switch loginResult {
             case .failed(let error):
-                // TODO: 로그인 오류처리
+                UIAlertController.alertError()
                 log.error("로그인 실패 :", error.localizedDescription)
             case .cancelled:
-                // TODO: 로그인 취소처리
+                UIAlertController.alertInfo(message: "로그인을 취소하였습니다.")
                 log.debug("로그인 취소")
             case .success(_, _, let accessToken):
                 Service.sharedInstance.auth(facebookAccessToken: accessToken.authenticationToken, withSuccess: {
                     self.handleSignIn()
                 }, failure: { (error) in
-                    // TODO: 로그인 오류처리
+                    UIAlertController.alertError()
                     log.error("로그인 실패 :", error.localizedDescription)
                 })
             }
@@ -149,7 +149,7 @@ class LoginController: UIViewController {
     fileprivate func handleSignIn() {
         UserSession.sharedInstance.cacheUser { (user, error) in
             if let _ = error {
-                UIAlertController.alertError(message: "회원으로 가입되어 있지 않습니다. 먼저 회원가입을 해주세요.")
+                UIAlertController.alertInfo(message: "회원으로 가입되어 있지 않습니다. 먼저 회원가입을 해주세요.")
                 return
             }
                         
