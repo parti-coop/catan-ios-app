@@ -21,6 +21,7 @@ class PostAdditionalView: UIStackView {
             if post != nil {
                 fatalError("데이터가 지정되기 전에 폭을 설정해야 합니다")
             }
+            
             let subviewWidth = PostAdditionalView.estimateSubviewWidth(width: forceWidth)
             surveyView.forceWidth = subviewWidth
             pollView.forceWidth = subviewWidth

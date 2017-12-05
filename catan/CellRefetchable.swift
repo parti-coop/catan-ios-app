@@ -9,6 +9,6 @@
 
 import UIKit
 
-protocol CellRefetchable: NSObjectProtocol {
+protocol CellRefetchable: class {
     func refetch()
 }

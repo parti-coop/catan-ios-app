@@ -9,7 +9,7 @@
 import LBTAComponents
 import UIKit
 
-protocol CommentsDatasourceDelegate: NSObjectProtocol {
+protocol CommentsDatasourceDelegate: class {
     func reloadData(isScrollToBottom: Bool)
 }
 

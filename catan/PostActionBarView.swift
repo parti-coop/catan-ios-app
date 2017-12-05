@@ -73,6 +73,9 @@ class PostActionBarView: UIView {
         didSet {
             guard let post = post else { return }
             upvoteLabel.attributedText = buildUpvoteLabelText(post)
+            
+            setNeedsLayout()
+            invalidateIntrinsicContentSize()
         }
     }
 
@@ -121,10 +124,13 @@ class PostActionBarView: UIView {
             return super.intrinsicContentSize
         }
 
-        return CGSize(width: forceWidth, height: PostActionBarView.estimateHeight())
+        return CGSize(width: forceWidth, height: PostActionBarView.estimateHeight(post: post))
     }
 
-    static func estimateHeight() -> CGFloat {
+    static func estimateHeight(post: Post?) -> CGFloat {
+        if post == nil {
+            return CGFloat(0)
+        }
         return Style.dimension.defaultDividerHeight
             + Style.dimension.defaultSpace
             + Style.dimension.defautLineHeight

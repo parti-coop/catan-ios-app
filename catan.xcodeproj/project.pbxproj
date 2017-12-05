@@ -29,6 +29,9 @@
 		98467F1B1F56A7B3008EEB3D /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98467F1A1F56A7B3008EEB3D /* CommentView.swift */; };
 		984E333F1F6937C500760D97 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E333E1F6937C500760D97 /* Option.swift */; };
 		984E33411F693C7E00760D97 /* OptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984E33401F693C7E00760D97 /* OptionView.swift */; };
+		985075631FC2407F009839FA /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985075621FC2407F009839FA /* UIView+Extension.swift */; };
+		985075651FC24699009839FA /* PostDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985075641FC24699009839FA /* PostDetailController.swift */; };
+		985075671FC24700009839FA /* PostDetailDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985075661FC24700009839FA /* PostDetailDatasource.swift */; };
 		985100D71F4CF109009BE875 /* DashboardDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100D61F4CF109009BE875 /* DashboardDatasource.swift */; };
 		985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100D81F4CF3A2009BE875 /* PostCell.swift */; };
 		985100DD1F4D0022009BE875 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985100DC1F4D0022009BE875 /* Post.swift */; };
@@ -63,6 +66,7 @@
 		98BE396D1F93AAEC007A15D7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE396C1F93AAEC007A15D7 /* UILabel+Extension.swift */; };
 		98BE396F1F93B0A7007A15D7 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE396E1F93B0A7007A15D7 /* PaddingLabel.swift */; };
 		98BE39711F95E49D007A15D7 /* WikiPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BE39701F95E49D007A15D7 /* WikiPreviewView.swift */; };
+		98E5E3AA1FD4C0EA00B94890 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E5E3A91FD4C0EA00B94890 /* PostView.swift */; };
 		98E663521F490CE400455CEB /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E663511F490CE400455CEB /* DashboardController.swift */; };
 		98E663541F491AB700455CEB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E663531F491AB700455CEB /* User.swift */; };
 		98E663571F4922AA00455CEB /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E663561F4922AA00455CEB /* LoginController.swift */; };
@@ -94,6 +98,9 @@
 		98467F1A1F56A7B3008EEB3D /* CommentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		984E333E1F6937C500760D97 /* Option.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		984E33401F693C7E00760D97 /* OptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionView.swift; sourceTree = "<group>"; };
+		985075621FC2407F009839FA /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		985075641FC24699009839FA /* PostDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailController.swift; sourceTree = "<group>"; };
+		985075661FC24700009839FA /* PostDetailDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailDatasource.swift; sourceTree = "<group>"; };
 		985100D61F4CF109009BE875 /* DashboardDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardDatasource.swift; sourceTree = "<group>"; };
 		985100D81F4CF3A2009BE875 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostCell.swift; path = ../PostCell.swift; sourceTree = "<group>"; };
 		985100DC1F4D0022009BE875 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -130,6 +137,7 @@
 		98BE396C1F93AAEC007A15D7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		98BE396E1F93B0A7007A15D7 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		98BE39701F95E49D007A15D7 /* WikiPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikiPreviewView.swift; sourceTree = "<group>"; };
+		98E5E3A91FD4C0EA00B94890 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		98E663511F490CE400455CEB /* DashboardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		98E663531F491AB700455CEB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		98E663561F4922AA00455CEB /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
@@ -207,10 +215,6 @@
 		985100DA1F4CFA0C009BE875 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */,
-				985100D81F4CF3A2009BE875 /* PostCell.swift */,
-				985100E61F4D6C1E009BE875 /* IndicatorCell.swift */,
-				987F85071FAFBF280055DD7A /* CommentCell.swift */,
 				980BCE611FB682D7006AFAB6 /* CommentFormView.swift */,
 				982377411FA7E75300CA5360 /* PostActionBarView.swift */,
 				985100FC1F501B2F009BE875 /* PostTitleAndBodyView.swift */,
@@ -226,6 +230,7 @@
 				984E33401F693C7E00760D97 /* OptionView.swift */,
 				98BE39681F9360F3007A15D7 /* WikiView.swift */,
 				98BE39701F95E49D007A15D7 /* WikiPreviewView.swift */,
+				98E5E3A91FD4C0EA00B94890 /* PostView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -233,12 +238,18 @@
 		985100DB1F4CFA19009BE875 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				98026F071F6FDFFA00E9B27A /* CellRefetchable.swift */,
+				985100D81F4CF3A2009BE875 /* PostCell.swift */,
+				985100E61F4D6C1E009BE875 /* IndicatorCell.swift */,
+				987F85071FAFBF280055DD7A /* CommentCell.swift */,
 				98A5F4FB1F46642000E6D781 /* MainTabBarController.swift */,
 				98E663511F490CE400455CEB /* DashboardController.swift */,
 				985100D61F4CF109009BE875 /* DashboardDatasource.swift */,
 				98E663561F4922AA00455CEB /* LoginController.swift */,
 				9892CEF61FAF1FD000616909 /* CommentsController.swift */,
 				987F85031FAFBB7D0055DD7A /* CommentsDatasource.swift */,
+				985075641FC24699009839FA /* PostDetailController.swift */,
+				985075661FC24700009839FA /* PostDetailDatasource.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -262,6 +273,7 @@
 				9898F0451FB7C81500FDF5FF /* LargeCollection.swift */,
 				9898F0471FB8EA8200FDF5FF /* ContentSizePreservedCollectionViewFlowLayout.swift */,
 				9864A2C71FBC5E3C009839BA /* UIAlertController+Extension.swift */,
+				985075621FC2407F009839FA /* UIView+Extension.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -482,11 +494,14 @@
 				9840295A1F6506980087692A /* String+Extension.swift in Sources */,
 				985100E11F4D1CBC009BE875 /* Page.swift in Sources */,
 				98E663521F490CE400455CEB /* DashboardController.swift in Sources */,
+				985075671FC24700009839FA /* PostDetailDatasource.swift in Sources */,
 				985100D91F4CF3A2009BE875 /* PostCell.swift in Sources */,
 				980BCE621FB682D7006AFAB6 /* CommentFormView.swift in Sources */,
+				98E5E3AA1FD4C0EA00B94890 /* PostView.swift in Sources */,
 				9898F0461FB7C81500FDF5FF /* LargeCollection.swift in Sources */,
 				983A11631F590D5E000D7D7F /* CommentBodyView.swift in Sources */,
 				987F85041FAFBB7D0055DD7A /* CommentsDatasource.swift in Sources */,
+				985075631FC2407F009839FA /* UIView+Extension.swift in Sources */,
 				98392D711F6095B80027C966 /* LinkSource.swift in Sources */,
 				9840295E1F655EF10087692A /* SurveyView.swift in Sources */,
 				9897985A1F54D8BE00A5F67B /* Comment.swift in Sources */,
@@ -494,6 +509,7 @@
 				98392D731F616B8E0027C966 /* PollView.swift in Sources */,
 				98A5F4F11F42D9B400E6D781 /* UIColor+Extension.swift in Sources */,
 				98A5F4F71F449AD600E6D781 /* Service.swift in Sources */,
+				985075651FC24699009839FA /* PostDetailController.swift in Sources */,
 				9840295C1F65540E0087692A /* UIStackView+Extension.swift in Sources */,
 				98BE39691F9360F3007A15D7 /* WikiView.swift in Sources */,
 				983A116D1F5BEF2B000D7D7F /* PostImageFileSourcesView.swift in Sources */,

@@ -9,7 +9,7 @@
 import UIKit
 import LBTAComponents
 
-class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostRefetchableController, PostActionBarDelegate, CommentsControllerDelegate, LatestCommentsViewDelegate, CommentViewDelegate {
+class DashboardController: DatasourceController, DashboardDatasourceDelegate, PostViewDelegate, PostActionBarDelegate, CommentsControllerDelegate, LatestCommentsViewDelegate, CommentViewDelegate, PostDetailControllerDelegate {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         collectionViewLayout.invalidateLayout()
     }
@@ -57,7 +57,7 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
     
     func reloadData() {
         collectionView?.reloadData()
-        collectionView?.backgroundColor = UIColor.app_light_gray
+        collectionView?.backgroundColor = .app_light_gray
         collectionView?.refreshControl?.endRefreshing()
     }
     
@@ -65,11 +65,18 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         collectionView?.reloadItems(at: [indexPath])
     }
     
-    // MARK: PostRefetchableController 구현
+    // MARK: PostViewDelegate 구현
     
     func refetch(post: Post) {
         guard let datasource = datasource as? DashboardDatasource else { return }
         datasource.fetch(post: post)
+    }
+    
+    func didTapDetail(post: Post) {
+        let postDetailController = PostDetailController()
+        postDetailController.postId = post.id
+        postDetailController.delegate = self
+        navigationController?.pushViewController(postDetailController, animated: true)
     }
     
     // MARK: PostActionBarDelegate 구현
@@ -108,6 +115,13 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         commentsController.delegate = self
         commentsController.needToShowKeyboardOnViewDidAppear = true
         navigationController?.pushViewController(commentsController, animated: true)
+    }
+    
+    // MARK: PostDetailControllerDelegate 구현
+    
+    func needToUpdate(of post: Post) {
+        guard let datasource = datasource as? DashboardDatasource else { return }
+        datasource.reloadItem(post: post)
     }
     
     // MARK: 로그아웃

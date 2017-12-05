@@ -11,7 +11,7 @@ import TRON
 import SwiftyJSON
 import UIKit
 
-protocol DashboardDatasourceDelegate: NSObjectProtocol {
+protocol DashboardDatasourceDelegate: class {
     func reloadData()
     func reloadItem(at: IndexPath)
 }

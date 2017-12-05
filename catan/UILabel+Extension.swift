@@ -9,17 +9,12 @@
 import UIKit
 
 extension UILabel {
-    func anchorHeightGreaterThanOrEqualTo(_ constant: CGFloat) {
-        translatesAutoresizingMaskIntoConstraints = false
-        heightAnchor.constraint(greaterThanOrEqualToConstant: constant).isActive = true
-    }
-    
     static func estimateHeight(text: String, width: CGFloat, of prototype: UILabel, greaterThanOrEqualToHeight: CGFloat = 0) -> CGFloat {
         let dummyView = UILabel()
         dummyView.text = text
         dummyView.textAlignment = prototype.textAlignment
         dummyView.font = prototype.font
-        dummyView.numberOfLines = prototype.numberOfLines
+        dummyView.numberOfLines = 0 //prototype.numberOfLines
         dummyView.lineBreakMode = prototype.lineBreakMode
         return max(dummyView.estimateContentHeight(width: width), greaterThanOrEqualToHeight) + estimatePadding(text: text, prototype: prototype)
     }
