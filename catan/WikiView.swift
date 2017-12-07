@@ -59,12 +59,10 @@ class WikiView: UIView {
     }
     
     static func buildLatestActivityBodyLabelText(_ text: String) -> NSAttributedString? {
-        if let textData = text.data(using: String.Encoding.unicode, allowLossyConversion: true) {
+        let textHtml = "<span style=\"font-family: '-apple-system', 'HelveticaNeue';\">\(text)</span>"
+        if let textData = textHtml.data(using: String.Encoding.unicode, allowLossyConversion: true) {
             return try? NSMutableAttributedString(data: textData,
-                                                    options: [
-                                                        NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                                                        "NSOriginalFont": Style.font.defaultNormal,
-                                                        NSFontAttributeName: Style.font.defaultNormal],
+                                                    options: [.documentType: NSAttributedString.DocumentType.html],
                                                     documentAttributes: nil)
         }
         return nil

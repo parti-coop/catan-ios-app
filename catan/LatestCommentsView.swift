@@ -46,7 +46,7 @@ class LatestCommentsView: UIView {
         return button
     }()
     
-    func handleMoreComments() {
+    @objc func handleMoreComments() {
         guard let post = post else { return }
         delegate?.didTapMoreComments(post: post)
     }

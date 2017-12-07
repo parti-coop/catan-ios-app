@@ -67,7 +67,7 @@ struct Service {
     }
 
     func request<T : JSONDecodable>(_ path: String, tron: TRON = Service.sharedInstance.tron, method: Alamofire.HTTPMethod = .get, parameters: [String: Any] = [:]) -> APIRequest<T, JSONError> {
-        let request: APIRequest<T, JSONError> = tron.request(path)
+        let request: APIRequest<T, JSONError> = tron.swiftyJSON.request(path)
         request.method = method
         request.parameters = parameters
         return request
@@ -80,9 +80,9 @@ struct Service {
     func downloadAuthenticated(_ path: String, parameters: [String: Any] = [:], resumingFrom: Data? = nil, to destination: @escaping DownloadRequest.DownloadFileDestination) -> DownloadAPIRequest<EmptyResponse, DownloadError> {
         let request: DownloadAPIRequest<EmptyResponse, DownloadError> = {
             if let resumingFrom = resumingFrom {
-                return tronAuthenticated.download(path, to: destination, resumingFrom: resumingFrom)
+                return tronAuthenticated.swiftyJSON.download(path, to: destination, resumingFrom: resumingFrom)
             } else {
-                return tronAuthenticated.download(path, to: destination)
+                return tronAuthenticated.swiftyJSON.download(path, to: destination)
             }
         }()
         request.parameters = parameters

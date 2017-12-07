@@ -137,7 +137,7 @@ class LinkSourceView: UIStackView {
         borderView.fillSuperview()
     }
     
-    func handleLink() {
+    @objc func handleLink() {
         if let urlString = post?.linkSource?.url, let url = URL(string: urlString) {
             if #available(iOS 10.0, *) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)

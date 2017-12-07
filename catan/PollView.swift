@@ -31,7 +31,7 @@ class PollView: UIView {
         return button
     }()
 
-    func handleAgree() {
+    @objc func handleAgree() {
         guard let poll = post?.poll else { return }
         let choice = poll.isAgreed() ? "unsure" : "agree"
         handleVote(poll: poll, choice: choice)
@@ -47,7 +47,7 @@ class PollView: UIView {
         return button
     }()
     
-    func handleDisagree() {
+    @objc func handleDisagree() {
         guard let poll = post?.poll else { return }
         let choice = poll.isDisagreed() ? "unsure" : "disagree"
         handleVote(poll: poll, choice: choice)

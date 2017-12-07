@@ -30,7 +30,7 @@ class HeightCache {
             timestampCache.removeObject(forKey: cacheKeyString)
             return nil
         }
-        return CGFloat(lastHeight)
+        return CGFloat(truncating: lastHeight)
     }
     
     func setHeight(_ height: CGFloat, for keyItem: HeightCacheKey, onWidth width: CGFloat) {

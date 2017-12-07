@@ -27,7 +27,7 @@ class LoginController: UIViewController {
         return button
     }()
     
-    func handleShowSignUp() {
+    @objc func handleShowSignUp() {
         //TODO: 가입하기
     }
     
@@ -122,12 +122,12 @@ class LoginController: UIViewController {
         stackView.anchor(logo.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, topConstant: 100, leftConstant: 40, rightConstant: 40, heightConstant: 200)
     }
     
-    func handleFacebookSignIn() {
+    @objc func handleFacebookSignIn() {
         let loginManager = LoginManager()
         if let _ = AccessToken.current {
            loginManager.logOut()
         }
-        loginManager.logIn([.publicProfile], viewController: self) { (loginResult) in
+        loginManager.logIn(readPermissions: [.publicProfile], viewController: self) { (loginResult) in
             switch loginResult {
             case .failed(let error):
                 UIAlertController.alertError()

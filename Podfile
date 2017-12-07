@@ -6,19 +6,16 @@ target 'catan' do
   use_frameworks!
 
   # Pods for catan
-  pod 'LBTAComponents', '~> 0.1.9'
+  pod 'LBTAComponents', '~> 1.0.1'
   pod 'FacebookCore'
   pod 'FacebookLogin'
   pod 'FacebookShare'
-  pod 'FBSDKCoreKit', '~> 4.22.1'
-  pod 'FBSDKLoginKit', '~> 4.22.1'
-  pod 'FBSDKShareKit', '~> 4.22.1'
-  pod 'TRON', '~> 3.0.0'
+  pod 'TRON', '~> 4.0'
   pod 'KeychainAccess'
   pod 'BonMot'
   pod 'SwiftyBeaver'
-  pod 'Gloss', '~> 1.2'
-  pod 'Kingfisher', '~> 3.0'
+  pod 'Gloss'
+  pod 'Kingfisher'
   pod 'DateToolsSwift'
   pod 'UICircularProgressRing'
   pod 'M13Checkbox'

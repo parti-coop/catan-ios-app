@@ -37,18 +37,15 @@ class CommentBodyView: UITextView {
         if let commentBodyData = commentBodyHtml.data(using: String.Encoding.unicode, allowLossyConversion: true) {
             if let commentBodyText = try? NSMutableAttributedString(data: commentBodyData,
                                                            options: [
-                                                            NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                                                            "NSOriginalFont": Style.font.defaultNormal,
-                                                            NSFontAttributeName: Style.font.defaultNormal ],
+                                                            .documentType: NSAttributedString.DocumentType.html ],
                                                            documentAttributes: nil) {
-                
                 let result = buildUserNicknameText(comment) + commentBodyText
                 let textRange = NSMakeRange(0, result.length)
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.lineSpacing = 2
                 paragraphStyle.paragraphSpacing = 0
                 paragraphStyle.paragraphSpacingBefore = 14
-                result.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: textRange)
+                result.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: textRange)
                 return result.trimText()
             }
         }
@@ -83,7 +80,7 @@ class CommentBodyView: UITextView {
         isScrollEnabled = false
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
-        linkTextAttributes = [ NSForegroundColorAttributeName: UIColor.app_link, NSUnderlineColorAttributeName: UIColor.clear ]
+        linkTextAttributes = [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.app_link, NSAttributedStringKey.underlineColor.rawValue: UIColor.clear ]
     }
     
     required public init?(coder aDecoder: NSCoder) {

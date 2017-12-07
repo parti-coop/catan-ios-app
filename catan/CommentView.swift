@@ -83,7 +83,7 @@ class CommentView: UIView {
         return button
     }()
     
-    func handleUpvote() {
+    @objc func handleUpvote() {
         guard let comment = comment else { return }
         if comment.isUpvotedByMe {
             UpvoteRequestFactory.destroy(commentId: comment.id).perform(
@@ -112,7 +112,7 @@ class CommentView: UIView {
         return button
     }()
     
-    func handleAddingComment() {
+    @objc func handleAddingComment() {
         guard let delegate = delegate, let comment = comment, let post = comment.post else { return }
         delegate.didTapAddingComment(post: post, toComment: comment)
     }
@@ -161,8 +161,6 @@ class CommentView: UIView {
         let contentMargin = Style.dimension.defaultSpace + (hasDivider ? Style.dimension.defaultDividerHeight : 0)
         userImageView.anchor(topAnchor, left: leftAnchor, bottom: nil, right: nil, topConstant: contentMargin, leftConstant: Style.dimension.commentView.paddingLeft, bottomConstant: 0, rightConstant: 0, widthConstant: Style.dimension.commentView.userImage, heightConstant: Style.dimension.commentView.userImage)
         bodyTextView.anchor(topAnchor, left: userImageView.rightAnchor, bottom: nil, right: rightAnchor, topConstant: contentMargin, leftConstant: Style.dimension.defaultSpace, bottomConstant: 0, rightConstant: Style.dimension.commentView.paddingRight, widthConstant: 0, heightConstant: 0)
-        
-        //setupActionButtons()
         
         layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: Style.dimension.defaultSpace, right: 0)
     }

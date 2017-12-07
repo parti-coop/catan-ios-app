@@ -76,10 +76,10 @@ open class APIStub<Model, ErrorModel> {
     open var loadingError : Error?
     
     /// Response model closure for successful API stub
-    open var modelClosure : ((Void) -> Model?)!
+    open var modelClosure : (() -> Model?)!
     
     /// Error model closure for unsuccessful API stub
-    open var errorClosure: (Void) -> APIError<ErrorModel> = { APIError(request: nil, response: nil, data: nil, error: nil) }
+    open var errorClosure: () -> APIError<ErrorModel> = { APIError(request: nil, response: nil, data: nil, error: nil) }
     
     /// Delay before stub is executed
     open var stubDelay = 0.1
@@ -182,24 +182,5 @@ open class APIStub<Model, ErrorModel> {
             let response: DownloadResponse<Model> = DownloadResponse(request: nil, response: nil, temporaryURL: nil, destinationURL: nil, resumeData: nil, result: result)
             completionBlock(response)
         }
-    }
-}
-
-// DEPRECATED
-
-extension APIStub {
-    @available(*,unavailable,renamed:"buildModel(fromFileNamed:inBundle:)")
-    public func buildModelFromFile(_ fileName: String, inBundle bundle: Bundle = Bundle.main) {
-        fatalError("UNAVAILABLE")
-    }
-    
-    @available(*,unavailable,renamed:"performStub(withSuccess:failure:)")
-    open func performStubWithSuccess(_ success: ((Model) -> Void)? = nil, failure: ((APIError<ErrorModel>) -> Void)? = nil) {
-        fatalError("UNAVAILABLE")
-    }
-    
-    @available(*,unavailable,renamed:"performStub(withCompletion:)")
-    open func performStubWithCompletion(_ completion : ((Alamofire.DataResponse<Model>) -> Void)) {
-        fatalError("UNAVAILABLE")
     }
 }

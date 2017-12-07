@@ -35,7 +35,7 @@ class OptionView: UIView {
         return checkbox
     }()
     
-    func handleFeedback() {
+    @objc func handleFeedback() {
         guard let option = option else { return }
         FeedbackRequestFactory.create(optionId: option.id, selected: option.isMySelect == false).perform(
             withSuccess: { [weak self] (response) in
@@ -121,7 +121,7 @@ class OptionView: UIView {
         addGestureRecognizer(tap)
     }
     
-    func handleTouch() {
+    @objc func handleTouch() {
         //checkbox.toggleCheckState(true)
         handleFeedback()
     }

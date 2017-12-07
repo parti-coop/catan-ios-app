@@ -18,9 +18,9 @@ struct Style {
     }
     
     struct font {
-        static let largeThin = UIFont.systemFont(ofSize: 20, weight: UIFontWeightThin)
-        static let defaultThin = UIFont.systemFont(ofSize: 17, weight: UIFontWeightThin)
-        static let smallThin = UIFont.systemFont(ofSize: 15, weight: UIFontWeightThin)
+        static let largeThin = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.thin)
+        static let defaultThin = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.thin)
+        static let smallThin = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.thin)
         static let defaultBold = UIFont.boldSystemFont(ofSize: 17)
         static let defaultNormal = UIFont.systemFont(ofSize: 17)
         static let smallNormal = UIFont.systemFont(ofSize: 15)

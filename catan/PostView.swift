@@ -103,7 +103,7 @@ class PostView: UIView, CellRefetchable {
         return button
     }()
     
-    func handleDetail() {
+    @objc func handleDetail() {
         guard let delegate = delegate, let post = post else { return }
         delegate.didTapDetail(post: post)
     }
@@ -187,7 +187,7 @@ class PostView: UIView, CellRefetchable {
     
     fileprivate func setupPostAdditionalViews(width: CGFloat) {
         addSubview(postAdditionalView)
-        
+
         postAdditionalView.anchor(postTitleAndBodyView.bottomAnchor, left: leftAnchor, bottom: nil, right: rightAnchor,
                                   topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
         postAdditionalView.forceWidth = PostView.widthPostAdditionalViews(width: width)

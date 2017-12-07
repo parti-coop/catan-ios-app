@@ -118,7 +118,7 @@ class PostDocumentFileSourceView: UIView, FileSourceDownloadDelegate {
         setupViews()
     }
     
-    func handleDownload() {
+    @objc func handleDownload() {
         fileSource.handleDownloadFile()
     }
     

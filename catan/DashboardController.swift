@@ -131,7 +131,7 @@ class DashboardController: DatasourceController, DashboardDatasourceDelegate, Po
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings_filled"), style: .plain, target: self, action: #selector(handleLogOut))
     }
 
-    func handleLogOut() {
+    @objc func handleLogOut() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         alertController.addAction(UIAlertAction(title: "로그아웃", style: .destructive, handler: { (_) in

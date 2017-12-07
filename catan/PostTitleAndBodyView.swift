@@ -44,18 +44,14 @@ class PostTitleAndBodyView: UITextView {
         let postBodyHtml = buildSmartHtmlString(postBodyHtmlSource, fontSize: bodyFontPointSize) ?? ""
         if let postTitleAndBodyData = "\(postTitleHtml)\(postBodyHtml)".data(using: String.Encoding.unicode, allowLossyConversion: true) {
             if let result = try? NSMutableAttributedString(data: postTitleAndBodyData,
-                options: [
-                    NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                    "NSOriginalFont": Style.font.defaultNormal,
-                    NSFontAttributeName: Style.font.defaultNormal
-                ],
+                options: [.documentType: NSAttributedString.DocumentType.html],
                 documentAttributes: nil) {
                 let textRange = NSMakeRange(0, result.length)
                 let paragraphStyle = NSMutableParagraphStyle()
                 paragraphStyle.lineSpacing = 2
                 paragraphStyle.paragraphSpacing = 0
                 paragraphStyle.paragraphSpacingBefore = 14
-                result.addAttribute(NSParagraphStyleAttributeName, value: paragraphStyle, range: textRange)
+                result.addAttribute(NSAttributedStringKey.paragraphStyle, value: paragraphStyle, range: textRange)
              
                 return result.trimText()
             }
@@ -86,7 +82,7 @@ class PostTitleAndBodyView: UITextView {
         isScrollEnabled = false
         textContainerInset = .zero
         textContainer.lineFragmentPadding = 0
-        linkTextAttributes = [ NSForegroundColorAttributeName: UIColor.app_link, NSUnderlineColorAttributeName: UIColor.clear ]
+        linkTextAttributes = [ NSAttributedStringKey.foregroundColor.rawValue: UIColor.app_link, NSAttributedStringKey.underlineColor.rawValue: UIColor.clear ]
     }
     
     required public init?(coder aDecoder: NSCoder) {

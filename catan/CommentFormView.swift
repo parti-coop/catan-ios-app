@@ -36,7 +36,7 @@ class CommentFormView: UIView {
     
     // 댓글 생성하기
     
-    func handleSubmit() {
+    @objc func handleSubmit() {
         guard let body = textField.text else { return }
         clearForm()
         if body.isPresent() {

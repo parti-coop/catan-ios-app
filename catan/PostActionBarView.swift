@@ -40,7 +40,7 @@ class PostActionBarView: UIView {
         return button
     }()
 
-    func handleUpvote() {
+    @objc func handleUpvote() {
         guard let post = post else { return }
         if post.isUpvotedByMe {
             UpvoteRequestFactory.destroy(postId: post.id).perform(withSuccess: { [weak self] (response) in
@@ -59,7 +59,7 @@ class PostActionBarView: UIView {
         }
     }
     
-    func handleAddingComment() {
+    @objc func handleAddingComment() {
         guard let post = post else { return }
         delegate?.didTapAddingComment(post: post)
     }

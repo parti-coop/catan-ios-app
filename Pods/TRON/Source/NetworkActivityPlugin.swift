@@ -46,16 +46,18 @@ open class NetworkActivityPlugin : Plugin {
      */
     var networkActivityCount = 0 {
         didSet {
-            application.isNetworkActivityIndicatorVisible = networkActivityCount > 0
+            DispatchQueue.main.async { [unowned self] in
+                self.application.isNetworkActivityIndicatorVisible = self.networkActivityCount > 0
+            }
         }
     }
     
     open func didSendAlamofireRequest<Model, ErrorModel>(_ request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
-        networkActivityCount += 1
+        DispatchQueue.main.async { [weak self] in self?.networkActivityCount += 1 }
     }
     
     open func willProcessResponse<Model, ErrorModel>(response: (URLRequest?, HTTPURLResponse?, Data?, Error?), forRequest request: Request, formedFrom tronRequest: BaseRequest<Model, ErrorModel>) {
-        networkActivityCount -= 1
+        DispatchQueue.main.async { [weak self] in self?.networkActivityCount -= 1 }
     }
 }
 
